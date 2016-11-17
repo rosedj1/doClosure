@@ -1,0 +1,103 @@
+from ROOT import *
+import makePlot_1D_fit
+#RooMsgService.instance().Print() 
+#RooMsgService.instance().getStream(1).removeTopic(RooFit.ObjectHandling)
+#RooMsgService.instance().getStream(1).removeTopic(RooFit.DataHandling)
+#RooMsgService.instance().getStream(1).removeTopic(RooFit.Eval)
+#RooMsgService.instance().getStream(1).removeTopic(RooFit.Caching)
+#RooMsgService.instance().setGlobalKillBelow(RooFit.WARNING)
+import argparse
+def ParseOption():
+
+    parser = argparse.ArgumentParser(description='submit all')
+    parser.add_argument('--min', dest='min_m4lErr', type=float, help='min for relMassZErr')
+    parser.add_argument('--max', dest='max_m4lErr', type=float, help='max for relMassZErr')
+    parser.add_argument('--channel', dest='channel', type=str, help='channel')
+    parser.add_argument('--inpath', dest='inpath', type=str, help='')
+    parser.add_argument('--filename', dest='filename', type=str, help='')
+    parser.add_argument('--plotpath', dest='plotpath', type=str, help='')
+    parser.add_argument('--outtxtName', dest='outtxtName', type=str, help='')
+    args = parser.parse_args()
+    return args
+
+args=ParseOption()
+
+m4lErr_min = args.min_m4lErr #0.006
+m4lErr_max = args.max_m4lErr #0.008
+
+### move to previous level, open tree only once???
+inputPath = args.inpath #'/cms/data/scratch/osg/mhl/Run2/HZZ4L/PereventMassErrCorr_2016ICHEP/Ana_ZZ4L/Ntuples/'
+inputFile = args.filename #'mH_125.root'
+treeName = 'passedEvents'
+
+savePath = args.plotpath #'/home/mhl/public_html/2016/20161021_mass/fitmassH/'
+### move to previous level
+
+saveName = 'mass4l_HErr_' + str(m4lErr_min).replace('.','p') + '_' + str(m4lErr_max).replace('.','p') + '_' + args.channel
+
+channelCut = {'4mu':'(finalState == 1)', '4e':'(finalState == 2)', '2e2mu':'(finalState > 2)'}
+
+cut = "passedFullSelection && mass4l > 105 && mass4l < 140 && \
+       mass4lErrREFIT/mass4lREFIT > " + str(m4lErr_min) + " && \
+       mass4lErrREFIT/mass4lREFIT < " + str(m4lErr_max)
+#       mass4lErr/mass4l > " + str(m4lErr_min) + " && \
+#       mass4lErr/mass4l < " + str(m4lErr_max)
+#       mass4lErrREFIT/mass4lREFIT > " + str(m4lErr_min) + " && \
+#       mass4lErrREFIT/mass4lREFIT < " + str(m4lErr_max)
+
+cut += '&& ' + channelCut[args.channel]
+
+plotParaConfig = \
+{\
+'binInfo': [100, 105, 140],
+'vars1': ['mass4lREFIT'],
+'cuts1': ['1'], #
+'weight1': ['1'],
+'xTitle': 'mass4l(GeV)',
+'yTitle': '',
+'savePath': savePath,
+'saveName': saveName, #
+'latexNote1': str(m4lErr_min) + ' < #sigma_{m4l}/m_{4l} < ' + str(m4lErr_max),
+'pdfName': 'doubleCB'
+}
+
+#initialize to-be-saved fitted parameter 
+fitResult = {'sigmaCB':0, 'sigmaDCB':0}
+
+myFile = TFile(inputPath+inputFile,'READ')
+myTree = myFile.Get(treeName)
+
+#TProof.Open("")
+#c = TChain("myTree")
+#c.Draw(">>myList", cut, "entrylist")
+
+#select part of tree to be used
+myTree.Draw(">>myList", cut, "entrylist")
+entryList = gDirectory.Get("myList")
+myTree.SetEntryList(entryList)
+
+myList.Print()
+
+#plot and fit massZ, get fitted sigma
+makePlot_1D_fit.MakeFitPlotFromTree(myTree, plotParaConfig, fitResult)
+
+print fitResult
+selector = TSelector.GetSelector("MySelector_m4l.C")
+myTree.Process(selector)
+
+#corred m4l = selector.mass4lErr
+
+### should make following lines more clean ...
+sigma_m4l = [fitResult['sigmaDCB'], selector.mass4lErr_uncorr_sum/selector.nEvents,\
+                                    selector.mass4lErr_corr_sum/selector.nEvents, \
+                                    selector.mass4lErrREFIT_corr_sum/selector.nEvents]#,\
+#                                 selector.massZErr_sum_rel/selector.nEvents,\
+#                                 selector.massZErr_sum_rel_corr/selector.nEvents]
+print ''
+print sigma_m4l
+sigma_m4l = [str(sigma_m4l[i]) for i in range(len(sigma_m4l))]
+
+with open(args.outtxtName,'a') as myfile:
+     myfile.write(sigma_m4l[0] + ' ' + sigma_m4l[1] + ' ' + sigma_m4l[2] + ' ' + sigma_m4l[3] + '\n')
+#     myfile.write(sigma_m2l[0] + ' ' + sigma_m2l[1] + ' ' + sigma_m2l[2] + ' ' + sigma_m2l[3] + ' ' + sigma_m2l[4] + '\n')
+
