@@ -95,13 +95,13 @@ Bool_t MySelector::Process(Long64_t entry)
 
 
 // use fitted BW mean and sigma
-   if (abs(*eta1)<0.9) pterr1_corr *= 1.234;
-   if (abs(*eta1)>=0.9 && abs(*eta1)<=1.8) pterr1_corr *= 1.292;
-   if (abs(*eta1)>1.8) pterr1_corr *= 1.042;
+   if (abs(*eta1)<0.9) pterr1_corr *= 1.22;
+   if (abs(*eta1)>=0.9 && abs(*eta1)<=1.8) pterr1_corr *= 1.284;
+   if (abs(*eta1)>1.8) pterr1_corr *= 1.051;
 
-   if (abs(*eta2)<0.9) pterr2_corr *= 1.234;
-   if (abs(*eta2)>=0.9 && abs(*eta2)<=1.8) pterr2_corr *= 1.292;
-   if (abs(*eta2)>1.8) pterr2_corr *= 1.042;
+   if (abs(*eta2)<0.9) pterr2_corr *= 1.22;
+   if (abs(*eta2)>=0.9 && abs(*eta2)<=1.8) pterr2_corr *= 1.284;
+   if (abs(*eta2)>1.8) pterr2_corr *= 1.051;
 
 
 

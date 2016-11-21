@@ -30,7 +30,7 @@ for i in range(1, len(data)):
 
     dataperline = data[i].split(' ')
     sigma2l_fit.append(float(dataperline[0]))
-    sigma2l_pred.append(float(dataperline[2]))
+    sigma2l_pred.append(float(dataperline[1]))
     sigma2l_pred_corr.append(float(dataperline[3]))
 
 y, x1, x2 = array('f'), array('f'), array('f')
@@ -75,11 +75,11 @@ lineBoundDiagonal_down.SetLineStyle(kDashed)
 lineBoundDiagonal_down.Draw()
 
 #gr1.Draw('p')
-gr2.Draw('p')
+gr2.Draw('p same')
 
-#gr1.SetMarkerStyle(2)
+gr1.SetMarkerStyle(2)
 gr2.SetMarkerStyle(2)
-#gr1.SetMarkerColor(1)
+gr1.SetMarkerColor(1)
 gr2.SetMarkerColor(2)
 
 legend = ROOT.TLegend(0.2,0.75,0.45,0.9)

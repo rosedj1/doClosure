@@ -42,14 +42,13 @@ cut = "passedFullSelection && mass4l > 105 && mass4l < 140 && \
        mass4lErrREFIT/mass4lREFIT < " + str(m4lErr_max)
 #       mass4lErr/mass4l > " + str(m4lErr_min) + " && \
 #       mass4lErr/mass4l < " + str(m4lErr_max)
-#       mass4lErrREFIT/mass4lREFIT > " + str(m4lErr_min) + " && \
-#       mass4lErrREFIT/mass4lREFIT < " + str(m4lErr_max)
 
 cut += '&& ' + channelCut[args.channel]
 
 plotParaConfig = \
 {\
 'binInfo': [100, 105, 140],
+#'vars1': ['mass4l'],
 'vars1': ['mass4lREFIT'],
 'cuts1': ['1'], #
 'weight1': ['1'],
