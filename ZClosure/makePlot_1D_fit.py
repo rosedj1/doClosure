@@ -38,7 +38,10 @@ def MakeFitPlotFromTree(tree, paraConfig, fitResult):
     saveName = paraConfig['saveName']
     latexNote1 = paraConfig['latexNote1']
     pdfName = paraConfig['pdfName']
-    
+    Z_width = paraConfig['z_width'] 
+    singleCB_a = paraConfig['singleCB_a']
+    singleCB_n = paraConfig['singleCB_n']
+
     #f1 = TFile(rootPath1 + rootfile1, 'READ')
     #t1 = f1.Get(tree1)
     
@@ -59,28 +62,24 @@ def MakeFitPlotFromTree(tree, paraConfig, fitResult):
     xmax = binInfo[2]
     
     w.factory('Gaussian::gauss(x[' + str(xmin) + ',' + str(xmax) + '],meanGauss[0,-1,1],sigmaGauss[0.01,0,0.015])')
-    w.factory('BreitWigner::bw(x[' + str(xmin) + ',' + str(xmax) + '],meanBW[91.2],sigmaBW[2.406])')#meanBW[91.2, 90, 92],sigmaBW[2.4,2,3])')
-#    w.factory('BreitWigner::bw(x[' + str(xmin) + ',' + str(xmax) + '],meanBW[91.187],sigmaBW[2.4952])')#meanBW[91.2, 90, 92],sigmaBW[2.4,2,3])')
+    w.factory('BreitWigner::bw(x[' + str(xmin) + ',' + str(xmax) + '],meanBW[91.2],sigmaBW['+str(Z_width)+'])')#meanBW[91.2, 90, 92],sigmaBW[2.4,2,3])')
 #    w.factory('BreitWigner::bw(x[' + str(xmin) + ',' + str(xmax) + '],meanBW[91.2, 90, 92],sigmaBW[2.4,2,3])')
 
     w.factory('DoubleCB::doubleCB(x[' + str(xmin) + ',' + str(xmax) + '], \
-                                  meanDCB[125,124,126], sigmaDCB[0.1,0,10], \
+                                  meanDCB[125,124,126], sigmaDCB[0.5,0.1,10], \
                                   alphaDCB[1.1,0,50], nDCB[1,0,50], alpha2[1.1,0,50], n2[1,0,50])')
 
     w.factory('CBShape::singleCB(x[' + str(xmin) + ',' + str(xmax) + '], \
-                                meanCB[-0.5,0.5], sigmaCB[1,0,10], alphaCB[1.612], nCB[0.9835])')
-#                                meanCB[-0.09], sigmaCB[1,0,10], alphaCB[1.612], nCB[0.9835])')
-#                                meanCB[0,-1.5,1.5], sigmaCB[0.1,0,10], alphaCB[5,1,10], nCB[5,1,30])')
-#                                meanCB[-0.09], sigmaCB[1,0,10], alphaCB[1.612], nCB[0.9835])')
+                                meanCB[0,-1.5,1.5], sigmaCB[0.5,0.1,10], alphaCB['+str(singleCB_a)+'], nCB['+str(singleCB_n)+'])')
 
     w.factory('Polynomial::poly3(x,{a0[1, -10,10],a1[0.1, -10,10],a2[0.1, -10,10],a3[1, -10,10]})')
 
-#    w.factory("Exponential::bkg(expr('a2*a2*x+a1*x', x,a1,a2), tau[0.1,-1,1])")
     w.factory("Exponential::bkg(x, tau[0.1,-1,1])")
 
     w.factory("Exponential::exp(expr('a3*a3*a3*x+a2*a2*x+a1*x+a0', x,a0,a1,a2,a3),a[-1, -2, 0])")
     
     w.var('x').setBins(1000, 'fft')
+
     w.factory('FCONV::BWxCB(x,bw,singleCB)')
     w.factory('FCONV::BWxDCB(x,bw,doubleCB)')
 
@@ -100,8 +99,6 @@ def MakeFitPlotFromTree(tree, paraConfig, fitResult):
     pdf.plotOn(xframe, RooFit.LineColor(2), RooFit.LineWidth(2),RooFit.Components("bkg"), RooFit.LineStyle(kDashed))
     pdf.paramOn(xframe, RooFit.Layout(0.17, 0.4, 0.9), RooFit.Format("NE", RooFit.FixedPrecision(4)))
 
-#    fitResult['sigma'] = w.var('sigmaCB').getVal()
-    
     c1 = TCanvas("c1", "c1", 800, 800)
     
     dummy = TH1D("dummy","dummy",1,binInfo[1],binInfo[2])

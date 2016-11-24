@@ -2,7 +2,7 @@ from subprocess import call
 import time 
 
 ### z -> mumu
-mass4lErr_bins = [0, 0.005, 0.007, 0.008]
+mass4lErr_bins = [0.005, 0.007, 0.008]
 nDiv = 8
 for i in range(nDiv):
     mass4lErr_bins.append(mass4lErr_bins[-1]+(0.02-0.008)/nDiv)
@@ -13,8 +13,8 @@ mass4lErr_bins.append(0.05)
 
 inputpath = '/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/liteUFHZZ4LAnalyzer/Ntuples/'
 #inputpath = '/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_2015MC/Mass_2015MC/Fit_PereventMerr/'
-filename = 'test_tripleGauss_symErrHESSE_corrMuPtScale.root'
-plotpath = '/home/mhl/public_html/2016/20161121_mass_addMuonPtScaleCorr/fitmassHREFIT/'
+filename = 'test_tripleGauss_symErrHESSE_corrMuPtScale_8TeVZ1Para.root'
+plotpath = '/home/mhl/public_html/2016/20161122_mass/run1MC_genmz1Shape/sigmaInModelFromEventWithoutFSR/'
 outtxtName = '../makeSummaryPlots/sigma_m4mu.txt'
 
 call('echo " " > ' + outtxtName, shell=True)

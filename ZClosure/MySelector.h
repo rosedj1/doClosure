@@ -58,6 +58,13 @@ public :
    double massZErr_sum_corr;
    double massZErr_sum_rel_corr;
 
+   TString fs_;
+   double pTErrCorr_eta1_;
+   double pTErrCorr_eta2_;
+   double pTErrCorr_eta3_;
+   double pTErrCorr_eta4_;
+   vector<double> pTErrCorr_;
+
    MySelector(TTree * /*tree*/ =0):
      nEvents(0), massZErr_sum(0), massZErr_sum_rel(0), massZErr_sum_corr(0), massZErr_sum_rel_corr(0) { }
 
@@ -76,8 +83,8 @@ public :
    virtual void    SlaveTerminate();
    virtual void    Terminate();
 
-//   virtual double  GetMassZErr_ave_noCorr();
-//   virtual double  GetMassZErr_ave_Corr();
+   void SetPtErrCorrection(TString fs, double pTErrCorr_eta1, double pTErrCorr_eta2, double pTErrCorr_eta3, double pTErrCorr_eta4);
+   void SetPtErrCorrection(TString fs, vector<double> pTErrCorr);
  
    ClassDef(MySelector,0);
 

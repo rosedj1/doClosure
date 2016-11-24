@@ -1,1 +1,1 @@
-cd ..; ./makeGraph.sh ; cd -
+cd ../makeSummaryPlots; ./makeGraph.sh ; cd -

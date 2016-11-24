@@ -17,6 +17,9 @@ def ParseOption():
     parser.add_argument('--filename', dest='filename', type=str, help='')
     parser.add_argument('--plotpath', dest='plotpath', type=str, help='')
     parser.add_argument('--outtxtName', dest='outtxtName', type=str, help='')
+    parser.add_argument('--doubleCB_tail',dest='doubleCB_tail', nargs='+', help='', type=float)#, required=True)
+    parser.add_argument('--doREFIT', dest='doREFIT', action='store_true', default=False, help='doREFIT')
+    
     args = parser.parse_args()
     return args
 
@@ -24,41 +27,64 @@ args=ParseOption()
 
 m4lErr_min = args.min_m4lErr #0.006
 m4lErr_max = args.max_m4lErr #0.008
-
-### move to previous level, open tree only once???
 inputPath = args.inpath #'/cms/data/scratch/osg/mhl/Run2/HZZ4L/PereventMassErrCorr_2016ICHEP/Ana_ZZ4L/Ntuples/'
 inputFile = args.filename #'mH_125.root'
 treeName = 'passedEvents'
-
 savePath = args.plotpath #'/home/mhl/public_html/2016/20161021_mass/fitmassH/'
-### move to previous level
-
 saveName = 'mass4l_HErr_' + str(m4lErr_min).replace('.','p') + '_' + str(m4lErr_max).replace('.','p') + '_' + args.channel
+if args.doREFIT:
+   saveName += '_refit'
+else:
+   saveName += '_reco'
+doubleCB_a1 = args.doubleCB_tail[0]
+doubleCB_n1 = args.doubleCB_tail[1]
+doubleCB_a2 = args.doubleCB_tail[2]
+doubleCB_n2 = args.doubleCB_tail[3]
 
 channelCut = {'4mu':'(finalState == 1)', '4e':'(finalState == 2)', '2e2mu':'(finalState > 2)'}
 
-cut = "passedFullSelection && mass4l > 105 && mass4l < 140 && \
-       mass4lErrREFIT/mass4lREFIT > " + str(m4lErr_min) + " && \
-       mass4lErrREFIT/mass4lREFIT < " + str(m4lErr_max)
+#cut = "passedFullSelection && mass4l > 105 && mass4l < 140 && "
+cut = "nFSRPhotons == 0 && passedFullSelection && mass4l > 105 && mass4l < 140 && "
+
 #       mass4lErr/mass4l > " + str(m4lErr_min) + " && \
 #       mass4lErr/mass4l < " + str(m4lErr_max)
+#       mass4lErrREFIT/mass4lREFIT > " + str(m4lErr_min) + " && \
+#       mass4lErrREFIT/mass4lREFIT < " + str(m4lErr_max)
 
-cut += '&& ' + channelCut[args.channel]
+if args.doREFIT:
+   cut += "mass4lErrREFIT/mass4lREFIT > " + str(m4lErr_min) + " &&  mass4lErrREFIT/mass4lREFIT < " + str(m4lErr_max)   
+else:
+   cut += "mass4lErr/mass4l > " + str(m4lErr_min) + " &&  mass4lErr/mass4l < " + str(m4lErr_max)
+
+cut += ' && ' + channelCut[args.channel]
 
 plotParaConfig = \
 {\
 'binInfo': [100, 105, 140],
 #'vars1': ['mass4l'],
-'vars1': ['mass4lREFIT'],
+#'vars1': ['mass4lREFIT'],
 'cuts1': ['1'], #
 'weight1': ['1'],
-'xTitle': 'mass4l(GeV)',
+#'xTitle': 'mass4l(GeV)',
 'yTitle': '',
 'savePath': savePath,
 'saveName': saveName, #
-'latexNote1': str(m4lErr_min) + ' < #sigma_{m4l}/m_{4l} < ' + str(m4lErr_max),
-'pdfName': 'doubleCB'
+#'latexNote1': str(m4lErr_min) + ' < #sigma_{m4l}/m_{4l} < ' + str(m4lErr_max),
+'pdfName': 'doubleCB',
+'doubleCB_a1': doubleCB_a1,
+'doubleCB_n1': doubleCB_n1,
+'doubleCB_a2': doubleCB_a2,
+'doubleCB_n2': doubleCB_n2
 }
+
+if args.doREFIT:
+   plotParaConfig['vars1'] = ['mass4lREFIT']
+   plotParaConfig['xTitle'] = 'mass4lREFIT(GeV)'
+   plotParaConfig['latexNote1'] =  str(m4lErr_min) + ' < #sigma_{m4lREFIT}/m_{4lREFIT} < ' + str(m4lErr_max)
+else:
+   plotParaConfig['vars1'] = ['mass4l']
+   plotParaConfig['xTitle'] = 'mass4l(GeV)'
+   plotParaConfig['latexNote1'] =  str(m4lErr_min) + ' < #sigma_{m4l}/m_{4l} < ' + str(m4lErr_max)
 
 #initialize to-be-saved fitted parameter 
 fitResult = {'sigmaCB':0, 'sigmaDCB':0}

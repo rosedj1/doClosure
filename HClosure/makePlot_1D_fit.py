@@ -38,6 +38,10 @@ def MakeFitPlotFromTree(tree, paraConfig, fitResult):
     saveName = paraConfig['saveName']
     latexNote1 = paraConfig['latexNote1']
     pdfName = paraConfig['pdfName']
+    doubleCB_a1 = paraConfig['doubleCB_a1']
+    doubleCB_n1 = paraConfig['doubleCB_n1']
+    doubleCB_a2 = paraConfig['doubleCB_a2']
+    doubleCB_n2 = paraConfig['doubleCB_n2']
     
     #f1 = TFile(rootPath1 + rootfile1, 'READ')
     #t1 = f1.Get(tree1)
@@ -64,7 +68,9 @@ def MakeFitPlotFromTree(tree, paraConfig, fitResult):
 
     w.factory('DoubleCB::doubleCB(x[' + str(xmin) + ',' + str(xmax) + '], \
                                   meanDCB[125,124,126], sigmaDCB[0.1,0,10], \
-                                  alphaDCB[1.332], nDCB[1.918], alpha2[2.074], n2[2.434])')
+                                  alphaDCB['+str(doubleCB_a1)+'], nDCB['+str(doubleCB_n1)+'], alpha2['+str(doubleCB_a2)+'], n2['+str(doubleCB_n2)+'])')
+ 
+#                                  alphaDCB[1.314], nDCB[2], alpha2[1.920], n2[2.825])')
 #                                  alphaDCB[1.255], nDCB[2.112], alpha2[1.851], n2[3.092])')
 
     w.factory('CBShape::singleCB(x[' + str(xmin) + ',' + str(xmax) + '], \
@@ -97,9 +103,10 @@ def MakeFitPlotFromTree(tree, paraConfig, fitResult):
 #    fitResult['sigma'] = w.var('sigmaCB').getVal()
     
     c1 = TCanvas("c1", "c1", 800, 800)
-    
+
+    c1.SetLogy()    
     dummy = TH1D("dummy","dummy",1,binInfo[1],binInfo[2])
-    dummy.SetMinimum(0)
+    dummy.SetMinimum(0.1)
     yMax1 = HIST1.GetMaximum()*1.5
     yMax = yMax1
     dummy.SetMaximum(yMax)

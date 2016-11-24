@@ -29,6 +29,24 @@
 #include <TH2.h>
 #include <TStyle.h>
 #include <math.h>
+
+void MySelector::SetPtErrCorrection(TString fs, double pTErrCorr_eta1, double pTErrCorr_eta2, double pTErrCorr_eta3, double pTErrCorr_eta4) {
+
+     fs_ = fs;
+     pTErrCorr_eta1_ = pTErrCorr_eta1;
+     pTErrCorr_eta2_ = pTErrCorr_eta2;
+     pTErrCorr_eta3_ = pTErrCorr_eta3;
+     pTErrCorr_eta4_ = pTErrCorr_eta4;
+
+}
+
+void MySelector::SetPtErrCorrection(TString fs, vector<double> pTErrCorr) {
+
+     fs_ = fs;
+     pTErrCorr_ = pTErrCorr;
+
+}
+
 void MySelector::Begin(TTree * /*tree*/)
 {
    // The Begin() function is called at the start of the query.
@@ -82,40 +100,35 @@ Bool_t MySelector::Process(Long64_t entry)
 
    double pterr1_corr = *pterr1; double pterr2_corr = *pterr2;
 
-/*
-// use pdg BW when deriving ebe
-   if (abs(*eta1)<0.9) pterr1_corr *= 1.18;
-   if (abs(*eta1)>=0.9 && abs(*eta1)<=1.8) pterr1_corr *= 1.262;
-   if (abs(*eta1)>1.8) pterr1_corr *= 1.069;
 
-   if (abs(*eta2)<0.9) pterr2_corr *= 1.18;
-   if (abs(*eta2)>=0.9 && abs(*eta2)<=1.8) pterr2_corr *= 1.262;
-   if (abs(*eta2)>1.8) pterr2_corr *= 1.069;
-*/
+// mu
+   if (fs_ == "2mu") {
 
+      if (abs(*eta1)<0.9) pterr1_corr *= pTErrCorr_eta1_;
+      if (abs(*eta1)>=0.9 && abs(*eta1)<=1.8) pterr1_corr *= pTErrCorr_eta2_;
+      if (abs(*eta1)>1.8) pterr1_corr *= pTErrCorr_eta3_;
 
-// use fitted BW mean and sigma
-   if (abs(*eta1)<0.9) pterr1_corr *= 1.22;
-   if (abs(*eta1)>=0.9 && abs(*eta1)<=1.8) pterr1_corr *= 1.284;
-   if (abs(*eta1)>1.8) pterr1_corr *= 1.051;
+      if (abs(*eta2)<0.9) pterr2_corr *= pTErrCorr_eta1_;
+      if (abs(*eta2)>=0.9 && abs(*eta2)<=1.8) pterr2_corr *= pTErrCorr_eta2_;
+      if (abs(*eta2)>1.8) pterr2_corr *= pTErrCorr_eta3_;
 
-   if (abs(*eta2)<0.9) pterr2_corr *= 1.22;
-   if (abs(*eta2)>=0.9 && abs(*eta2)<=1.8) pterr2_corr *= 1.284;
-   if (abs(*eta2)>1.8) pterr2_corr *= 1.051;
+      }
 
+//e
+   if (fs_ == "2e") {
 
+      if (abs(*eta1)<1) pterr1_corr *= pTErrCorr_eta1_;
+      if (abs(*eta1)>=1 && abs(*eta1)<=1.44) pterr1_corr *= pTErrCorr_eta2_;
+      if (abs(*eta1)>=1.57 && abs(*eta1)<=2) pterr1_corr *= pTErrCorr_eta3_;
+      if (abs(*eta1)>2) pterr1_corr *= pTErrCorr_eta4_;
 
-/*
-   if (abs(*eta1)<0.7) pterr1_corr *= 1.176;
-   if (abs(*eta1)>=0.7 && abs(*eta1)<=1) pterr1_corr *= 1.176;
-   if (abs(*eta1)>=1 && abs(*eta1)<=1.5) pterr1_corr *= 1.117;
-   if (abs(*eta1)>1.5) pterr1_corr *= 1.078;
+      if (abs(*eta2)<1) pterr2_corr *= pTErrCorr_eta1_;
+      if (abs(*eta2)>=1 && abs(*eta2)<=1.44) pterr2_corr *= pTErrCorr_eta2_;
+      if (abs(*eta2)>=1.57 && abs(*eta2)<=2) pterr2_corr *= pTErrCorr_eta3_;
+      if (abs(*eta2)>2) pterr2_corr *= pTErrCorr_eta4_;
 
-   if (abs(*eta2)<0.7) pterr2_corr *= 1.176;
-   if (abs(*eta2)>=0.7 && abs(*eta2)<=1) pterr2_corr *= 1.176;
-   if (abs(*eta2)>=1 && abs(*eta2)<=1.5) pterr2_corr *= 1.117;
-   if (abs(*eta2)>1.5) pterr2_corr *= 1.078;
-*/
+      }
+
    lep1p.SetPtEtaPhiM(*pT1+pterr1_corr,double(*eta1),double(*phi1),*m1);
    lep2p.SetPtEtaPhiM(*pT2+pterr2_corr,double(*eta2),double(*phi2),*m2);
 
