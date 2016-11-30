@@ -69,16 +69,23 @@ def MakeFitPlotFromTree(tree, paraConfig, fitResult):
                                   meanDCB[125,124,126], sigmaDCB[0.5,0.1,10], \
                                   alphaDCB[1.1,0,50], nDCB[1,0,50], alpha2[1.1,0,50], n2[1,0,50])')
 
+#    w.factory('CBShape::singleCB(x[' + str(xmin) + ',' + str(xmax) + '], \
+#                                meanCB[0, -1.5, 1.5], sigmaCB[0.5,0.1,10], alphaCB['+str(singleCB_a)+'], nCB['+str(singleCB_n)+'])')
     w.factory('CBShape::singleCB(x[' + str(xmin) + ',' + str(xmax) + '], \
-                                meanCB[0,-1.5,1.5], sigmaCB[0.5,0.1,10], alphaCB['+str(singleCB_a)+'], nCB['+str(singleCB_n)+'])')
+                                meanCB[0,-1.5,1.5], sigmaCB[1,0.1,10], alphaCB[1,0,10], nCB[1,0,10])')
 
     w.factory('Polynomial::poly3(x,{a0[1, -10,10],a1[0.1, -10,10],a2[0.1, -10,10],a3[1, -10,10]})')
 
+#    w.factory("Exponential::bkg(x, tau[-0.03])")#tau[0.1,-1,1])")
     w.factory("Exponential::bkg(x, tau[0.1,-1,1])")
 
     w.factory("Exponential::exp(expr('a3*a3*a3*x+a2*a2*x+a1*x+a0', x,a0,a1,a2,a3),a[-1, -2, 0])")
     
-    w.var('x').setBins(1000, 'fft')
+#    w.var('x').setBins(1000, 'fft')
+    w.var('x').setBins(10000, "cache")
+    w.var('x').setMin("cache", 50.5)
+    w.var('x').setMax("cache", 130.5)
+    w.var('x').setRange("subrange",60,120)
 
     w.factory('FCONV::BWxCB(x,bw,singleCB)')
     w.factory('FCONV::BWxDCB(x,bw,doubleCB)')
@@ -100,9 +107,9 @@ def MakeFitPlotFromTree(tree, paraConfig, fitResult):
     pdf.paramOn(xframe, RooFit.Layout(0.17, 0.4, 0.9), RooFit.Format("NE", RooFit.FixedPrecision(4)))
 
     c1 = TCanvas("c1", "c1", 800, 800)
-    
+    c1.SetLogy()    
     dummy = TH1D("dummy","dummy",1,binInfo[1],binInfo[2])
-    dummy.SetMinimum(0)
+    dummy.SetMinimum(0.1)
     yMax1 = HIST1.GetMaximum()*1.5
     yMax = yMax1
     dummy.SetMaximum(yMax)

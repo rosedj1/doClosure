@@ -29,6 +29,28 @@
 #include <TH2.h>
 #include <TStyle.h>
 #include <math.h>
+#include <TFile.h>
+void MySelector::SetTag(TString fs) {fs_=fs;}
+
+double MySelector::pTCorr(double pT, double eta, TString fs, TString tag){
+
+// TFile* fLUT = TFile::Open("tmpLUTs/LUT_"+fs+"_"+tag+".root","READ");
+// TFile* fLUT = TFile::Open("LUT_"+fs+".root");
+
+// TH2F* LUT = (TH2F*) fLUT->Get(fs);
+ TAxis* x_pTaxis = LUT_->GetXaxis(); TAxis* y_etaaxis = LUT_->GetYaxis();
+ double maxPt = x_pTaxis->GetXmax(); double minPt = x_pTaxis->GetXmin();
+
+ int xbin = x_pTaxis->FindFixBin(pT);
+ int ybin = y_etaaxis->FindFixBin(abs(eta));
+
+ double scale = 1.0;
+ if(pT>minPt && pT<maxPt){  scale = LUT_->GetBinContent(xbin,ybin);  }
+
+ return scale;
+
+}
+
 
 void MySelector::SetPtErrCorrection(TString fs, double pTErrCorr_eta1, double pTErrCorr_eta2, double pTErrCorr_eta3, double pTErrCorr_eta4) {
 
@@ -54,6 +76,10 @@ void MySelector::Begin(TTree * /*tree*/)
    // The tree argument is deprecated (on PROOF 0 is passed).
 
    TString option = GetOption();
+//   fLUT_ = TFile::Open("tmpLUTs/LUT_"+fs_+"_"+tag_+".root","READ");
+   fLUT_ = TFile::Open("LUT_"+fs_+".root");
+
+   LUT_ = (TH2F*) fLUT_->Get(fs_);
 }
 
 void MySelector::SlaveBegin(TTree * /*tree*/)
@@ -100,7 +126,10 @@ Bool_t MySelector::Process(Long64_t entry)
 
    double pterr1_corr = *pterr1; double pterr2_corr = *pterr2;
 
+   pterr1_corr *= pTCorr(*pT1, *eta1, fs_, tag_);
+   pterr2_corr *= pTCorr(*pT2, *eta2, fs_, tag_);
 
+/*   
 // mu
    if (fs_ == "2mu") {
 
@@ -128,7 +157,7 @@ Bool_t MySelector::Process(Long64_t entry)
       if (abs(*eta2)>2) pterr2_corr *= pTErrCorr_eta4_;
 
       }
-
+*/
    lep1p.SetPtEtaPhiM(*pT1+pterr1_corr,double(*eta1),double(*phi1),*m1);
    lep2p.SetPtEtaPhiM(*pT2+pterr2_corr,double(*eta2),double(*phi2),*m2);
 

@@ -43,8 +43,8 @@ doubleCB_n2 = args.doubleCB_tail[3]
 
 channelCut = {'4mu':'(finalState == 1)', '4e':'(finalState == 2)', '2e2mu':'(finalState > 2)'}
 
-#cut = "passedFullSelection && mass4l > 105 && mass4l < 140 && "
-cut = "nFSRPhotons == 0 && passedFullSelection && mass4l > 105 && mass4l < 140 && "
+cut = "passedFullSelection && mass4l > 105 && mass4l < 140 && "
+#cut = "nFSRPhotons == 0 && passedFullSelection && mass4l > 105 && mass4l < 140 && "
 
 #       mass4lErr/mass4l > " + str(m4lErr_min) + " && \
 #       mass4lErr/mass4l < " + str(m4lErr_max)
@@ -55,6 +55,7 @@ if args.doREFIT:
    cut += "mass4lErrREFIT/mass4lREFIT > " + str(m4lErr_min) + " &&  mass4lErrREFIT/mass4lREFIT < " + str(m4lErr_max)   
 else:
    cut += "mass4lErr/mass4l > " + str(m4lErr_min) + " &&  mass4lErr/mass4l < " + str(m4lErr_max)
+#   cut += "mass4lErr > " + str(m4lErr_min) + " &&  mass4lErr < " + str(m4lErr_max)
 
 cut += ' && ' + channelCut[args.channel]
 

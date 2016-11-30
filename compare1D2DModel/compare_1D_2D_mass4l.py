@@ -21,13 +21,13 @@ def ParseOption():
 
 args=ParseOption()
 
-binInfo = [100, 105, 140]
+binInfo = [105, 105,140]
 CMS_zz4l_mass = RooRealVar('CMS_zz4l_mass','CMS_zz4l_mass',104,140)
 CMS_zz4l_massErr = RooRealVar('CMS_zz4l_massErr','CMS_zz4l_massErr',0,0.1)
 #w = RooWorkspace("w")
 
 for m4lType in ['reco', 'refit']:
-    for fs in ['4mu']:#'4e', '4mu', '2e2mu']:
+    for fs in ['4e','2e2mu']:#'4e', '4mu', '2e2mu']:
 
 #        path = '/raid/raid9/mhl/HZZ4L_Run2/HZZ4L/PereventMassErrCorr_2016ICHEP/Mass_ICHEP2016/CreateDatacards_Moriond2016_JES_v0_dev_ZJetsOn_10fb_1_ggHOnly_relativeError/'
 #        path = '/raid/raid9/mhl/HZZ4L_Run2/HZZ4L/PereventMassErrCorr_2016ICHEP/getCorrection_ICHEP2016/toyStudy_test/STEP4_getMass_asimov_runOnIHEPA/'
@@ -89,7 +89,7 @@ for m4lType in ['reco', 'refit']:
         mass4lFrame.Draw()
         #set axis of upper pad
 #        mass4lFrame.GetYaxis().SetLabelSize(0.)
-        axis = TGaxis( 105, 0, 105, hist_m4l1D.GetMaximum()*1.5, 0, hist_m4l1D.GetMaximum(), 510, "")
+#        axis = TGaxis( 105, 0, 105, hist_m4l1D.GetMaximum()*1.5, 0, hist_m4l1D.GetMaximum(), 510, "")
 #        axis.Draw()
         #legend
         legend = ROOT.TLegend(0.7,0.75,0.95,0.9)

@@ -48,7 +48,7 @@ for i in range(len(sigma2l_fit)):
 ave = []
 for i in range(len(x1)):
   print x2[i], x1[i], y[i], 1-x2[i]/y[i]
-  ave.append(1-x2[i]/y[i])
+  ave.append(abs(1-x2[i]/y[i]))
 print np.average(ave)
 
 
