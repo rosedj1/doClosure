@@ -1,1 +1,1 @@
-./doCompare1D2D.sh "CreateDatacards_test_2015MC_4mu_corrMuPtScale_8TeV_GENMZ1Para_sigmaInModelFromEventsNOFSR/" "/home/mhl/public_html/2016/20161122_mass/run1MC_genmz1Shape/sigmaInModelFromEventWithoutFSR/"
+./doCompare1D2D.sh "CreateDatacards_test_allFinalStates_v1" "/home/mhl/public_html/2016/20161125_mass/"

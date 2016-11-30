@@ -68,10 +68,10 @@ def MakeFitPlotFromTree(tree, paraConfig, fitResult):
 
     w.factory('DoubleCB::doubleCB(x[' + str(xmin) + ',' + str(xmax) + '], \
                                   meanDCB[125,124,126], sigmaDCB[0.1,0,10], \
-                                  alphaDCB['+str(doubleCB_a1)+'], nDCB['+str(doubleCB_n1)+'], alpha2['+str(doubleCB_a2)+'], n2['+str(doubleCB_n2)+'])')
+                                  alphaDCB[1,0,10], nDCB[1,0,10], alpha2[1,0,10], n2[1,0,10])')
+#                                  alphaDCB['+str(doubleCB_a1)+'], nDCB['+str(doubleCB_n1)+'], alpha2['+str(doubleCB_a2)+'], n2['+str(doubleCB_n2)+'])')
+#                                  alphaDCB[1,0,10], nDCB[1,0,10], alpha2[1,0,10], n2[1,0,10])')
  
-#                                  alphaDCB[1.314], nDCB[2], alpha2[1.920], n2[2.825])')
-#                                  alphaDCB[1.255], nDCB[2.112], alpha2[1.851], n2[3.092])')
 
     w.factory('CBShape::singleCB(x[' + str(xmin) + ',' + str(xmax) + '], \
                                 meanCB[0,-1.5,1.5], sigmaCB[0.1,0,10], alphaCB[5,1,10], nCB[5,0,30])')
@@ -104,9 +104,9 @@ def MakeFitPlotFromTree(tree, paraConfig, fitResult):
     
     c1 = TCanvas("c1", "c1", 800, 800)
 
-    c1.SetLogy()    
+#    c1.SetLogy()    
     dummy = TH1D("dummy","dummy",1,binInfo[1],binInfo[2])
-    dummy.SetMinimum(0.1)
+    dummy.SetMinimum(0)
     yMax1 = HIST1.GetMaximum()*1.5
     yMax = yMax1
     dummy.SetMaximum(yMax)

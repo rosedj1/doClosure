@@ -59,11 +59,15 @@ public :
    double massZErr_sum_rel_corr;
 
    TString fs_;
+   TString tag_;
    double pTErrCorr_eta1_;
    double pTErrCorr_eta2_;
    double pTErrCorr_eta3_;
    double pTErrCorr_eta4_;
    vector<double> pTErrCorr_;
+
+   TFile* fLUT_;
+   TH2F* LUT_; 
 
    MySelector(TTree * /*tree*/ =0):
      nEvents(0), massZErr_sum(0), massZErr_sum_rel(0), massZErr_sum_corr(0), massZErr_sum_rel_corr(0) { }
@@ -85,7 +89,8 @@ public :
 
    void SetPtErrCorrection(TString fs, double pTErrCorr_eta1, double pTErrCorr_eta2, double pTErrCorr_eta3, double pTErrCorr_eta4);
    void SetPtErrCorrection(TString fs, vector<double> pTErrCorr);
- 
+   double pTCorr(double pT, double eta, TString fs, TString tag);
+   void SetTag(TString fs); 
    ClassDef(MySelector,0);
 
 };
