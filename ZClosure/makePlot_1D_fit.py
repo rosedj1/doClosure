@@ -41,6 +41,10 @@ def MakeFitPlotFromTree(tree, paraConfig, fitResult):
     Z_width = paraConfig['z_width'] 
     singleCB_a = paraConfig['singleCB_a']
     singleCB_n = paraConfig['singleCB_n']
+#    doubleCB_a1 = paraConfig['doubleCB_a1']
+#    doubleCB_n1 = paraConfig['doubleCB_n1']
+#    doubleCB_a2 = paraConfig['doubleCB_a2']
+#    doubleCB_n2 = paraConfig['doubleCB_n2']
 
     #f1 = TFile(rootPath1 + rootfile1, 'READ')
     #t1 = f1.Get(tree1)
@@ -65,30 +69,32 @@ def MakeFitPlotFromTree(tree, paraConfig, fitResult):
     w.factory('BreitWigner::bw(x[' + str(xmin) + ',' + str(xmax) + '],meanBW[91.2],sigmaBW['+str(Z_width)+'])')#meanBW[91.2, 90, 92],sigmaBW[2.4,2,3])')
 #    w.factory('BreitWigner::bw(x[' + str(xmin) + ',' + str(xmax) + '],meanBW[91.2, 90, 92],sigmaBW[2.4,2,3])')
 
+#   w.factory('DoubleCB::doubleCB(x[' + str(xmin) + ',' + str(xmax) + '], \
+#                                 meanDCB[125,124,126], sigmaDCB[0.5,0.1,10], \
+#                                 alphaDCB[1.1,0,50], nDCB[1,0,50], alpha2[1.1,0,50], n2[1,0,50])')
     w.factory('DoubleCB::doubleCB(x[' + str(xmin) + ',' + str(xmax) + '], \
-                                  meanDCB[125,124,126], sigmaDCB[0.5,0.1,10], \
-                                  alphaDCB[1.1,0,50], nDCB[1,0,50], alpha2[1.1,0,50], n2[1,0,50])')
+                              meanDCB[0,-1,1], sigmaDCB[1, 0, 5], \
+                              alphaDCB[1,0,10], nDCB[1,0,10], alpha2[1,0,10], n2[1,0,50])')
+#                              alphaDCB['+str(doubleCB_a1)+'], nDCB[1,0,50], alpha2['+str(doubleCB_a2)+'], n2[1,0,50])')
+#                              alphaDCB[1,0,10], nDCB['+str(doubleCB_n1)+'], alpha2[1,0,10], n2['+str(doubleCB_n2)+'])')
+#                              alphaDCB['+str(doubleCB_a1)+'], nDCB['+str(doubleCB_n1)+'], alpha2['+str(doubleCB_a2)+'], n2['+str(doubleCB_n2)+'])')
+#                              alphaDCB[1,0,10], nDCB[1,0,10], alpha2[1,0,10], n2[1,0,50])')
 
-#    w.factory('CBShape::singleCB(x[' + str(xmin) + ',' + str(xmax) + '], \
-#                                meanCB[0, -1.5, 1.5], sigmaCB[0.5,0.1,10], alphaCB['+str(singleCB_a)+'], nCB['+str(singleCB_n)+'])')
     w.factory('CBShape::singleCB(x[' + str(xmin) + ',' + str(xmax) + '], \
-                                meanCB[0,-1.5,1.5], sigmaCB[1,0.1,10], alphaCB[1,0,10], nCB[1,0,10])')
+                                meanCB[0, -1.5, 1.5], sigmaCB[0.5,0.1,10], alphaCB['+str(singleCB_a)+'], nCB['+str(singleCB_n)+'])')
+#    w.factory('CBShape::singleCB(x[' + str(xmin) + ',' + str(xmax) + '], \
+#                                meanCB[0,-1.5,1.5], sigmaCB[1,0.1,10], alphaCB[1,0,10], nCB[1,0,10])')
 
     w.factory('Polynomial::poly3(x,{a0[1, -10,10],a1[0.1, -10,10],a2[0.1, -10,10],a3[1, -10,10]})')
 
 #    w.factory("Exponential::bkg(x, tau[-0.03])")#tau[0.1,-1,1])")
-    w.factory("Exponential::bkg(x, tau[0.1,-1,1])")
+    w.factory("Exponential::bkg(x, tau[0,-1,1])")
 
     w.factory("Exponential::exp(expr('a3*a3*a3*x+a2*a2*x+a1*x+a0', x,a0,a1,a2,a3),a[-1, -2, 0])")
     
-#    w.var('x').setBins(1000, 'fft')
-    w.var('x').setBins(10000, "cache")
-    w.var('x').setMin("cache", 50.5)
-    w.var('x').setMax("cache", 130.5)
-    w.var('x').setRange("subrange",60,120)
 
     w.factory('FCONV::BWxCB(x,bw,singleCB)')
-    w.factory('FCONV::BWxDCB(x,bw,doubleCB)')
+#    w.factory('FCONV::BWxDCB(x,bw,doubleCB)')
 
     w.factory('SUM:BWplusEXP(f1[0,1]*bw, exp)')
     w.factory('SUM:BWplusPOLY3(f1[0,1]*bw, poly3)')
@@ -107,7 +113,7 @@ def MakeFitPlotFromTree(tree, paraConfig, fitResult):
     pdf.paramOn(xframe, RooFit.Layout(0.17, 0.4, 0.9), RooFit.Format("NE", RooFit.FixedPrecision(4)))
 
     c1 = TCanvas("c1", "c1", 800, 800)
-    c1.SetLogy()    
+#    c1.SetLogy()    
     dummy = TH1D("dummy","dummy",1,binInfo[1],binInfo[2])
     dummy.SetMinimum(0.1)
     yMax1 = HIST1.GetMaximum()*1.5
@@ -143,5 +149,6 @@ def MakeFitPlotFromTree(tree, paraConfig, fitResult):
 
     #more optimal way is to save all variables in workspace in dictionary and pass to ouside
     fitResult['sigmaCB'] = w.var('sigmaCB').getVal()
-    fitResult['sigmaDCB'] = w.var('sigmaDCB').getVal()
-    
+#    fitResult['sigmaDCB'] = w.var('sigmaDCB').getVal()
+    fitResult['sigmaCB_err'] = w.var('sigmaCB').getError()
+   
