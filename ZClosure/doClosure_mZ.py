@@ -21,6 +21,7 @@ def ParseOption():
     parser.add_argument('--zWidth', dest='Z_width', type=float, help='Z width in MC or pdg value')
     parser.add_argument('--plotBinInfo', dest='binInfo', nargs='+', help='', type=int)#, required=True)
     parser.add_argument('--singleCB_tail',dest='singleCB_tail', nargs='+', help='', type=float)#, required=True)
+    parser.add_argument('--doubleCB_tail',dest='doubleCB_tail', nargs='+', help='', type=float)#, required=True)
     parser.add_argument('--pTErrCorrections', dest='pTErrCorrections', nargs='+', help='', type=float)#, required=True)
 
     args = parser.parse_args()
@@ -38,6 +39,10 @@ saveName = 'massZ_relmZErr_' + str(massZErr_rel_min) + '_' + str(massZErr_rel_ma
 binInfo = args.binInfo
 singleCB_a = args.singleCB_tail[0]
 singleCB_n = args.singleCB_tail[1]
+#doubleCB_a1 = args.doubleCB_tail[0]
+#doubleCB_n1 = args.doubleCB_tail[1]
+#doubleCB_a2 = args.doubleCB_tail[2]
+#doubleCB_n2 = args.doubleCB_tail[3]
 pTErrCorrections = args.pTErrCorrections
 
 cut = "massZ > " + str(binInfo[1]) + " && massZ < " + str(binInfo[2]) + " && \
@@ -56,13 +61,18 @@ plotParaConfig = \
 'saveName': saveName, #
 'latexNote1': str(massZErr_rel_min) + ' < #sigma_{2l}/m_{2l} < ' + str(massZErr_rel_max),
 'pdfName': 'model',
+#'pdfName': 'BWxDCB',
 'z_width': args.Z_width ,
 'singleCB_a': singleCB_a,
-'singleCB_n': singleCB_n
+'singleCB_n': singleCB_n,
+#'doubleCB_a1': doubleCB_a1,
+#'doubleCB_n1': doubleCB_n1,
+#'doubleCB_a2': doubleCB_a2,
+#'doubleCB_n2': doubleCB_n2
 }
 
 #initialize to-be-saved fitted parameter 
-fitResult = {'sigmaCB':0}
+fitResult = {'sigmaCB':0, 'sigmaDCB':0}
 
 myFile = TFile.Open(inputPath+inputFile,'READ')
 myTree = myFile.Get(treeName)
@@ -89,8 +99,9 @@ selector.SetTag(fs)
 myTree.Process(selector)
 
 ### should make following lines more clean ...
-sigma_m2l = [fitResult['sigmaCB'], selector.massZErr_sum/selector.nEvents,\
-                                 selector.massZErr_sum_corr/selector.nEvents]#,\
+sigma_m2l = [fitResult['sigmaCB'], fitResult['sigmaCB_err'],\
+             selector.massZErr_sum/selector.nEvents,\
+             selector.massZErr_sum_corr/selector.nEvents]#,\
 #                                 selector.massZErr_sum_rel/selector.nEvents,\
 #                                 selector.massZErr_sum_rel_corr/selector.nEvents]
 
@@ -100,5 +111,5 @@ sigma_m2l = [str(sigma_m2l[i]) for i in range(len(sigma_m2l))]
 
 with open(args.outtxtName,'a') as myfile:
 #     myfile.write(sigma_m2l[0] + ' ' + sigma_m2l[1] + ' ' + sigma_m2l[2] + ' ' + sigma_m2l[3] + ' ' + sigma_m2l[4] + '\n')
-     myfile.write(sigma_m2l[0] + ' ' + sigma_m2l[1] + ' ' + sigma_m2l[2] + '\n')
+     myfile.write(sigma_m2l[0] + ' ' + sigma_m2l[1] + ' ' + sigma_m2l[2] + ' ' + sigma_m2l[3] + '\n')
 

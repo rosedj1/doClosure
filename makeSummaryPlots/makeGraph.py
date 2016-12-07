@@ -22,28 +22,33 @@ def ParseOption():
 
 args=ParseOption()
 
-sigma2l_fit = []
-sigma2l_pred = []
-sigma2l_pred_corr = []
+sigma_fit = []
+sigma_fitErr = []
+sigma_pred = []
+sigma_pred_corr = []
 
 data = [line.strip() for line in open(args.intxt, 'r')]
 for i in range(1, len(data)):
 
     dataperline = data[i].split(' ')
-    sigma2l_fit.append(float(dataperline[0]))
-    sigma2l_pred.append(float(dataperline[1]))
+    sigma_fit.append(float(dataperline[0]))
+    sigma_fitErr.append(float(dataperline[1]))
+    sigma_pred.append(float(dataperline[2]))
     if args.doREFIT:
-       sigma2l_pred_corr.append(float(dataperline[3]))
+       sigma_pred_corr.append(float(dataperline[4]))
     else:
-       sigma2l_pred_corr.append(float(dataperline[2]))
+       sigma_pred_corr.append(float(dataperline[3]))
 
 
 y, x1, x2 = array('f'), array('f'), array('f')
+xErr,yErr = array('f'), array('f')
 
-for i in range(len(sigma2l_fit)):
-    y.append(sigma2l_fit[i])
-    x1.append(sigma2l_pred[i])
-    x2.append(sigma2l_pred_corr[i])
+for i in range(len(sigma_fit)):
+    y.append(sigma_fit[i])
+    yErr.append(sigma_fitErr[i])
+    x1.append(sigma_pred[i])
+    x2.append(sigma_pred_corr[i])
+    xErr.append(0)
 
 ave = []
 for i in range(len(x1)):
@@ -52,8 +57,8 @@ for i in range(len(x1)):
 print np.average(ave)
 
 
-gr1 = TGraph(len(y),x1,y)
-gr2 = TGraph(len(y),x2,y)
+gr1 = TGraphErrors(len(y),x1,y,xErr,yErr)
+gr2 = TGraphErrors(len(y),x2,y,xErr,yErr)
 
 c1 = TCanvas('c1', '', 800, 800)
 
@@ -70,18 +75,21 @@ dummy.GetYaxis().SetTitle('Measured #sigma_{'+args.measurement+'}')
 dummy.Draw()
 
 lineBoundDiagonal = TLine(0, 0, 5,5)
+#lineBoundDiagonal = TLine(0, 0, 10,10)#5,5)
 lineBoundDiagonal.SetLineStyle(kDashed)
 lineBoundDiagonal.Draw()
 lineBoundDiagonal_up = TLine(0, 0, 5/1.2,5)
+#lineBoundDiagonal_up = TLine(0, 0, 10/1.2,10)#5/1.2,5)
 lineBoundDiagonal_up.SetLineStyle(kDashed)
 lineBoundDiagonal_up.Draw()
 lineBoundDiagonal_down = TLine(0, 0, 5,5/1.2)
+#lineBoundDiagonal_down = TLine(0, 0, 10,10/1.2)#5,5/1.2)
 lineBoundDiagonal_down.SetLineStyle(kDashed)
 lineBoundDiagonal_down.Draw()
 
 if not args.doREFIT:
-   gr1.Draw('p')
-gr2.Draw('p same')
+   gr1.Draw('pe0')
+gr2.Draw('pe0 same')
 
 gr1.SetMarkerStyle(2)
 gr2.SetMarkerStyle(2)

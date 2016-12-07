@@ -67,10 +67,11 @@ def MakeFitPlotFromTree(tree, paraConfig, fitResult):
 #    w.factory('BreitWigner::bw(x[' + str(xmin) + ',' + str(xmax) + '],meanBW[91.2, 90, 92],sigmaBW[2.4,2,3])')
 
     w.factory('DoubleCB::doubleCB(x[' + str(xmin) + ',' + str(xmax) + '], \
-                                  meanDCB[125,124,126], sigmaDCB[0.1,0,10], \
-                                  alphaDCB[1,0,10], nDCB[1,0,10], alpha2[1,0,10], n2[1,0,10])')
+                                 meanDCB[125,124,126], sigmaDCB[0.5,0.1,10], \
+                                  alphaDCB[1,0,10], nDCB['+str(doubleCB_n1)+'], alpha2[1,0,10], n2['+str(doubleCB_n2)+'])')
+#                                  alphaDCB[1,0,50], nDCB['+str(doubleCB_n1)+'], alpha2[1,0,50], n2['+str(doubleCB_n2)+'])')
 #                                  alphaDCB['+str(doubleCB_a1)+'], nDCB['+str(doubleCB_n1)+'], alpha2['+str(doubleCB_a2)+'], n2['+str(doubleCB_n2)+'])')
-#                                  alphaDCB[1,0,10], nDCB[1,0,10], alpha2[1,0,10], n2[1,0,10])')
+#                                  alphaDCB[1,0,50], nDCB[1,0,50], alpha2[1,0,50], n2[1,0,50])')
  
 
     w.factory('CBShape::singleCB(x[' + str(xmin) + ',' + str(xmax) + '], \
@@ -141,4 +142,14 @@ def MakeFitPlotFromTree(tree, paraConfig, fitResult):
     #more optimal way is to save all variables in workspace in dictionary and pass to ouside
     fitResult['sigmaCB'] = w.var('sigmaCB').getVal()
     fitResult['sigmaDCB'] = w.var('sigmaDCB').getVal()
+    fitResult['sigmaDCB_err'] = w.var('sigmaDCB').getError()
+    fitResult['alphaDCB'] = w.var('alphaDCB').getVal()
+    fitResult['alphaDCB_err'] = w.var('alphaDCB').getError()
+    fitResult['nDCB'] = w.var('nDCB').getVal()
+    fitResult['nDCB_err'] = w.var('nDCB').getError()
+    fitResult['alpha2'] = w.var('alpha2').getVal()
+    fitResult['alpha2_err'] = w.var('alpha2').getError()
+    fitResult['n2'] = w.var('n2').getVal()
+    fitResult['n2_err'] = w.var('n2').getError()
+    
     

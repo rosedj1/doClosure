@@ -114,9 +114,10 @@ myTree.Process(selector)
 #corred m4l = selector.mass4lErr
 
 ### should make following lines more clean ...
-sigma_m4l = [fitResult['sigmaDCB'], selector.mass4lErr_uncorr_sum/selector.nEvents,\
-                                    selector.mass4lErr_corr_sum/selector.nEvents, \
-                                    selector.mass4lErrREFIT_corr_sum/selector.nEvents]#,\
+sigma_m4l = [fitResult['sigmaDCB'], fitResult['sigmaDCB_err'], \
+             selector.mass4lErr_uncorr_sum/selector.nEvents,\
+             selector.mass4lErr_corr_sum/selector.nEvents, \
+             selector.mass4lErrREFIT_corr_sum/selector.nEvents]#,\
 #                                 selector.massZErr_sum_rel/selector.nEvents,\
 #                                 selector.massZErr_sum_rel_corr/selector.nEvents]
 print ''
@@ -124,6 +125,9 @@ print sigma_m4l
 sigma_m4l = [str(sigma_m4l[i]) for i in range(len(sigma_m4l))]
 
 with open(args.outtxtName,'a') as myfile:
-     myfile.write(sigma_m4l[0] + ' ' + sigma_m4l[1] + ' ' + sigma_m4l[2] + ' ' + sigma_m4l[3] + '\n')
-#     myfile.write(sigma_m2l[0] + ' ' + sigma_m2l[1] + ' ' + sigma_m2l[2] + ' ' + sigma_m2l[3] + ' ' + sigma_m2l[4] + '\n')
+     myfile.write(sigma_m4l[0] + ' ' + sigma_m4l[1] + ' ' + sigma_m4l[2] + ' ' + sigma_m4l[3] + ' ' + sigma_m4l[4] + '\n')
+with open(args.outtxtName+'para.txt','a') as myfile:
+   if args.max_m4lErr < 1:
+     myfile.write(str(args.min_m4lErr) + ' ' + str(args.max_m4lErr) + ' ' + str(fitResult['alphaDCB']) + ' ' + str(fitResult['nDCB']) + ' ' + str(fitResult['alpha2']) + ' ' + str(fitResult['n2']) + '\n')
+     myfile.write(str(args.min_m4lErr) + ' ' + str(args.max_m4lErr) + ' ' + str(fitResult['alphaDCB_err']) + ' ' + str(fitResult['nDCB_err']) + ' ' + str(fitResult['alpha2_err']) + ' ' + str(fitResult['n2_err']) + '\n')
 
