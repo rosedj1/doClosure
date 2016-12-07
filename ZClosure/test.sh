@@ -1,4 +1,4 @@
-plotpath="/home/mhl/public_html/2016/20161206_mass/fitmassZ/"
+plotpath="/home/mhl/public_html/2016/20161207_mass/scratch_fitmassZ/"
 
 cd ../makeSummaryPlots;
 ./makeGraph.sh 2e $plotpath

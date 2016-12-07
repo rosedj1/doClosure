@@ -126,8 +126,27 @@ Bool_t MySelector::Process(Long64_t entry)
 
    double pterr1_corr = *pterr1; double pterr2_corr = *pterr2;
 
-   pterr1_corr *= pTCorr(*pT1, *eta1, fs_, tag_);
-   pterr2_corr *= pTCorr(*pT2, *eta2, fs_, tag_);
+   if (*lep1_ecalDriven) {
+
+      pterr1_corr *= pTCorr(*pT1, *eta1, fs_, tag_);
+
+      } else {
+
+             if (abs(*eta1) < 1.44) pterr1_corr *= 2.44838;
+             if (abs(*eta1) > 1.44 && abs(*eta1) < 2.5) pterr1_corr *= 3.27358;
+
+             }
+
+   if (*lep2_ecalDriven) {
+
+      pterr2_corr *= pTCorr(*pT2, *eta2, fs_, tag_);
+
+      } else {
+
+             if (abs(*eta2) < 1.44) pterr2_corr *= 2.44838;
+             if (abs(*eta2) > 1.44 && abs(*eta2) < 2.5) pterr2_corr *= 3.27358;
+
+             }
 
 /*   
 // mu

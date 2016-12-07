@@ -38,6 +38,9 @@ public :
    TTreeReaderValue<Double_t> m2 = {fReader, "m2"};
    TTreeReaderValue<Double_t> pterr1 = {fReader, "pterr1"};
    TTreeReaderValue<Double_t> pterr2 = {fReader, "pterr2"};
+   TTreeReaderValue<Int_t> lep1_ecalDriven = {fReader, "lep1_ecalDriven"};
+   TTreeReaderValue<Int_t> lep2_ecalDriven = {fReader, "lep2_ecalDriven"};
+
 /*   TTreeReaderValue<Double_t> pterr1old = {fReader, "pterr1old"};
    TTreeReaderValue<Double_t> pterr2old = {fReader, "pterr2old"};
    TTreeReaderValue<Double_t> Met = {fReader, "Met"};
