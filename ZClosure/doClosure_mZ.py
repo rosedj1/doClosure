@@ -91,9 +91,9 @@ makePlot_1D_fit.MakeFitPlotFromTree(myTree, plotParaConfig, fitResult)
 
 #print fitResult
 selector = TSelector.GetSelector("MySelector.C")
-tag = str(massZErr_rel_min) + '_' + str(massZErr_rel_max)
+#tag = str(massZErr_rel_min) + '_' + str(massZErr_rel_max)
 fs = args.fs
-call('cp LUT_' + fs + '.root tmpLUTs/LUT_' + fs + '_' + tag + '.root', shell=True)
+#call('cp LUT_' + fs + '.root tmpLUTs/LUT_' + fs + '_' + tag + '.root', shell=True)
 selector.SetTag(fs)
 #selector.SetPtErrCorrection(args.fs, pTErrCorrections[0], pTErrCorrections[1], pTErrCorrections[2], pTErrCorrections[3])
 myTree.Process(selector)

@@ -57,8 +57,8 @@ doubleCB_tail_2e2mu_refit = '0.99254 2.9679 1.4789 4.7435'
 
 #doAllClosure('4mu', filename, plotpath, doubleCB_tail_4mu_reco, False)
 #doAllClosure('4mu', filename, plotpath, doubleCB_tail_4mu_refit, True)
-#doAllClosure('4e', filename, plotpath, doubleCB_tail_4e_reco, False)
-#doAllClosure('4e', filename, plotpath, doubleCB_tail_4e_refit, True)
+doAllClosure('4e', filename, plotpath, doubleCB_tail_4e_reco, False)
+doAllClosure('4e', filename, plotpath, doubleCB_tail_4e_refit, True)
 doAllClosure('2e2mu', filename, plotpath, doubleCB_tail_2e2mu_reco, False)
 doAllClosure('2e2mu', filename, plotpath, doubleCB_tail_2e2mu_refit, True)
 

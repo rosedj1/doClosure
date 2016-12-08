@@ -7,7 +7,11 @@ def doAllClosure(fs, plotPath, Z_width, plotBinInfo, singleCB_tail, pTErrCorrect
     nDiv = 8
     for i in range(nDiv):
        massZErr_rel_bins.append(massZErr_rel_bins[-1]+(0.03-0.008)/nDiv)
+    massZErr_rel_bins.append(0.04)
     massZErr_rel_bins.append(0.1)
+#    massZErr_rel_bins.append(1)
+
+
 
     '''
     massZErr_rel_bins = [0,1]
@@ -43,7 +47,7 @@ def doAllClosure(fs, plotPath, Z_width, plotBinInfo, singleCB_tail, pTErrCorrect
 
 #plotBinInfo = '100 80 100'
 plotBinInfo = '300 60 120'
-plotpath = '/home/mhl/public_html/2016/20161207_mass/scratch_fitmassZ/'
+plotpath = '/home/mhl/public_html/2016/20161207_electronCorr/fitmassZ/'
 
 singleCB_tail_mu = '1.583 1.086' #first is alpha, second is n of singleCB
 singleCB_tail_e = '1.1443 2.5964' #first is alpha, second is n of singleCB

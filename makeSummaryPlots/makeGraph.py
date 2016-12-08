@@ -51,6 +51,7 @@ for i in range(len(sigma_fit)):
     xErr.append(0)
 
 ave = []
+print 'corr, uncorr, measure'
 for i in range(len(x1)):
   print x2[i], x1[i], y[i], 1-x2[i]/y[i]
   ave.append(abs(1-x2[i]/y[i]))

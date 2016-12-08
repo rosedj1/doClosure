@@ -32,12 +32,31 @@
 #include <TFile.h>
 void MySelector::SetTag(TString fs) {fs_=fs;}
 
-double MySelector::pTCorr(double pT, double eta, TString fs, TString tag){
 
-// TFile* fLUT = TFile::Open("tmpLUTs/LUT_"+fs+"_"+tag+".root","READ");
-// TFile* fLUT = TFile::Open("LUT_"+fs+".root");
+double MySelector::ApplyCorr(double pT, double eta, double pTErr, int ecalDriven, TString fs) {
 
-// TH2F* LUT = (TH2F*) fLUT->Get(fs);
+ double scale = 1;
+
+ if (ecalDriven) {
+
+    if (abs(eta) < 1 && pTErr/pT < 0.03 ) scale = pTCorr(pT,eta,fs,0); // LUT_1 is for |eta| < 1 && pTErr/pT < 0.03
+    if (abs(eta) < 1 && pTErr/pT > 0.03 ) scale = 0.9584;
+    if (abs(eta) >= 1 && pTErr/pT < 0.07 ) scale = pTCorr(pT,eta,fs,1); // LUT_2 is for |eta| > 1 && pTErr/pT < 0.06
+    if (abs(eta) >= 1 && pTErr/pT > 0.07 ) scale = 0.76;
+
+    } else {
+
+           scale = pTCorr(pT,eta,fs,2); //LUT_3 is for non ecal driven electron
+
+           }
+
+    return scale;
+}
+
+double MySelector::pTCorr(double pT, double eta, TString fs, int tag){
+
+ TH2F* LUT_ = LUTs_[tag];
+
  TAxis* x_pTaxis = LUT_->GetXaxis(); TAxis* y_etaaxis = LUT_->GetYaxis();
  double maxPt = x_pTaxis->GetXmax(); double minPt = x_pTaxis->GetXmin();
 
@@ -47,6 +66,8 @@ double MySelector::pTCorr(double pT, double eta, TString fs, TString tag){
  double scale = 1.0;
  if(pT>minPt && pT<maxPt){  scale = LUT_->GetBinContent(xbin,ybin);  }
 
+// if(tag == 1 && pT>minPt && pT<maxPt) cout << "xbin: " << xbin << ", ybin: " << ybin << ", scale: " << LUT_->GetBinContent(xbin,ybin) << endl;
+// if (tag==1) cout << LUT_->GetXaxis()->GetNbins() << ", " << LUT_->GetYaxis()->GetNbins() << endl;
  return scale;
 
 }
@@ -76,10 +97,20 @@ void MySelector::Begin(TTree * /*tree*/)
    // The tree argument is deprecated (on PROOF 0 is passed).
 
    TString option = GetOption();
-//   fLUT_ = TFile::Open("tmpLUTs/LUT_"+fs_+"_"+tag_+".root","READ");
-   fLUT_ = TFile::Open("LUT_"+fs_+".root");
 
-   LUT_ = (TH2F*) fLUT_->Get(fs_);
+   fLUT_1_ = TFile::Open("LUT_"+fs_+"_1.root");
+   LUT_1_ = (TH2F*) fLUT_1_->Get(fs_);
+
+   fLUT_2_ = TFile::Open("LUT_"+fs_+"_2.root");
+   LUT_2_ = (TH2F*) fLUT_2_->Get(fs_);
+
+   fLUT_3_ = TFile::Open("LUT_"+fs_+"_3.root");
+   LUT_3_ = (TH2F*) fLUT_3_->Get(fs_);
+
+   LUTs_[0] = LUT_1_;
+   LUTs_[1] = LUT_2_;
+   LUTs_[2] = LUT_3_;
+
 }
 
 void MySelector::SlaveBegin(TTree * /*tree*/)
@@ -112,6 +143,8 @@ Bool_t MySelector::Process(Long64_t entry)
 
    fReader.SetEntry(entry);
 
+//   if (nEvents > 100) return kTRUE;
+
    TLorentzVector lep1, lep2;
    lep1.SetPtEtaPhiM(*pT1,double(*eta1),double(*phi1),*m1);
    lep2.SetPtEtaPhiM(*pT2,double(*eta2),double(*phi2),*m2);
@@ -126,27 +159,58 @@ Bool_t MySelector::Process(Long64_t entry)
 
    double pterr1_corr = *pterr1; double pterr2_corr = *pterr2;
 
-   if (*lep1_ecalDriven) {
+/*
+   if (fs_ == "2mu") {
 
       pterr1_corr *= pTCorr(*pT1, *eta1, fs_, tag_);
+      pterr2_corr *= pTCorr(*pT2, *eta2, fs_, tag_);
+
+      }
+*/
+
+   if (fs_ == "2e") {
+
+      pterr1_corr *= ApplyCorr(*pT1, *eta1, *pterr1, *lep1_ecalDriven, fs_);   
+      pterr2_corr *= ApplyCorr(*pT2, *eta2, *pterr2, *lep2_ecalDriven, fs_);                    
+
+      }
+   
+/*
+   if (*lep1_ecalDriven) {
+
+      if ((*pterr1)/(*pT1) < 0.06) {
+
+         pterr1_corr *= pTCorr(*pT1, *eta1, fs_, tag_);
+
+         } else {pterr1_corr *= 0.94;}
 
       } else {
 
              if (abs(*eta1) < 1.44) pterr1_corr *= 2.44838;
-             if (abs(*eta1) > 1.44 && abs(*eta1) < 2.5) pterr1_corr *= 3.27358;
+             if (abs(*eta1) > 1.44 && abs(*eta1) < 1.6) pterr1_corr *= 4;
+             if (abs(*eta1) > 1.6 && abs(*eta1) < 2) pterr1_corr *= 2.55443;
+             if (abs(*eta1) > 2 && abs(*eta1) < 2.5) pterr1_corr *= 1.95906;
 
              }
 
    if (*lep2_ecalDriven) {
 
-      pterr2_corr *= pTCorr(*pT2, *eta2, fs_, tag_);
+      if ((*pterr2)/(*pT2) < 0.06) {
+
+         pterr2_corr *= pTCorr(*pT2, *eta2, fs_, tag_);
+
+         } else {pterr2_corr *= 0.94;}
 
       } else {
 
              if (abs(*eta2) < 1.44) pterr2_corr *= 2.44838;
-             if (abs(*eta2) > 1.44 && abs(*eta2) < 2.5) pterr2_corr *= 3.27358;
+             if (abs(*eta1) > 1.44 && abs(*eta1) < 1.6) pterr1_corr *= 4;
+             if (abs(*eta1) > 1.6 && abs(*eta1) < 2) pterr1_corr *= 2.55443;
+             if (abs(*eta1) > 2 && abs(*eta1) < 2.5) pterr1_corr *= 1.95906;
 
              }
+
+*/
 
 /*   
 // mu
