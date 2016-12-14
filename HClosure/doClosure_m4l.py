@@ -128,6 +128,6 @@ with open(args.outtxtName,'a') as myfile:
      myfile.write(sigma_m4l[0] + ' ' + sigma_m4l[1] + ' ' + sigma_m4l[2] + ' ' + sigma_m4l[3] + ' ' + sigma_m4l[4] + '\n')
 with open(args.outtxtName+'para.txt','a') as myfile:
    if args.max_m4lErr < 1:
-     myfile.write(str(args.min_m4lErr) + ' ' + str(args.max_m4lErr) + ' ' + str(fitResult['alphaDCB']) + ' ' + str(fitResult['nDCB']) + ' ' + str(fitResult['alpha2']) + ' ' + str(fitResult['n2']) + '\n')
-     myfile.write(str(args.min_m4lErr) + ' ' + str(args.max_m4lErr) + ' ' + str(fitResult['alphaDCB_err']) + ' ' + str(fitResult['nDCB_err']) + ' ' + str(fitResult['alpha2_err']) + ' ' + str(fitResult['n2_err']) + '\n')
+     myfile.write(str(args.min_m4lErr) + ' ' + str(args.max_m4lErr) + ' ' + str(fitResult['alphaDCB']) + ' ' + str(fitResult['nDCB']) + ' ' + str(fitResult['alpha2']) + ' ' + str(fitResult['n2']) + ' ' + str(fitResult['meanDCB']) +'\n')
+     myfile.write(str(args.min_m4lErr) + ' ' + str(args.max_m4lErr) + ' ' + str(fitResult['alphaDCB_err']) + ' ' + str(fitResult['nDCB_err']) + ' ' + str(fitResult['alpha2_err']) + ' ' + str(fitResult['n2_err']) + ' ' + str(fitResult['meanDCB_err']) +'\n')
 

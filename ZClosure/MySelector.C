@@ -98,18 +98,22 @@ void MySelector::Begin(TTree * /*tree*/)
 
    TString option = GetOption();
 
-   fLUT_1_ = TFile::Open("LUT_"+fs_+"_1.root");
-   LUT_1_ = (TH2F*) fLUT_1_->Get(fs_);
+   if (fs_ == "2e") {
 
-   fLUT_2_ = TFile::Open("LUT_"+fs_+"_2.root");
-   LUT_2_ = (TH2F*) fLUT_2_->Get(fs_);
+      fLUT_1_ = TFile::Open("LUT_"+fs_+"_1.root");
+      LUT_1_ = (TH2F*) fLUT_1_->Get(fs_);
 
-   fLUT_3_ = TFile::Open("LUT_"+fs_+"_3.root");
-   LUT_3_ = (TH2F*) fLUT_3_->Get(fs_);
+      fLUT_2_ = TFile::Open("LUT_"+fs_+"_2.root");
+      LUT_2_ = (TH2F*) fLUT_2_->Get(fs_);
 
-   LUTs_[0] = LUT_1_;
-   LUTs_[1] = LUT_2_;
-   LUTs_[2] = LUT_3_;
+      fLUT_3_ = TFile::Open("LUT_"+fs_+"_3.root");
+      LUT_3_ = (TH2F*) fLUT_3_->Get(fs_);
+
+      LUTs_[0] = LUT_1_;
+      LUTs_[1] = LUT_2_;
+      LUTs_[2] = LUT_3_;
+
+      }
 
 }
 
@@ -159,14 +163,14 @@ Bool_t MySelector::Process(Long64_t entry)
 
    double pterr1_corr = *pterr1; double pterr2_corr = *pterr2;
 
-/*
+
    if (fs_ == "2mu") {
 
       pterr1_corr *= pTCorr(*pT1, *eta1, fs_, tag_);
       pterr2_corr *= pTCorr(*pT2, *eta2, fs_, tag_);
 
       }
-*/
+
 
    if (fs_ == "2e") {
 

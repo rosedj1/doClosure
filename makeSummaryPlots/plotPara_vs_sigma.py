@@ -23,6 +23,9 @@ def makePlot(fileName, index, paraName,m4lType):
         dummy.SetMinimum(0)
     if 'alpha' in paraName:
         yMax = 3
+    if 'mean' in paraName:
+        yMax = 126
+        dummy.SetMinimum(123.5)
     dummy.SetMaximum(yMax)
     dummy.SetLineColor(0)
     dummy.SetMarkerColor(0)
@@ -36,26 +39,41 @@ def makePlot(fileName, index, paraName,m4lType):
     gr.Fit('pol1')
     gr.Draw('p same')
 
-    c.SaveAs('/home/mhl/public_html/2016/20161207_mass/scratch_fitmassH/' + paraName + '_' + m4lType + '.png')
+    c.SaveAs('/home/mhl/public_html/2016/20161207_electronCorr/tailParas/' + paraName + '_' + m4lType + '.png')
 
 makePlot("sigma_m2e2mu_reco.txtpara.txt", 2, 'alphaL', '2e2mu_reco')
 makePlot("sigma_m2e2mu_reco.txtpara.txt", 3, 'nL', '2e2mu_reco')
 makePlot("sigma_m2e2mu_reco.txtpara.txt", 4, 'alphaR', '2e2mu_reco')
 makePlot("sigma_m2e2mu_reco.txtpara.txt", 5, 'nR', '2e2mu_reco')
+makePlot("sigma_m2e2mu_reco.txtpara.txt", 6, 'meanDCB', '2e2mu_reco')
 
 makePlot("sigma_m2e2mu_refit.txtpara.txt", 2, 'alphaL', '2e2mu_refit')
 makePlot("sigma_m2e2mu_refit.txtpara.txt", 3, 'nL', '2e2mu_refit')
 makePlot("sigma_m2e2mu_refit.txtpara.txt", 4, 'alphaR', '2e2mu_refit')
 makePlot("sigma_m2e2mu_refit.txtpara.txt", 5, 'nR', '2e2mu_refit')
+makePlot("sigma_m2e2mu_refit.txtpara.txt", 6, 'meanDCB', '2e2mu_refit')
 
-#makePlot("sigma_m4e_reco.txtpara.txt", 2, 'alphaL', '4e_reco')
-#makePlot("sigma_m4e_reco.txtpara.txt", 3, 'nL', '4e_reco')
-#makePlot("sigma_m4e_reco.txtpara.txt", 4, 'alphaR', '4e_reco')
-#makePlot("sigma_m4e_reco.txtpara.txt", 5, 'nR', '4e_reco')
+makePlot("sigma_m4e_reco.txtpara.txt", 2, 'alphaL', '4e_reco')
+makePlot("sigma_m4e_reco.txtpara.txt", 3, 'nL', '4e_reco')
+makePlot("sigma_m4e_reco.txtpara.txt", 4, 'alphaR', '4e_reco')
+makePlot("sigma_m4e_reco.txtpara.txt", 5, 'nR', '4e_reco')
+makePlot("sigma_m4e_reco.txtpara.txt", 6, 'meanDCB', '4e_reco')
 
-#makePlot("sigma_m4e_refit.txtpara.txt", 2, 'alphaL', '4e_refit')
-#makePlot("sigma_m4e_refit.txtpara.txt", 3, 'nL', '4e_refit')
-#makePlot("sigma_m4e_refit.txtpara.txt", 4, 'alphaR', '4e_refit')
-#makePlot("sigma_m4e_refit.txtpara.txt", 5, 'nR', '4e_refit')
+makePlot("sigma_m4e_refit.txtpara.txt", 2, 'alphaL', '4e_refit')
+makePlot("sigma_m4e_refit.txtpara.txt", 3, 'nL', '4e_refit')
+makePlot("sigma_m4e_refit.txtpara.txt", 4, 'alphaR', '4e_refit')
+makePlot("sigma_m4e_refit.txtpara.txt", 5, 'nR', '4e_refit')
+makePlot("sigma_m4e_refit.txtpara.txt", 6, 'meanDCB', '4e_refit')
 
+makePlot("sigma_m4mu_reco.txtpara.txt", 2, 'alphaL', '4mu_reco')
+makePlot("sigma_m4mu_reco.txtpara.txt", 3, 'nL', '4mu_reco')
+makePlot("sigma_m4mu_reco.txtpara.txt", 4, 'alphaR', '4mu_reco')
+makePlot("sigma_m4mu_reco.txtpara.txt", 5, 'nR', '4mu_reco')
+makePlot("sigma_m4mu_reco.txtpara.txt", 6, 'meanDCB', '4mu_reco')
+
+makePlot("sigma_m4mu_refit.txtpara.txt", 2, 'alphaL', '4mu_refit')
+makePlot("sigma_m4mu_refit.txtpara.txt", 3, 'nL', '4mu_refit')
+makePlot("sigma_m4mu_refit.txtpara.txt", 4, 'alphaR', '4mu_refit')
+makePlot("sigma_m4mu_refit.txtpara.txt", 5, 'nR', '4mu_refit')
+makePlot("sigma_m4mu_refit.txtpara.txt", 6, 'meanDCB', '4mu_refit')
 
