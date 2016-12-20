@@ -3,6 +3,7 @@ import time
 
 def doAllClosure(fs, plotPath, Z_width, plotBinInfo, singleCB_tail, pTErrCorrections):
 
+    
     massZErr_rel_bins = [0,0.008]
     nDiv = 8
     for i in range(nDiv):
@@ -10,12 +11,12 @@ def doAllClosure(fs, plotPath, Z_width, plotBinInfo, singleCB_tail, pTErrCorrect
     massZErr_rel_bins.append(0.1)
 
     '''
-    massZErr_rel_bins = [0,1]
+    massZErr_rel_bins = [0,0.8]
     nDiv = 8
     for i in range(nDiv):
-        massZErr_rel_bins.append(massZErr_rel_bins[-1]+(4.0-1.0)/nDiv)
+        massZErr_rel_bins.append(massZErr_rel_bins[-1]+(3.5-0.8)/nDiv)
     massZErr_rel_bins.append(5)
-    '''
+    ''' 
 #    inputpath = '/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/outputRoot/DY_2015MC_kalman_v4_NOmassZCut_useLepFSRForMassZ/'
 #    inputpath = '/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/outputRoot/DY_2015MC_kalman_v4_NOmassZCut_addpTScaleCorrection/'
     inputpath = '/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/outputRoot/DY_2015MC_kalman_v4_NOmassZCut/'
@@ -43,7 +44,7 @@ def doAllClosure(fs, plotPath, Z_width, plotBinInfo, singleCB_tail, pTErrCorrect
 
 #plotBinInfo = '100 80 100'
 plotBinInfo = '300 60 120'
-plotpath = '/home/mhl/public_html/2016/20161206_mass/fitmassZ/'
+plotpath = '/home/mhl/public_html/2016/20161214_test'
 
 singleCB_tail_mu = '1.583 1.086' #first is alpha, second is n of singleCB
 singleCB_tail_e = '1.1443 2.5964' #first is alpha, second is n of singleCB
@@ -55,8 +56,8 @@ pTErrCorrections_e = '1.245 1.140 1.077 1.178'
 #ZWidth = 2.37
 ZWidth = 2.44
 
-#doAllClosure('2mu', plotpath, ZWidth, plotBinInfo, singleCB_tail_mu, pTErrCorrections_mu)
-doAllClosure('2e', plotpath, ZWidth, plotBinInfo, singleCB_tail_e, pTErrCorrections_e)
+doAllClosure('2mu', plotpath, ZWidth, plotBinInfo, singleCB_tail_mu, pTErrCorrections_mu)
+#doAllClosure('2e', plotpath, ZWidth, plotBinInfo, singleCB_tail_e, pTErrCorrections_e)
 #doAllClosure('2e', plotpath, ZWidth, plotBinInfo, doubleCB_tail_e, pTErrCorrections_e)
 
 

@@ -73,10 +73,10 @@ for m4lType in ['refit']:#, 'reco']:
 
         dcb.fitTo(m4ldata1D)
 #        dcb.plotOn(mass4lFrame, RooFit.LineColor(2), RooFit.LineWidth(2))
-        dcb.paramOn(mass4lFrame, RooFit.Layout(0.17, 0.4, 0.9), RooFit.Format("NE", RooFit.FixedPrecision(4)))
+        dcb.paramOn(mass4lFrame, RooFit.Layout(0.17, 0.4, 0.9), RooFit.Format("NE", RooFit.FixedPrecision(4)), RooFit.Parameters(RooArgSet(w.var('meanDCB'))))
         dcb.fitTo(m4ldata2D)
 #        dcb.plotOn(mass4lFrame, RooFit.LineColor(5), RooFit.LineWidth(2))
-        dcb.paramOn(mass4lFrame, RooFit.Layout(0.17, 0.4, 0.5), RooFit.Format("NE", RooFit.FixedPrecision(4)))
+        dcb.paramOn(mass4lFrame, RooFit.Layout(0.17, 0.4, 0.5), RooFit.Format("NE", RooFit.FixedPrecision(4)), RooFit.Parameters(RooArgSet(w.var('meanDCB'), w.var('sigmaDCB'))))
 
 ###
         c1 = TCanvas('c1', '', 800, 800)

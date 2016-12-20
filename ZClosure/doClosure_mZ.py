@@ -48,6 +48,8 @@ pTErrCorrections = args.pTErrCorrections
 cut = "massZ > " + str(binInfo[1]) + " && massZ < " + str(binInfo[2]) + " && \
        massZErr/massZ > " + str(massZErr_rel_min) + " && \
        massZErr/massZ < " + str(massZErr_rel_max)
+#       massZErr > " + str(massZErr_rel_min) + " && \
+#       massZErr < " + str(massZErr_rel_max)
 
 plotParaConfig = \
 {\

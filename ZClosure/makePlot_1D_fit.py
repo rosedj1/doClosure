@@ -80,10 +80,10 @@ def MakeFitPlotFromTree(tree, paraConfig, fitResult):
 #                              alphaDCB['+str(doubleCB_a1)+'], nDCB['+str(doubleCB_n1)+'], alpha2['+str(doubleCB_a2)+'], n2['+str(doubleCB_n2)+'])')
 #                              alphaDCB[1,0,10], nDCB[1,0,10], alpha2[1,0,10], n2[1,0,50])')
 
-    w.factory('CBShape::singleCB(x[' + str(xmin) + ',' + str(xmax) + '], \
-                                meanCB[0, -1.5, 1.5], sigmaCB[0.5,0.1,10], alphaCB['+str(singleCB_a)+'], nCB['+str(singleCB_n)+'])')
 #    w.factory('CBShape::singleCB(x[' + str(xmin) + ',' + str(xmax) + '], \
-#                                meanCB[0,-1.5,1.5], sigmaCB[1,0.1,10], alphaCB[1,0,10], nCB[1,0,10])')
+#                                meanCB[0, -1.5, 1.5], sigmaCB[0.5,0.1,10], alphaCB['+str(singleCB_a)+'], nCB['+str(singleCB_n)+'])')
+    w.factory('CBShape::singleCB(x[' + str(xmin) + ',' + str(xmax) + '], \
+                                meanCB[0,-1.5,1.5], sigmaCB[1,0.1,10], alphaCB[1,0,10], nCB[1,0,10])')
 
     w.factory('Polynomial::poly3(x,{a0[1, -10,10],a1[0.1, -10,10],a2[0.1, -10,10],a3[1, -10,10]})')
 
