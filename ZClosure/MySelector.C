@@ -45,6 +45,9 @@ double MySelector::pTCorr(double pT, double eta, TString fs, TString tag){
  int ybin = y_etaaxis->FindFixBin(abs(eta));
 
  double scale = 1.0;
+
+ //cout << "pT: " << pT << ", xbin: " << xbin << ", ybin: " << ybin << ", scale: " << LUT_->GetBinContent(xbin,ybin) << endl;
+
  if(pT>minPt && pT<maxPt){  scale = LUT_->GetBinContent(xbin,ybin);  }
 
  return scale;
@@ -112,6 +115,8 @@ Bool_t MySelector::Process(Long64_t entry)
 
    fReader.SetEntry(entry);
 
+//   if (entry > 5000)    return kTRUE;
+
    TLorentzVector lep1, lep2;
    lep1.SetPtEtaPhiM(*pT1,double(*eta1),double(*phi1),*m1);
    lep2.SetPtEtaPhiM(*pT2,double(*eta2),double(*phi2),*m2);
@@ -126,9 +131,12 @@ Bool_t MySelector::Process(Long64_t entry)
 
    double pterr1_corr = *pterr1; double pterr2_corr = *pterr2;
 
+//   cout << "pterr1_corr: " << pterr1_corr << ", pterr2_corr: " << pterr2_corr << endl;
+
    pterr1_corr *= pTCorr(*pT1, *eta1, fs_, tag_);
    pterr2_corr *= pTCorr(*pT2, *eta2, fs_, tag_);
 
+//   cout << "pterr1_corr: " << pterr1_corr << ", pterr2_corr: " << pterr2_corr << endl;
 /*   
 // mu
    if (fs_ == "2mu") {

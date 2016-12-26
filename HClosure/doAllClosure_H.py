@@ -46,7 +46,7 @@ def doAllClosure(fs, filename, plotpath, doubleCB_tail, doREFIT):
         call(cmd, shell=True)
 
 filename = 'test.root'
-plotpath = '/home/mhl/public_html/2016/20161207_mass/scratch_fitmassH/'
+plotpath = '/home/mhl/public_html/2016/20161224_muCorr_MC/fitmassH/'
 
 doubleCB_tail_4mu_reco = '1.2898 2.0380 1.8323 3.1842' # a1,n1,a2,n2
 doubleCB_tail_4mu_refit = '1.3321 1.8954 1.9023 3.0074' 
@@ -55,10 +55,10 @@ doubleCB_tail_4e_refit = '0.85705 4.5382 1.4509 6.01'
 doubleCB_tail_2e2mu_reco = '0.90829 3.6011 1.3723 5.2865'
 doubleCB_tail_2e2mu_refit = '0.99254 2.9679 1.4789 4.7435'
 
-#doAllClosure('4mu', filename, plotpath, doubleCB_tail_4mu_reco, False)
-#doAllClosure('4mu', filename, plotpath, doubleCB_tail_4mu_refit, True)
+doAllClosure('4mu', filename, plotpath, doubleCB_tail_4mu_reco, False)
+doAllClosure('4mu', filename, plotpath, doubleCB_tail_4mu_refit, True)
 #doAllClosure('4e', filename, plotpath, doubleCB_tail_4e_reco, False)
 #doAllClosure('4e', filename, plotpath, doubleCB_tail_4e_refit, True)
-doAllClosure('2e2mu', filename, plotpath, doubleCB_tail_2e2mu_reco, False)
-doAllClosure('2e2mu', filename, plotpath, doubleCB_tail_2e2mu_refit, True)
+#doAllClosure('2e2mu', filename, plotpath, doubleCB_tail_2e2mu_reco, False)
+#doAllClosure('2e2mu', filename, plotpath, doubleCB_tail_2e2mu_refit, True)
 

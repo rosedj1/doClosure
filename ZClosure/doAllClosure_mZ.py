@@ -4,10 +4,13 @@ import time
 def doAllClosure(fs, plotPath, Z_width, plotBinInfo, singleCB_tail, pTErrCorrections):
 
     
-    massZErr_rel_bins = [0,0.008]
+    massZErr_rel_bins = [0,0.009]
     nDiv = 8
     for i in range(nDiv):
-       massZErr_rel_bins.append(massZErr_rel_bins[-1]+(0.03-0.008)/nDiv)
+       massZErr_rel_bins.append(massZErr_rel_bins[-1]+(0.03-0.009)/nDiv)
+#    massZErr_rel_bins.append(0.04)
+#    massZErr_rel_bins.append(0.05)
+#    massZErr_rel_bins.append(0.07)
     massZErr_rel_bins.append(0.1)
 
     '''
@@ -19,9 +22,15 @@ def doAllClosure(fs, plotPath, Z_width, plotBinInfo, singleCB_tail, pTErrCorrect
     ''' 
 #    inputpath = '/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/outputRoot/DY_2015MC_kalman_v4_NOmassZCut_useLepFSRForMassZ/'
 #    inputpath = '/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/outputRoot/DY_2015MC_kalman_v4_NOmassZCut_addpTScaleCorrection/'
-    inputpath = '/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/outputRoot/DY_2015MC_kalman_v4_NOmassZCut/'
+#    inputpath = '/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/outputRoot/DY_2015MC_kalman_v4_NOmassZCut/'
 
-    filename = 'DYJetsToLL_M-50_kalman_v4_m'+fs+'.root'
+    inputpath = '/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/outputRoot/Data_2015D/'
+#    inputpath = '/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/outputRoot/Data_2016_v1/'
+#    inputpath = '/raid/raid9/mhl/HZZ4L_Run2/HZZ4L/PereventMassErrCorr_2016ICHEP/PereventMassErrCorr_v0_forData/'
+#    inputpath = '/raid/raid9/mhl/HZZ4L_Run2/HZZ4L/PereventMassErrCorr_2016ICHEP/getCorrection_ICHEP2016/inputRoot/'
+#    filename = 'DYJetsToLL_M-50_kalman_v4_m'+fs+'.root'
+#    inputpath = '/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/outputRoot/DY_2015MC_kalman_v4_76X/'
+    filename = 'DoubleLepton_m'+fs+'.root'
     outtxtName = '../makeSummaryPlots/sigma_m'+fs+'.txt'
 
     call('echo " " > ' + outtxtName, shell=True)
@@ -44,7 +53,7 @@ def doAllClosure(fs, plotPath, Z_width, plotBinInfo, singleCB_tail, pTErrCorrect
 
 #plotBinInfo = '100 80 100'
 plotBinInfo = '300 60 120'
-plotpath = '/home/mhl/public_html/2016/20161214_test'
+plotpath = '/home/mhl/public_html/2016/20161226_eCorr_2015/fitmassZ/'
 
 singleCB_tail_mu = '1.583 1.086' #first is alpha, second is n of singleCB
 singleCB_tail_e = '1.1443 2.5964' #first is alpha, second is n of singleCB
@@ -54,10 +63,10 @@ pTErrCorrections_mu = '1.251 1.292 1.117 1'
 pTErrCorrections_e = '1.245 1.140 1.077 1.178'
 
 #ZWidth = 2.37
-ZWidth = 2.44
+ZWidth = 2.49
 
-doAllClosure('2mu', plotpath, ZWidth, plotBinInfo, singleCB_tail_mu, pTErrCorrections_mu)
-#doAllClosure('2e', plotpath, ZWidth, plotBinInfo, singleCB_tail_e, pTErrCorrections_e)
+#doAllClosure('2mu', plotpath, ZWidth, plotBinInfo, singleCB_tail_mu, pTErrCorrections_mu)
+doAllClosure('2e', plotpath, ZWidth, plotBinInfo, singleCB_tail_e, pTErrCorrections_e)
 #doAllClosure('2e', plotpath, ZWidth, plotBinInfo, doubleCB_tail_e, pTErrCorrections_e)
 
 
