@@ -40,9 +40,9 @@ double MySelector::ApplyCorr(double pT, double eta, double pTErr, int ecalDriven
  if (ecalDriven) {
 
     if (abs(eta) < 1 && pTErr/pT < 0.03 ) scale = pTCorr(pT,eta,fs,0); // LUT_1 is for |eta| < 1 && pTErr/pT < 0.03
-    if (abs(eta) < 1 && pTErr/pT > 0.03 ) scale = 0.9584;
+    if (abs(eta) < 1 && pTErr/pT > 0.03 ) scale =1.02;
     if (abs(eta) >= 1 && pTErr/pT < 0.07 ) scale = pTCorr(pT,eta,fs,1); // LUT_2 is for |eta| > 1 && pTErr/pT < 0.06
-    if (abs(eta) >= 1 && pTErr/pT > 0.07 ) scale = 0.76;
+    if (abs(eta) >= 1 && pTErr/pT > 0.07 ) scale = 0.67;
 
     } else {
 
@@ -163,7 +163,7 @@ Bool_t MySelector::Process(Long64_t entry)
 
    double pterr1_corr = *pterr1; double pterr2_corr = *pterr2;
 
-
+/*
    if (fs_ == "2mu") {
 
       pterr1_corr *= pTCorr(*pT1, *eta1, fs_, tag_);
@@ -171,7 +171,7 @@ Bool_t MySelector::Process(Long64_t entry)
 
       }
 
-
+*/
    if (fs_ == "2e") {
 
       pterr1_corr *= ApplyCorr(*pT1, *eta1, *pterr1, *lep1_ecalDriven, fs_);   
