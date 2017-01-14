@@ -26,8 +26,8 @@ CMS_zz4l_mass = RooRealVar('CMS_zz4l_mass','CMS_zz4l_mass',104,140)
 CMS_zz4l_massErr = RooRealVar('CMS_zz4l_massErr','CMS_zz4l_massErr',0,0.1)
 #w = RooWorkspace("w")
 
-for m4lType in ['refit']:#, 'reco']:
-    for fs in ['2e2mu']:#,'4e']:#, '4mu']:
+for m4lType in ['refit', 'reco']:
+    for fs in ['4mu','2e2mu','4e']:
 
 #        path = '/raid/raid9/mhl/HZZ4L_Run2/HZZ4L/PereventMassErrCorr_2016ICHEP/Mass_ICHEP2016/CreateDatacards_Moriond2016_JES_v0_dev_ZJetsOn_10fb_1_ggHOnly_relativeError/'
 #        path = '/raid/raid9/mhl/HZZ4L_Run2/HZZ4L/PereventMassErrCorr_2016ICHEP/getCorrection_ICHEP2016/toyStudy_test/STEP4_getMass_asimov_runOnIHEPA/'
@@ -73,10 +73,10 @@ for m4lType in ['refit']:#, 'reco']:
 
         dcb.fitTo(m4ldata1D)
 #        dcb.plotOn(mass4lFrame, RooFit.LineColor(2), RooFit.LineWidth(2))
-        dcb.paramOn(mass4lFrame, RooFit.Layout(0.17, 0.4, 0.9), RooFit.Format("NE", RooFit.FixedPrecision(4)), RooFit.Parameters(RooArgSet(w.var('meanDCB'))))
+        dcb.paramOn(mass4lFrame, RooFit.Layout(0.17, 0.4, 0.9), RooFit.Format("NE", RooFit.FixedPrecision(4)) )
         dcb.fitTo(m4ldata2D)
 #        dcb.plotOn(mass4lFrame, RooFit.LineColor(5), RooFit.LineWidth(2))
-        dcb.paramOn(mass4lFrame, RooFit.Layout(0.17, 0.4, 0.5), RooFit.Format("NE", RooFit.FixedPrecision(4)), RooFit.Parameters(RooArgSet(w.var('meanDCB'), w.var('sigmaDCB'))))
+        dcb.paramOn(mass4lFrame, RooFit.Layout(0.17, 0.4, 0.5), RooFit.Format("NE", RooFit.FixedPrecision(4)) )
 
 ###
         c1 = TCanvas('c1', '', 800, 800)

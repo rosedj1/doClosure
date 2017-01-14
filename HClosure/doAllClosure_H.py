@@ -8,7 +8,8 @@ def doAllClosure(fs, filename, plotpath, doubleCB_tail, doREFIT):
        mass4lErr_bins = [0,0.007]
        nDiv = 8
        for i in range(nDiv):
-           mass4lErr_bins.append(mass4lErr_bins[-1]+(0.02-0.007)/nDiv)
+           mass4lErr_bins.append(mass4lErr_bins[-1]+(0.018-0.007)/nDiv)
+#           mass4lErr_bins.append(mass4lErr_bins[-1]+(0.02-0.007)/nDiv)
        mass4lErr_bins.append(1)
     else:
        mass4lErr_bins = [0,0.009]
