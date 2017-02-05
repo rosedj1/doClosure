@@ -68,8 +68,14 @@ def MakeFitPlotFromTree(tree, paraConfig, fitResult):
 
     w.factory('DoubleCB::doubleCB(x[' + str(xmin) + ',' + str(xmax) + '], \
                                  meanDCB[125,120,130], sigmaDCB[1,0,10], \
-                                 alphaDCB[0.9876], nDCB[4.394], alpha2[2.022], n2[3.256])')
+                                 alphaDCB[1,0.9,1.1], nDCB[6,5,7], alpha2[2,1.5,2.5], n2[2.5,2,3])')
 
+
+#2016MC
+#4e reco                               alphaDCB[0.895], nDCB[8.383], alpha2[2.238], n2[2.848])')
+#4e refit                              alphaDCB[0.9629], nDCB[6.489], alpha2[2.067], n2[2.408])')
+
+#2015MC
 # 4 point of 4e refit                                 alphaDCB[1.112], nDCB[3.984], alpha2[2.338], n2[2.15])')
 # 3 point of 4e refit                                 alphaDCB[0.9876], nDCB[4.394], alpha2[2.022], n2[3.256])')
 # 3 point of 4e reco                                 alphaDCB[0.95], nDCB[4.23], alpha2[2.189], n2[3.04])')
@@ -104,8 +110,8 @@ def MakeFitPlotFromTree(tree, paraConfig, fitResult):
     
     dataHist1 = RooDataHist('dataHist1', 'dataHist1', RooArgList(w.var('x')), HIST1, 1)
     pdf = w.pdf(pdfName)
-    fFit = pdf.fitTo(dataHist1)#, RooFit.PrintLevel(-1))
-    
+    fFit = pdf.fitTo(dataHist1,RooFit.Save(kTRUE))#, RooFit.PrintLevel(-1))
+
     xframe = w.var('x').frame(RooFit.Title(xTitle))
     
     dataHist1.plotOn(xframe, RooFit.MarkerStyle(20), RooFit.MarkerColor(1))
@@ -132,6 +138,8 @@ def MakeFitPlotFromTree(tree, paraConfig, fitResult):
     dummy.Draw()
     
     xframe.Draw('same')
+    chi2 = xframe.chiSquare(fFit.floatParsFinal().getSize())
+    dof =  fFit.floatParsFinal().getSize()
     
     legend = TLegend(0.15,0.9,0.42,0.95)
     #legend.AddEntry(HIST2, legend2, 'l')
@@ -147,6 +155,8 @@ def MakeFitPlotFromTree(tree, paraConfig, fitResult):
     latex.SetTextFont(42)
     latex.SetTextAlign(11)
     latex.DrawLatex(0.18, 0.45, latexNote1)
+    latex.DrawLatex(0.6, 0.3, "#chi^{2}/DOF = %.3f" %(chi2/dof))
+
     c1.SaveAs(savePath+saveName+'.png')
     c1.SaveAs(savePath+saveName+'.pdf')
 

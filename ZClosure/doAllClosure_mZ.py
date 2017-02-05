@@ -3,10 +3,10 @@ import time
 
 def doAllClosure(fs, plotPath, Z_width, plotBinInfo, singleCB_tail, pTErrCorrections):
 
-    massZErr_rel_bins = [0,0.008]
+    massZErr_rel_bins = [0,0.0085]
     nDiv = 8
     for i in range(nDiv):
-       massZErr_rel_bins.append(massZErr_rel_bins[-1]+(0.03-0.008)/nDiv)
+       massZErr_rel_bins.append(massZErr_rel_bins[-1]+(0.03-0.0085)/nDiv)
     massZErr_rel_bins.append(0.04)
     massZErr_rel_bins.append(0.1)
 #    massZErr_rel_bins.append(1)
@@ -24,9 +24,11 @@ def doAllClosure(fs, plotPath, Z_width, plotBinInfo, singleCB_tail, pTErrCorrect
 #    inputpath = '/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/outputRoot/DY_2015MC_kalman_v4_NOmassZCut_addpTScaleCorrection/'
 #    inputpath = '/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/outputRoot/DY_2015MC_kalman_v4_NOmassZCut/'
  
-    inputpath = '/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/outputRoot/Data_2015D/'   
-    filename = 'DoubleLepton_m'+fs+'.root'
-#    filename = 'DYJetsToLL_M-50_kalman_v4_m'+fs+'.root'
+#    inputpath = '/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/outputRoot/Data_2015D/'   
+#    filename = 'DoubleLepton_m'+fs+'.root'
+#2016MC
+    inputpath = '/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/outputRoot/DY_2016MC_v1_20170201/'
+    filename = 'DYJetsToLL_M-50_kalman_v4_m'+fs+'.root'
     outtxtName = '../makeSummaryPlots/sigma_m'+fs+'.txt'
 
     call('echo " " > ' + outtxtName, shell=True)
@@ -49,7 +51,7 @@ def doAllClosure(fs, plotPath, Z_width, plotBinInfo, singleCB_tail, pTErrCorrect
 
 #plotBinInfo = '100 80 100'
 plotBinInfo = '300 60 120'
-plotpath = '/home/mhl/public_html/2017/20170118_test/scratch/'
+plotpath = '/home/mhl/public_html/2017/20170205_muonPtErrCorr/fitmassZ/'
 
 singleCB_tail_mu = '1.583 1.086' #first is alpha, second is n of singleCB
 singleCB_tail_e = '1.1443 2.5964' #first is alpha, second is n of singleCB
@@ -59,10 +61,10 @@ pTErrCorrections_mu = '1.251 1.292 1.117 1'
 pTErrCorrections_e = '1.245 1.140 1.077 1.178'
 
 #ZWidth = 2.44
-ZWidth = 2.49
+ZWidth = 2.43
 
-#doAllClosure('2mu', plotpath, ZWidth, plotBinInfo, singleCB_tail_mu, pTErrCorrections_mu)
-doAllClosure('2e', plotpath, ZWidth, plotBinInfo, singleCB_tail_e, pTErrCorrections_e)
+doAllClosure('2mu', plotpath, ZWidth, plotBinInfo, singleCB_tail_mu, pTErrCorrections_mu)
+#doAllClosure('2e', plotpath, ZWidth, plotBinInfo, singleCB_tail_e, pTErrCorrections_e)
 #doAllClosure('2e', plotpath, ZWidth, plotBinInfo, doubleCB_tail_e, pTErrCorrections_e)
 
 

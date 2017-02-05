@@ -129,7 +129,7 @@ def MakeComparePlot_1D(w, binInfo, xTitle, yTitle, saveName):
     legend.SetFillColor(0)
     legend.SetBorderSize(1)
     legend.Draw('SAME')
-    c1.SaveAs("/home/mhl/public_html/2016/20161205_mass/m4lfit/"+saveName+".png")
+    c1.SaveAs("/home/mhl/public_html/2017/20170203_Hmass_4e/"+saveName+".png")
 
 #fullSimPath = "/cms/data/store/user/t2/users/mhl/"
 #fullSimPath = "/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_2015MC/Mass_2015MC/Fit_PereventMerr/"
@@ -141,28 +141,28 @@ toyPath = "/raid/raid9/mhl/HZZ4L_Run2/HZZ4L/PereventMassErrCorr_2016ICHEP/getCor
 
 #templatePath = "/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_2015MC/Mass_2015MC/CreateDatacards_Moriond2016_JES_v0_dev_ZJetsOn_10fb_1_ggHOnly_relativeError_test/cards_sm13_1D_refit_2p7fb_CB/HCG/125/"
 
-templatePath = "/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/doMeasurement/CreateDatacards_test_allFinalStates_v1/cards_sm13_1Debe_refit_2p7fb_CB/HCG/125/"
+templatePath = "/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/doMeasurement/CreateDatacards_Moriond17_eOnly_20170201/cards_sm13_1Debe_reco_2p7fb_CB/HCG/125/"
 #templatePath = "/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/doMeasurement/CreateDatacards_test_allFinalStates_v1/cards_sm13_1Debe_reco_2p7fb_CB/HCG/125/"
 
 #fullSimTree = "ggH_2015MC_mH125.root"
-fullSimTree = "test.root"
+fullSimTree = "ggH125_2016MC.root"
 toy = "hzz4l_4muS_13TeV_1D_refit_withToys.input.root"
-template = "hzz4l_2e2muS_13TeV.input.root"
+template = "hzz4l_4eS_13TeV.input.root"
 
 rooVarName = "CMS_zz4l_massErr"
 #varFullSimName = "mass4l"
 #varFullSimName = "mass4lREFIT"
 #pdfName = "ggH_hzz"
 #rooVarName = "CMS_zz4l_massErr"
-varFullSimName = "mass4lErrREFIT/mass4lREFIT"
-#varFullSimName = "mass4lErr/mass4l"
-pdfName = "pdfErrS_3"
+#varFullSimName = "mass4lErrREFIT/mass4lREFIT"
+varFullSimName = "mass4lErr/mass4l"
+pdfName = "pdfErrS_2"
 
-cut = "passedFullSelection && finalState > 2 && mass4l > 105 && mass4l < 140"
+cut = "passedFullSelection && finalState == 2 && mass4l > 105 && mass4l < 140"
 
 xTitle = varFullSimName#"mass4lREFIT"
 yTitle = ""
-saveName = "compare_mass4lErr_model_2e2mu_refit"
+saveName = "compare_mass4lErr_model_4e_reco"
 #saveName = "compare_mass4lErr_model_2e2mu_reco"
 
 path = {'fullSim': fullSimPath, 'toy': toyPath, 'template': templatePath}

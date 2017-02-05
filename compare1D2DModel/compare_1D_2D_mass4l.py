@@ -27,7 +27,7 @@ CMS_zz4l_massErr = RooRealVar('CMS_zz4l_massErr','CMS_zz4l_massErr',0,0.1)
 #w = RooWorkspace("w")
 
 for m4lType in ['refit', 'reco']:
-    for fs in ['4e','2e2mu', '4mu']:
+    for fs in ['4e']:#,'2e2mu', '4mu']:
 
 #        path = '/raid/raid9/mhl/HZZ4L_Run2/HZZ4L/PereventMassErrCorr_2016ICHEP/Mass_ICHEP2016/CreateDatacards_Moriond2016_JES_v0_dev_ZJetsOn_10fb_1_ggHOnly_relativeError/'
 #        path = '/raid/raid9/mhl/HZZ4L_Run2/HZZ4L/PereventMassErrCorr_2016ICHEP/getCorrection_ICHEP2016/toyStudy_test/STEP4_getMass_asimov_runOnIHEPA/'

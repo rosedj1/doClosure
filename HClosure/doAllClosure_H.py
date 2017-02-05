@@ -12,7 +12,7 @@ def doAllClosure(fs, filename, plotpath, doubleCB_tail, doREFIT):
        mass4lErr_bins.append(1)
     else:
        mass4lErr_bins = [0,0.009]
-       nDiv = 6
+       nDiv = 8#6
        for i in range(nDiv):
            mass4lErr_bins.append(mass4lErr_bins[-1]+(0.02-0.009)/nDiv)
        mass4lErr_bins.append(1)
@@ -45,8 +45,8 @@ def doAllClosure(fs, filename, plotpath, doubleCB_tail, doREFIT):
         print cmd
         call(cmd, shell=True)
 
-filename = 'test.root'
-plotpath = '/home/mhl/public_html/2016/20161213_mass/scratch/'
+filename = 'ggH125_2016MC.root'
+plotpath = '/home/mhl/public_html/2017/20170203_Hmass_4e/fitmassH_refit/'
 
 doubleCB_tail_4mu_reco = '1.2547 2.1116 1.8509 3.0920' # a1,n1,a2,n2
 doubleCB_tail_4mu_refit = '1.2741 2.02 1.99 2.71' 

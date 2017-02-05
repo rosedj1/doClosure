@@ -99,7 +99,7 @@ def MakeFitPlotFromTree(tree, paraConfig, fitResult):
     w.factory('SUM:BWplusEXP(f1[0,1]*bw, exp)')
     w.factory('SUM:BWplusPOLY3(f1[0,1]*bw, poly3)')
 
-    w.factory('SUM:model(fsig[0.9,0.7,1]*BWxCB, bkg)')
+    w.factory('SUM:model(fsig[0.9,0.7,0.99]*BWxCB, bkg)')
     
     dataHist1 = RooDataHist('dataHist1', 'dataHist1', RooArgList(w.var('x')), HIST1, 1)
     pdf = w.pdf(pdfName)

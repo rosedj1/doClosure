@@ -40,9 +40,9 @@ double MySelector::ApplyCorr(double pT, double eta, double pTErr, int ecalDriven
  if (ecalDriven) {
 
     if (abs(eta) < 1 && pTErr/pT < 0.03 ) scale = pTCorr(pT,eta,fs,0); // LUT_1 is for |eta| < 1 && pTErr/pT < 0.03
-    if (abs(eta) < 1 && pTErr/pT > 0.03 ) scale = 1.02;
+    if (abs(eta) < 1 && pTErr/pT > 0.03 ) scale = 1.03;
     if (abs(eta) >= 1 && pTErr/pT < 0.07 ) scale = pTCorr(pT,eta,fs,1); // LUT_2 is for |eta| > 1 && pTErr/pT < 0.06
-    if (abs(eta) >= 1 && pTErr/pT > 0.07 ) scale = 0.67;
+    if (abs(eta) >= 1 && pTErr/pT > 0.07 ) scale = 0.74;
 
     } else {
 
