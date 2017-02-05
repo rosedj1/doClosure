@@ -1,4 +1,4 @@
-plotpath="/home/mhl/public_html/2017/20170111_2015data_ptErrCorr_mu_0_0p9_1p8_2p2_2p4/"
+plotpath="/home/mhl/public_html/2017/20170205_muonPtErrCorr/fitmassZ/"
 
 cd ../makeSummaryPlots;
 #./makeGraph.sh 2e $plotpath
