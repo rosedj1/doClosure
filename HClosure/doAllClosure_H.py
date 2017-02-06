@@ -46,14 +46,15 @@ def doAllClosure(fs, filename, plotpath, doubleCB_tail, doREFIT):
         call(cmd, shell=True)
 
 filename = 'ggH125_2016MC.root'
-plotpath = '/home/mhl/public_html/2017/20170203_Hmass_4e/fitmassH_refit/'
+plotpath = '/home/mhl/public_html/2017/20170205_muonPtErrCorr/fitmassH/'
 
-doubleCB_tail_4mu_reco = '1.2547 2.1116 1.8509 3.0920' # a1,n1,a2,n2
-doubleCB_tail_4mu_refit = '1.2741 2.02 1.99 2.71' 
-doubleCB_tail_4e_reco = '0.8629 5.3039 1.4398 6.1962' # a1,n1,a2,n2
-doubleCB_tail_4e_refit = '0.85930 4.4827 1.4451 6.1654'
-doubleCB_tail_2e2mu_reco = '0.9515 3.4081 1.4387 4.8701'
-doubleCB_tail_2e2mu_refit = '0.99078 2.9022 1.4538 4.8895'
+doubleCB_tail_4mu_reco = '1.345 1.881 2.436 1.520' # a1,n1,a2,n2
+doubleCB_tail_4mu_refit = '1.319 1.992 2.329 1.970' 
+doubleCB_tail_4e_reco = '0.9354 6.581 2.025 3.274'
+#doubleCB_tail_4e_reco = '0.819 8.33 1.56 4.61' 
+doubleCB_tail_4e_refit = '1.04 5.35 1.89 4.095'
+doubleCB_tail_2e2mu_reco = '1.057 3.965 2.290 1.882'
+doubleCB_tail_2e2mu_refit = '1.185 3.144 1.973 2.795'
 
 call('rm ../makeSummaryPlots/*txtpara*txt', shell=True)
 

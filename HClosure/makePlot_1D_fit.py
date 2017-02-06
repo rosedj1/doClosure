@@ -68,7 +68,7 @@ def MakeFitPlotFromTree(tree, paraConfig, fitResult):
 
     w.factory('DoubleCB::doubleCB(x[' + str(xmin) + ',' + str(xmax) + '], \
                                  meanDCB[125,120,130], sigmaDCB[1,0,10], \
-                                 alphaDCB[1,0.9,1.1], nDCB[6,5,7], alpha2[2,1.5,2.5], n2[2.5,2,3])')
+                                 alphaDCB['+str(doubleCB_a1)+'], nDCB['+str(doubleCB_n1)+'], alpha2['+str(doubleCB_a2)+'], n2['+str(doubleCB_n2)+'])')
 
 
 #2016MC

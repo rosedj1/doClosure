@@ -112,4 +112,5 @@ legend.Draw('SAME')
 
 #c1.SaveAs('/home/mhl/public_html/2016/20161020_mass/fitmassZ/closureZ.png')
 c1.SaveAs(args.plotpath+args.plotname)
+c1.SaveAs(args.plotpath+args.plotname.replace('.png','.pdf'))
 
