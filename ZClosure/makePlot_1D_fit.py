@@ -83,7 +83,7 @@ def MakeFitPlotFromTree(tree, paraConfig, fitResult):
 #    w.factory('CBShape::singleCB(x[' + str(xmin) + ',' + str(xmax) + '], \
 #                                meanCB[0, -1.5, 1.5], sigmaCB[0.5,0.1,10], alphaCB['+str(singleCB_a)+'], nCB['+str(singleCB_n)+'])')
     w.factory('CBShape::singleCB(x[' + str(xmin) + ',' + str(xmax) + '], \
-                                meanCB[0,-1.5,1.5], sigmaCB[1,0.1,10], alphaCB[1,0,10], nCB[1,0,10])')
+                                meanCB[0,-1.5,1.5], sigmaCB[2,0.1,10], alphaCB[1,0,10], nCB[1,0,10])')
 
     w.factory('Polynomial::poly3(x,{a0[1, -10,10],a1[0.1, -10,10],a2[0.1, -10,10],a3[1, -10,10]})')
 
