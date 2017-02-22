@@ -29,8 +29,6 @@ CMS_zz4l_massErr = RooRealVar('CMS_zz4l_massErr','CMS_zz4l_massErr',0,0.1)
 for m4lType in ['refit', 'reco']:
     for fs in ['4e','2e2mu','4mu']:
 
-#        path = '/raid/raid9/mhl/HZZ4L_Run2/HZZ4L/PereventMassErrCorr_2016ICHEP/Mass_ICHEP2016/CreateDatacards_Moriond2016_JES_v0_dev_ZJetsOn_10fb_1_ggHOnly_relativeError/'
-#        path = '/raid/raid9/mhl/HZZ4L_Run2/HZZ4L/PereventMassErrCorr_2016ICHEP/getCorrection_ICHEP2016/toyStudy_test/STEP4_getMass_asimov_runOnIHEPA/'
         path = args.path
 
         pdfPath1 = path + 'cards_sm13_1D_'+m4lType+'_2p7fb_CB/HCG/125/'
@@ -52,9 +50,9 @@ for m4lType in ['refit', 'reco']:
         #make frame and plots
         mass4lFrame = CMS_zz4l_mass.frame()
 
-        m4ldata1D = m4lpdf1D.generate(RooArgSet(CMS_zz4l_mass), 50000)
+        m4ldata1D = m4lpdf1D.generate(RooArgSet(CMS_zz4l_mass), 100000)
         hist_m4l1D = RooAbsData.createHistogram(m4ldata1D,'m4ldata1D',CMS_zz4l_mass,RooFit.Binning(binInfo[0], binInfo[1], binInfo[2]))
-        m4ldata2D = m4lpdf2D.generate(RooArgSet(CMS_zz4l_mass,CMS_zz4l_massErr), 50000)
+        m4ldata2D = m4lpdf2D.generate(RooArgSet(CMS_zz4l_mass,CMS_zz4l_massErr), 100000)
         hist_m4l2D = RooAbsData.createHistogram(m4ldata2D,'m4ldata2D',CMS_zz4l_mass,RooFit.Binning(binInfo[0], binInfo[1], binInfo[2]))
 
         m4ldata2D.plotOn(mass4lFrame, RooFit.MarkerStyle(20), RooFit.MarkerColor(4), RooFit.MarkerSize(1))
@@ -62,21 +60,42 @@ for m4lType in ['refit', 'reco']:
 
         m4ldata1D.plotOn(mass4lFrame, RooFit.MarkerStyle(20), RooFit.MarkerColor(1), RooFit.MarkerSize(1))
         m4lpdf1D.plotOn(mass4lFrame, RooFit.LineWidth(2), RooFit.LineColor(1), RooFit.Name("m4l_1D"))
- 
-###
+
+   
+        ###########
+        fsDict = {"4mu":'1', "4e":'2', "2e2mu":'3'}
+        uncDict = {"4mu":0.01, "4e":0.3, "2e2mu":0.05}
+#        uncDict = {"4mu":0.2, "4e":0.2, "2e2mu":0.2}
+
+#        w2.var("CMS_zz4l_sigma_e_sig").setVal(uncDict[fs]*1)
+        w2.var("CMS_zz4l_n_sig_"+fsDict[fs]+"_13").setVal(uncDict[fs]*1)
+        m4ldata2D_1sigma_plus = m4lpdf2D.generate(RooArgSet(CMS_zz4l_mass,CMS_zz4l_massErr),100000)
+        hist_m4l2D_1sigma_plus = RooAbsData.createHistogram(m4ldata2D_1sigma_plus,'m4ldata2D_1sigma_plus',CMS_zz4l_mass,RooFit.Binning(binInfo[0], binInfo[1], binInfo[2]))
+#        m4ldata2D_1sigma_plus.plotOn(mass4lFrame, RooFit.MarkerStyle(20), RooFit.MarkerColor(2), RooFit.MarkerSize(1))
+#        m4lpdf2D.plotOn(mass4lFrame, RooFit.LineWidth(2), RooFit.LineColor(2), RooFit.Name("m4l_2D_to_1D_1sigma_plus"))
+
+#        w2.var("CMS_zz4l_sigma_e_sig").setVal(uncDict[fs]*-1)
+        w2.var("CMS_zz4l_n_sig_"+fsDict[fs]+"_13").setVal(uncDict[fs]*-1)
+        m4ldata2D_1sigma_minus = m4lpdf2D.generate(RooArgSet(CMS_zz4l_mass,CMS_zz4l_massErr), 100000)
+        hist_m4l2D_1sigma_minus = RooAbsData.createHistogram(m4ldata2D_1sigma_minus,'m4ldata2D_1sigma_minus',CMS_zz4l_mass,RooFit.Binning(binInfo[0], binInfo[1], binInfo[2]))
+#        m4ldata2D_1sigma_minus.plotOn(mass4lFrame, RooFit.MarkerStyle(20), RooFit.MarkerColor(5), RooFit.MarkerSize(1))
+#        m4lpdf2D.plotOn(mass4lFrame, RooFit.LineWidth(2), RooFit.LineColor(5), RooFit.Name("m4l_2D_to_1D_1sigma_minus"))
+
+        ###########
+
         w.factory('DoubleCB::doubleCB(CMS_zz4l_mass, \
                              meanDCB[125,120,130], sigmaDCB[1,0,10], \
                              alphaDCB[1.1,0,50], nDCB[1,0,50], alpha2[1.1,0,50], n2[1,0,50])')
-        w.Print()
+#        w.Print()
 
         dcb = w.pdf("doubleCB")
 
-        dcb.fitTo(m4ldata1D)
+#        dcb.fitTo(m4ldata1D)
 #        dcb.plotOn(mass4lFrame, RooFit.LineColor(2), RooFit.LineWidth(2))
-        dcb.paramOn(mass4lFrame, RooFit.Layout(0.17, 0.4, 0.9), RooFit.Format("NE", RooFit.FixedPrecision(4)))
-        dcb.fitTo(m4ldata2D)
+#        dcb.paramOn(mass4lFrame, RooFit.Layout(0.17, 0.4, 0.9), RooFit.Format("NE", RooFit.FixedPrecision(4)))
+#        dcb.fitTo(m4ldata2D)
 #        dcb.plotOn(mass4lFrame, RooFit.LineColor(5), RooFit.LineWidth(2))
-        dcb.paramOn(mass4lFrame, RooFit.Layout(0.17, 0.4, 0.5), RooFit.Format("NE", RooFit.FixedPrecision(4)))
+#        dcb.paramOn(mass4lFrame, RooFit.Layout(0.17, 0.4, 0.5), RooFit.Format("NE", RooFit.FixedPrecision(4)))
 
 ###
         c1 = TCanvas('c1', '', 800, 800)
@@ -111,12 +130,12 @@ for m4lType in ['refit', 'reco']:
         pad2.cd()
         #make ratio plot
         ratio = hist_m4l1D.Clone("ratio")
-        ratio.SetMinimum(0.6)
-        ratio.SetMaximum(1.4)
+        ratio.SetMinimum(0.4)
+        ratio.SetMaximum(1.6)
         ratio.Sumw2()
         ratio.SetStats(0)
         ratio.Divide(hist_m4l2D)
-        ratio.SetMarkerStyle(20)
+        ratio.SetMarkerStyle(1)#20)
         ratio.Draw('e1p')
         ratio.SetTitle("")
         ratio.GetYaxis().SetTitle("ratio 1D/2D ")
@@ -132,8 +151,16 @@ for m4lType in ['refit', 'reco']:
         ratio.GetXaxis().SetLabelFont(43)
         ratio.GetXaxis().SetLabelSize(25)
 
-#        c1.SaveAs("/home/mhl/public_html/2016/20160922_mass_1D_2D_compare/plots_2015MC/m4l_1D_2D_compare_"+m4lType+"_"+fs+".png")
-#        c1.SaveAs("/home/mhl/public_html/2016/20160922_mass_1D_2D_compare/plots_2016MC/m4l_1D_2D_compare_"+m4lType+"_"+fs+".png")
+        ratio_1sigma_plus = hist_m4l1D.Clone("ratio_1sigma_plus")
+        ratio_1sigma_plus.Divide(hist_m4l2D_1sigma_plus)
+        ratio_1sigma_plus.Draw('same')
+        ratio_1sigma_plus.SetLineColor(2)
+        ratio_1sigma_minus = hist_m4l1D.Clone("ratio_1sigma_minus")
+        ratio_1sigma_minus.Divide(hist_m4l2D_1sigma_minus)
+        ratio_1sigma_minus.Draw('same')
+        ratio_1sigma_minus.SetLineColor(4)
+
+
         c1.SaveAs(args.saveDir + "m4l_1D_2D_compare_"+m4lType+"_"+fs+".png")
         c1.SaveAs(args.saveDir + "m4l_1D_2D_compare_"+m4lType+"_"+fs+".pdf")
         c1.SaveAs("m4l_1D_2D_compare_"+m4lType+"_"+fs+".png")

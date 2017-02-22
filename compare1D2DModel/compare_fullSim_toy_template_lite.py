@@ -71,7 +71,7 @@ def PrepareFrameForPlot(w, path, fileName, varName, binInfo, cut):
     rooVar = RooRealVar(rooVarName, rooVarName, binInfo[1], binInfo[2])
     getattr(w,'import')(rooVar)
 #get data from fullSim
-    w.Print()
+#    w.Print()
     GetHistFromTree(fullSimPath, fullSimTree, varFullSimName, rooVar, rooVarName, binInfo, cut, w)
     dataHist_fullSim = w.data("dataHist_fullSim")
 #get data from toy
@@ -89,9 +89,9 @@ def PrepareFrameForPlot(w, path, fileName, varName, binInfo, cut):
 #    dataHist_toy.plotOn(rooVarFrame, RooFit.MarkerStyle(21), RooFit.MarkerColor(4), RooFit.Name("Toy"))
 
 ###
-    w.Print()
+#    w.Print()
 #    w.pdf("doubleCB").fitTo(dataHist_fullSim)
-    w.pdf("gauss_plus_landau").fitTo(dataHist_fullSim)
+#    w.pdf("gauss_plus_landau").fitTo(dataHist_fullSim)
 #    w.pdf("doubleCB").plotOn(rooVarFrame, RooFit.LineColor(4), RooFit.LineWidth(2) )
 #    w.pdf("gauss_plus_landau").plotOn(rooVarFrame, RooFit.LineColor(4), RooFit.LineWidth(2) )
 #    w.pdf("gauss_plus_landau").paramOn(rooVarFrame, RooFit.Layout(0.17, 0.3, 0.9), RooFit.Format("NE", RooFit.FixedPrecision(2)))
@@ -129,11 +129,13 @@ def MakeComparePlot_1D(w, binInfo, xTitle, yTitle, saveName):
     legend.SetFillColor(0)
     legend.SetBorderSize(1)
     legend.Draw('SAME')
-    c1.SaveAs("/home/mhl/public_html/2017/20170203_Hmass_4e/"+saveName+".png")
+    c1.SaveAs("/home/mhl/public_html/2017/20170220_checkFullSimModel/"+saveName+".png")
 
 #fullSimPath = "/cms/data/store/user/t2/users/mhl/"
 #fullSimPath = "/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_2015MC/Mass_2015MC/Fit_PereventMerr/"
-fullSimPath = "/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/liteUFHZZ4LAnalyzer/Ntuples/"
+#fullSimPath = "/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/liteUFHZZ4LAnalyzer/Ntuples/"
+#fullSimPath = "/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/doToy_tmp/inputTrees/"
+fullSimPath = "/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/inputRoot/ggHSampleToMakeErrTemplate/"
 toyPath = "/raid/raid9/mhl/HZZ4L_Run2/HZZ4L/PereventMassErrCorr_2016ICHEP/getCorrection_ICHEP2016/toyStudy_test/STEP3_mergedToys_BkgSmear1pct4mu_FixShape_FixZX/"
 
 #templatePath = "/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_2015MC/Mass_2015MC/CreateDatacards_Moriond2016_JES_v0_dev_ZJetsOn_10fb_1_ggHOnly_relativeError_getEBEusingFittedBWMeanSigma/cards_sm13_1Debe_refit_2p7fb_CB/HCG/125/"
@@ -141,35 +143,38 @@ toyPath = "/raid/raid9/mhl/HZZ4L_Run2/HZZ4L/PereventMassErrCorr_2016ICHEP/getCor
 
 #templatePath = "/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_2015MC/Mass_2015MC/CreateDatacards_Moriond2016_JES_v0_dev_ZJetsOn_10fb_1_ggHOnly_relativeError_test/cards_sm13_1D_refit_2p7fb_CB/HCG/125/"
 
-templatePath = "/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/doMeasurement/CreateDatacards_Moriond17_eOnly_20170201/cards_sm13_1Debe_refit_2p7fb_CB/HCG/125/"
+templatePath = "/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/doMeasurement/CreateDatacards_Moriond17_eOnly_20170201/cards_sm13_1D_reco_2p7fb_CB/HCG/125/"
 #templatePath = "/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/doMeasurement/CreateDatacards_test_allFinalStates_v1/cards_sm13_1Debe_reco_2p7fb_CB/HCG/125/"
 
 #fullSimTree = "ggH_2015MC_mH125.root"
-fullSimTree = "ggH125_2016MC.root"
+#fullSimTree = "mH_125.root" ##################################################
+fullSimTree = "mH_125_preApproval_20170214.root"
 toy = "hzz4l_4muS_13TeV_1D_refit_withToys.input.root"
-template = "hzz4l_4eS_13TeV.input.root"
 
-rooVarName = "CMS_zz4l_massErr"
-#varFullSimName = "mass4l"
+template = "hzz4l_4eS_13TeV.input.root" ###########################################
+
+rooVarName = "CMS_zz4l_mass"
+varFullSimName = "mass4l"
 #varFullSimName = "mass4lREFIT"
-#pdfName = "ggH_hzz"
-#rooVarName = "CMS_zz4l_massErr"
-varFullSimName = "mass4lErrREFIT/mass4lREFIT"
-#varFullSimName = "mass4lErr/mass4l"
-pdfName = "pdfErrS_2"
+pdfName = "ggH_hzz"
 
-cut = "passedFullSelection && finalState == 2 && mass4l > 105 && mass4l < 140"
+#rooVarName = "CMS_zz4l_massErr"
+#varFullSimName = "mass4lErrREFIT/mass4lREFIT"
+#varFullSimName = "mass4lErr/mass4l"
+#pdfName = "pdfErrS_2"
+
+cut = "passedFullSelection && finalState == 2 && mass4l > 105 && mass4l < 140" ################################
 
 xTitle = varFullSimName#"mass4lREFIT"
 yTitle = ""
-saveName = "compare_mass4lErr_model_4e_refit"
+saveName = "compare_mass4l_model_4e_reco" ####################################
 #saveName = "compare_mass4lErr_model_2e2mu_reco"
 
 path = {'fullSim': fullSimPath, 'toy': toyPath, 'template': templatePath}
 fileName = {'fullSim': fullSimTree, 'toy': toy, 'template': template}
 varName = {'rooVarName': rooVarName, 'varFullSimName':varFullSimName, 'pdfName':pdfName}
 
-binInfo = [50, 0.00, 0.1]
+binInfo = [70,105,140]
 
 w = RooWorkspace("w")
 PrepareFrameForPlot(w, path, fileName, varName, binInfo, cut)

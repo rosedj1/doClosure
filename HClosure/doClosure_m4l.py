@@ -19,6 +19,8 @@ def ParseOption():
     parser.add_argument('--outtxtName', dest='outtxtName', type=str, help='')
     parser.add_argument('--doubleCB_tail',dest='doubleCB_tail', nargs='+', help='', type=float)#, required=True)
     parser.add_argument('--doREFIT', dest='doREFIT', action='store_true', default=False, help='doREFIT')
+    parser.add_argument('--floatTail', dest='floatTail', action='store_true', default=False, help='floatTail')
+    parser.add_argument('--doubleCB_width', dest='doubleCB_width', type=float, default=1.0, help='')
     
     args = parser.parse_args()
     return args
@@ -40,6 +42,9 @@ doubleCB_a1 = args.doubleCB_tail[0]
 doubleCB_n1 = args.doubleCB_tail[1]
 doubleCB_a2 = args.doubleCB_tail[2]
 doubleCB_n2 = args.doubleCB_tail[3]
+
+floatTail = args.floatTail
+doubleCB_width = args.doubleCB_width
 
 channelCut = {'4mu':'(finalState == 1)', '4e':'(finalState == 2)', '2e2mu':'(finalState > 2)'}
 
@@ -75,7 +80,9 @@ plotParaConfig = \
 'doubleCB_a1': doubleCB_a1,
 'doubleCB_n1': doubleCB_n1,
 'doubleCB_a2': doubleCB_a2,
-'doubleCB_n2': doubleCB_n2
+'doubleCB_n2': doubleCB_n2,
+'floatTail': floatTail,
+'doubleCB_width':doubleCB_width
 }
 
 if args.doREFIT:
@@ -122,6 +129,7 @@ sigma_m4l = [fitResult['sigmaDCB'], fitResult['sigmaDCB_err'], \
 #                                 selector.massZErr_sum_rel_corr/selector.nEvents]
 print ''
 print sigma_m4l
+print str(fitResult['alphaDCB']) + ' ' + str(fitResult['nDCB']) + ' ' + str(fitResult['alpha2']) + ' ' + str(fitResult['n2']) + ' ' + str(fitResult['meanDCB'])
 sigma_m4l = [str(sigma_m4l[i]) for i in range(len(sigma_m4l))]
 
 with open(args.outtxtName,'a') as myfile:

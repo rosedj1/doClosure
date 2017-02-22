@@ -42,6 +42,7 @@ def MakeFitPlotFromTree(tree, paraConfig, fitResult):
     doubleCB_n1 = paraConfig['doubleCB_n1']
     doubleCB_a2 = paraConfig['doubleCB_a2']
     doubleCB_n2 = paraConfig['doubleCB_n2']
+    floatTail = paraConfig['floatTail']
     
     #f1 = TFile(rootPath1 + rootfile1, 'READ')
     #t1 = f1.Get(tree1)
@@ -66,9 +67,16 @@ def MakeFitPlotFromTree(tree, paraConfig, fitResult):
     w.factory('BreitWigner::bw(x[' + str(xmin) + ',' + str(xmax) + '],meanBW[91.187],sigmaBW[2.4952])')#meanBW[91.2, 90, 92],sigmaBW[2.4,2,3])')
 #    w.factory('BreitWigner::bw(x[' + str(xmin) + ',' + str(xmax) + '],meanBW[91.2, 90, 92],sigmaBW[2.4,2,3])')
 
-    w.factory('DoubleCB::doubleCB(x[' + str(xmin) + ',' + str(xmax) + '], \
-                                 meanDCB[125,120,130], sigmaDCB[1,0,10], \
-                                 alphaDCB['+str(doubleCB_a1)+'], nDCB['+str(doubleCB_n1)+'], alpha2['+str(doubleCB_a2)+'], n2['+str(doubleCB_n2)+'])')
+
+    if floatTail:
+       tmpWidth = paraConfig['doubleCB_width']
+       w.factory('DoubleCB::doubleCB(x[' + str(xmin) + ',' + str(xmax) + '], \
+                                     meanDCB[125,120,130], sigmaDCB['+str(tmpWidth)+'], \
+                                     alphaDCB[1,0,50], nDCB[1,0,50], alpha2[1,0,50], n2[1,0,50])')
+    else:
+       w.factory('DoubleCB::doubleCB(x[' + str(xmin) + ',' + str(xmax) + '], \
+                                     meanDCB[125,120,130], sigmaDCB[1,0,10], \
+                                     alphaDCB['+str(doubleCB_a1)+'], nDCB['+str(doubleCB_n1)+'], alpha2['+str(doubleCB_a2)+'], n2['+str(doubleCB_n2)+'])')
 
 
 #2016MC
