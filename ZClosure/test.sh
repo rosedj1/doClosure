@@ -1,8 +1,8 @@
-plotpath="/home/mhl/public_html/2017/20170222_muCorr/fitmassZ/"
+plotpath="/home/mhl/public_html/2017/20170222_eCorr/fitmassZ/"
 
 cd ../makeSummaryPlots;
-#./makeGraph.sh 2e $plotpath
-./makeGraph.sh 2mu $plotpath
+./makeGraph.sh 2e $plotpath
+#./makeGraph.sh 2mu $plotpath
 
 #./makeGraph.sh 4mu_reco $plotpath
 #./makeGraph.sh 4mu_refit $plotpath
