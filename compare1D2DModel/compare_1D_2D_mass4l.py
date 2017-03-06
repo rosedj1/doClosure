@@ -28,6 +28,8 @@ CMS_zz4l_massErr = RooRealVar('CMS_zz4l_massErr','CMS_zz4l_massErr',0,0.1)
 
 for m4lType in ['refit', 'reco']:
     for fs in ['4e','2e2mu','4mu']:
+#for m4lType in ['reco']:
+#    for fs in ['2e2mu']:
 
         path = args.path
 
@@ -63,6 +65,7 @@ for m4lType in ['refit', 'reco']:
 
    
         ###########
+        '''
         fsDict = {"4mu":'1', "4e":'2', "2e2mu":'3'}
         uncDict = {"4mu":0.01, "4e":0.3, "2e2mu":0.05}
 #        uncDict = {"4mu":0.2, "4e":0.2, "2e2mu":0.2}
@@ -80,7 +83,7 @@ for m4lType in ['refit', 'reco']:
         hist_m4l2D_1sigma_minus = RooAbsData.createHistogram(m4ldata2D_1sigma_minus,'m4ldata2D_1sigma_minus',CMS_zz4l_mass,RooFit.Binning(binInfo[0], binInfo[1], binInfo[2]))
 #        m4ldata2D_1sigma_minus.plotOn(mass4lFrame, RooFit.MarkerStyle(20), RooFit.MarkerColor(5), RooFit.MarkerSize(1))
 #        m4lpdf2D.plotOn(mass4lFrame, RooFit.LineWidth(2), RooFit.LineColor(5), RooFit.Name("m4l_2D_to_1D_1sigma_minus"))
-
+        '''
         ###########
 
         w.factory('DoubleCB::doubleCB(CMS_zz4l_mass, \
@@ -90,12 +93,12 @@ for m4lType in ['refit', 'reco']:
 
         dcb = w.pdf("doubleCB")
 
-#        dcb.fitTo(m4ldata1D)
+        dcb.fitTo(m4ldata1D)
 #        dcb.plotOn(mass4lFrame, RooFit.LineColor(2), RooFit.LineWidth(2))
-#        dcb.paramOn(mass4lFrame, RooFit.Layout(0.17, 0.4, 0.9), RooFit.Format("NE", RooFit.FixedPrecision(4)))
-#        dcb.fitTo(m4ldata2D)
+        dcb.paramOn(mass4lFrame, RooFit.Layout(0.17, 0.4, 0.9), RooFit.Format("NE", RooFit.FixedPrecision(4)))
+        dcb.fitTo(m4ldata2D)
 #        dcb.plotOn(mass4lFrame, RooFit.LineColor(5), RooFit.LineWidth(2))
-#        dcb.paramOn(mass4lFrame, RooFit.Layout(0.17, 0.4, 0.5), RooFit.Format("NE", RooFit.FixedPrecision(4)))
+        dcb.paramOn(mass4lFrame, RooFit.Layout(0.17, 0.4, 0.5), RooFit.Format("NE", RooFit.FixedPrecision(4)))
 
 ###
         c1 = TCanvas('c1', '', 800, 800)
@@ -135,7 +138,7 @@ for m4lType in ['refit', 'reco']:
         ratio.Sumw2()
         ratio.SetStats(0)
         ratio.Divide(hist_m4l2D)
-        ratio.SetMarkerStyle(1)#20)
+        ratio.SetMarkerStyle(20)
         ratio.Draw('e1p')
         ratio.SetTitle("")
         ratio.GetYaxis().SetTitle("ratio 1D/2D ")
@@ -151,6 +154,7 @@ for m4lType in ['refit', 'reco']:
         ratio.GetXaxis().SetLabelFont(43)
         ratio.GetXaxis().SetLabelSize(25)
 
+        '''
         ratio_1sigma_plus = hist_m4l1D.Clone("ratio_1sigma_plus")
         ratio_1sigma_plus.Divide(hist_m4l2D_1sigma_plus)
         ratio_1sigma_plus.Draw('same')
@@ -159,7 +163,7 @@ for m4lType in ['refit', 'reco']:
         ratio_1sigma_minus.Divide(hist_m4l2D_1sigma_minus)
         ratio_1sigma_minus.Draw('same')
         ratio_1sigma_minus.SetLineColor(4)
-
+        '''
 
         c1.SaveAs(args.saveDir + "m4l_1D_2D_compare_"+m4lType+"_"+fs+".png")
         c1.SaveAs(args.saveDir + "m4l_1D_2D_compare_"+m4lType+"_"+fs+".pdf")
