@@ -33,27 +33,27 @@
 void MySelector::SetTag(TString fs) {fs_=fs;}
 
 
-double MySelector::ApplyCorr(double pT, double eta, double pTErr, int ecalDriven, TString fs) {
+double MySelector::ApplyCorr(double pT, double eta, double pTErr, int ecalDriven) {
 
  double scale = 1;
 
  if (ecalDriven) {
 
-    if (abs(eta) < 1 && pTErr/pT < 0.03 ) scale = pTCorr(pT,eta,fs,0); // LUT_1 is for |eta| < 1 && pTErr/pT < 0.03
+    if (abs(eta) < 1 && pTErr/pT < 0.03 ) scale = pTCorr(pT,eta,0); // LUT_1 is for |eta| < 1 && pTErr/pT < 0.03
     if (abs(eta) < 1 && pTErr/pT > 0.03 ) scale = 1.187;
-    if (abs(eta) >= 1 && pTErr/pT < 0.07 ) scale = pTCorr(pT,eta,fs,1); // LUT_2 is for |eta| > 1 && pTErr/pT < 0.06
+    if (abs(eta) >= 1 && pTErr/pT < 0.07 ) scale = pTCorr(pT,eta,1); // LUT_2 is for |eta| > 1 && pTErr/pT < 0.06
     if (abs(eta) >= 1 && pTErr/pT > 0.07 ) scale = 0.815;
 
     } else {
 
-           scale = pTCorr(pT,eta,fs,2); //LUT_3 is for non ecal driven electron
+           scale = pTCorr(pT,eta,2); //LUT_3 is for non ecal driven electron
 
            }
 
     return scale;
 }
 
-double MySelector::pTCorr(double pT, double eta, TString fs, int tag){
+double MySelector::pTCorr(double pT, double eta, int tag){
 
  TH2F* LUT_ = LUTs_[tag];
 
@@ -115,6 +115,14 @@ void MySelector::Begin(TTree * /*tree*/)
 
       }
 
+
+   if (fs_ == "2mu") {
+
+      fLUT_1_ = TFile::Open("LUT_"+fs_+".root");
+      LUT_1_ = (TH2F*) fLUT_1_->Get(fs_);
+      LUTs_[0] = LUT_1_;
+
+      }
 }
 
 void MySelector::SlaveBegin(TTree * /*tree*/)
@@ -163,19 +171,19 @@ Bool_t MySelector::Process(Long64_t entry)
 
    double pterr1_corr = *pterr1; double pterr2_corr = *pterr2;
 
-/*
+
    if (fs_ == "2mu") {
 
-      pterr1_corr *= pTCorr(*pT1, *eta1, fs_, tag_);
-      pterr2_corr *= pTCorr(*pT2, *eta2, fs_, tag_);
+      pterr1_corr *= pTCorr(*pT1, *eta1,  0);
+      pterr2_corr *= pTCorr(*pT2, *eta2,  0);
 
       }
 
-*/
+
    if (fs_ == "2e") {
 
-      pterr1_corr *= ApplyCorr(*pT1, *eta1, *pterr1, *lep1_ecalDriven, fs_);   
-      pterr2_corr *= ApplyCorr(*pT2, *eta2, *pterr2, *lep2_ecalDriven, fs_);                    
+      pterr1_corr *= ApplyCorr(*pT1, *eta1, *pterr1, *lep1_ecalDriven);   
+      pterr2_corr *= ApplyCorr(*pT2, *eta2, *pterr2, *lep2_ecalDriven);                    
 
       }
    

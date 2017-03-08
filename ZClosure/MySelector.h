@@ -97,9 +97,9 @@ public :
 
    void SetPtErrCorrection(TString fs, double pTErrCorr_eta1, double pTErrCorr_eta2, double pTErrCorr_eta3, double pTErrCorr_eta4);
    void SetPtErrCorrection(TString fs, vector<double> pTErrCorr);
-   double pTCorr(double pT, double eta, TString fs, int tag);
+   double pTCorr(double pT, double eta,  int tag);
    void SetTag(TString fs); 
-   double ApplyCorr(double pT, double eta, double pTErr, int ecalDriven, TString fs);
+   double ApplyCorr(double pT, double eta, double pTErr, int ecalDriven);
 
    ClassDef(MySelector,0);
 
