@@ -28,6 +28,8 @@ def doAllClosure(fs, plotPath, Z_width, plotBinInfo, singleCB_tail, pTErrCorrect
 #    inputpath = '/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/outputRoot/Data_2016_v1/'
 #    inputpath = '/raid/raid9/mhl/HZZ4L_Run2/HZZ4L/PereventMassErrCorr_2016ICHEP/PereventMassErrCorr_v0_forData/'
 #    inputpath = '/raid/raid9/mhl/HZZ4L_Run2/HZZ4L/PereventMassErrCorr_2016ICHEP/getCorrection_ICHEP2016/inputRoot/'
+
+#    inputpath = '/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/outputRoot/DY_2016MC_v1_20170222/'
 #    filename = 'DYJetsToLL_M-50_kalman_v4_m'+fs+'.root'
 #    inputpath = '/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/outputRoot/DY_2015MC_kalman_v4_76X/'
     inputpath = '/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/outputRoot/Data_2016_v1_20170223/'
@@ -52,9 +54,9 @@ def doAllClosure(fs, plotPath, Z_width, plotBinInfo, singleCB_tail, pTErrCorrect
         call(cmd, shell=True)
 
 
-#plotBinInfo = '100 80 100'
+#plotBinInfo = '500 70 110'
 plotBinInfo = '300 60 120'
-plotpath = '/home/mhl/public_html/2017/20170223_lepCorr_data/fitmassZ/'
+plotpath = '/home/mhl/public_html/2017/20170308_plotsForApproval/fitmassZ/'
 
 singleCB_tail_mu = '1.583 1.086' #first is alpha, second is n of singleCB
 singleCB_tail_e = '1.1443 2.5964' #first is alpha, second is n of singleCB
@@ -63,7 +65,7 @@ doubleCB_tail_e = '1 2.13 1.262 50'
 pTErrCorrections_mu = '1.251 1.292 1.117 1'
 pTErrCorrections_e = '1.245 1.140 1.077 1.178'
 
-#ZWidth = 2.37
+#ZWidth = 2.47
 ZWidth = 2.49
 
 doAllClosure('2mu', plotpath, ZWidth, plotBinInfo, singleCB_tail_mu, pTErrCorrections_mu)

@@ -1,4 +1,4 @@
-plotpath="/home/mhl/public_html/2017/20170223_lepCorr_data/fitmassZ/"
+plotpath="/home/mhl/public_html/2017/20170308_plotsForApproval/fitmassZ/"
 
 cd ../makeSummaryPlots;
 #./makeGraph.sh 2e $plotpath

@@ -66,7 +66,7 @@ def MakeFitPlotFromTree(tree, paraConfig, fitResult):
     xmax = binInfo[2]
     
     w.factory('Gaussian::gauss(x[' + str(xmin) + ',' + str(xmax) + '],meanGauss[0,-1,1],sigmaGauss[0.01,0,0.015])')
-    w.factory('BreitWigner::bw(x[' + str(xmin) + ',' + str(xmax) + '],meanBW[91.2],sigmaBW['+str(Z_width)+'])')#meanBW[91.2, 90, 92],sigmaBW[2.4,2,3])')
+    w.factory('BreitWigner::bw(x[' + str(xmin) + ',' + str(xmax) + '],meanBW[91.1876],sigmaBW['+str(Z_width)+'])')#meanBW[91.2, 90, 92],sigmaBW[2.4,2,3])')
 #    w.factory('BreitWigner::bw(x[' + str(xmin) + ',' + str(xmax) + '],meanBW[91.2, 90, 92],sigmaBW[2.4,2,3])')
 
 #   w.factory('DoubleCB::doubleCB(x[' + str(xmin) + ',' + str(xmax) + '], \
