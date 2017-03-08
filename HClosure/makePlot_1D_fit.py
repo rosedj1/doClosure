@@ -42,6 +42,7 @@ def MakeFitPlotFromTree(tree, paraConfig, fitResult):
     doubleCB_n1 = paraConfig['doubleCB_n1']
     doubleCB_a2 = paraConfig['doubleCB_a2']
     doubleCB_n2 = paraConfig['doubleCB_n2']
+    floatTail = paraConfig['floatTail']
     
     #f1 = TFile(rootPath1 + rootfile1, 'READ')
     #t1 = f1.Get(tree1)
@@ -66,9 +67,33 @@ def MakeFitPlotFromTree(tree, paraConfig, fitResult):
     w.factory('BreitWigner::bw(x[' + str(xmin) + ',' + str(xmax) + '],meanBW[91.187],sigmaBW[2.4952])')#meanBW[91.2, 90, 92],sigmaBW[2.4,2,3])')
 #    w.factory('BreitWigner::bw(x[' + str(xmin) + ',' + str(xmax) + '],meanBW[91.2, 90, 92],sigmaBW[2.4,2,3])')
 
-    w.factory('DoubleCB::doubleCB(x[' + str(xmin) + ',' + str(xmax) + '], \
-                                 meanDCB[125,124,126], sigmaDCB[0.5,0.1,10], \
-                                  alphaDCB[1,0,10], nDCB['+str(doubleCB_n1)+'], alpha2[1,0,10], n2['+str(doubleCB_n2)+'])')
+
+    if floatTail:
+       tmpWidth = paraConfig['doubleCB_width']
+       w.factory('DoubleCB::doubleCB(x[' + str(xmin) + ',' + str(xmax) + '], \
+                                     meanDCB[125,120,130], sigmaDCB['+str(tmpWidth)+'], \
+                                     alphaDCB[1,0,50], nDCB[1,0,50], alpha2[1,0,50], n2[1,0,50])')
+    else:
+       w.factory('DoubleCB::doubleCB(x[' + str(xmin) + ',' + str(xmax) + '], \
+                                     meanDCB[125,120,130], sigmaDCB[1,0,10], \
+                                     alphaDCB['+str(doubleCB_a1)+'], nDCB['+str(doubleCB_n1)+'], alpha2['+str(doubleCB_a2)+'], n2['+str(doubleCB_n2)+'])')
+
+
+#2016MC
+#4e reco                               alphaDCB[0.895], nDCB[8.383], alpha2[2.238], n2[2.848])')
+#4e refit                              alphaDCB[0.9629], nDCB[6.489], alpha2[2.067], n2[2.408])')
+
+#2015MC
+# 4 point of 4e refit                                 alphaDCB[1.112], nDCB[3.984], alpha2[2.338], n2[2.15])')
+# 3 point of 4e refit                                 alphaDCB[0.9876], nDCB[4.394], alpha2[2.022], n2[3.256])')
+# 3 point of 4e reco                                 alphaDCB[0.95], nDCB[4.23], alpha2[2.189], n2[3.04])')
+# 2 point of 4mu reco                                 alphaDCB[1.315], nDCB[1.834], alpha2[2.53], n2[1.288])')
+# 2 point of 2e2mu reco inclusive                                 alphaDCB[1.187], nDCB[2.369], alpha2[2.577], n2[1.258])')
+# 2 point of 2e2mu refit inclusive                                alphaDCB[1.237], nDCB[2.482], alpha2[2.363], n2[1.873])')
+
+
+#                                 alphaDCB['+str(doubleCB_a1)+'], nDCB['+str(doubleCB_n1)+'], alpha2['+str(doubleCB_a2)+'], n2['+str(doubleCB_n2)+'])')
+#                                 alphaDCB[1,0,10], nDCB['+str(doubleCB_n1)+'], alpha2[1,0,10], n2['+str(doubleCB_n2)+'])')
 #                                  alphaDCB[1,0,50], nDCB['+str(doubleCB_n1)+'], alpha2[1,0,50], n2['+str(doubleCB_n2)+'])')
 #                                  alphaDCB['+str(doubleCB_a1)+'], nDCB['+str(doubleCB_n1)+'], alpha2['+str(doubleCB_a2)+'], n2['+str(doubleCB_n2)+'])')
 #                                  alphaDCB[1,0,50], nDCB[1,0,50], alpha2[1,0,50], n2[1,0,50])')
@@ -93,8 +118,8 @@ def MakeFitPlotFromTree(tree, paraConfig, fitResult):
     
     dataHist1 = RooDataHist('dataHist1', 'dataHist1', RooArgList(w.var('x')), HIST1, 1)
     pdf = w.pdf(pdfName)
-    fFit = pdf.fitTo(dataHist1)#, RooFit.PrintLevel(-1))
-    
+    fFit = pdf.fitTo(dataHist1,RooFit.Save(kTRUE))#, RooFit.PrintLevel(-1))
+
     xframe = w.var('x').frame(RooFit.Title(xTitle))
     
     dataHist1.plotOn(xframe, RooFit.MarkerStyle(20), RooFit.MarkerColor(1))
@@ -121,6 +146,8 @@ def MakeFitPlotFromTree(tree, paraConfig, fitResult):
     dummy.Draw()
     
     xframe.Draw('same')
+    chi2 = xframe.chiSquare(fFit.floatParsFinal().getSize())
+    dof =  fFit.floatParsFinal().getSize()
     
     legend = TLegend(0.15,0.9,0.42,0.95)
     #legend.AddEntry(HIST2, legend2, 'l')
@@ -136,6 +163,8 @@ def MakeFitPlotFromTree(tree, paraConfig, fitResult):
     latex.SetTextFont(42)
     latex.SetTextAlign(11)
     latex.DrawLatex(0.18, 0.45, latexNote1)
+    latex.DrawLatex(0.6, 0.3, "#chi^{2}/DOF = %.3f" %(chi2/dof))
+
     c1.SaveAs(savePath+saveName+'.png')
     c1.SaveAs(savePath+saveName+'.pdf')
 
@@ -151,5 +180,6 @@ def MakeFitPlotFromTree(tree, paraConfig, fitResult):
     fitResult['alpha2_err'] = w.var('alpha2').getError()
     fitResult['n2'] = w.var('n2').getVal()
     fitResult['n2_err'] = w.var('n2').getError()
-    
-    
+    fitResult['meanDCB'] = w.var('meanDCB').getVal()
+    fitResult['meanDCB_err'] = w.var('meanDCB').getError()
+

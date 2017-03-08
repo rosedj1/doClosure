@@ -103,11 +103,11 @@ def MakeComparePlot_1D(w, binInfo, xTitle, yTitle, saveName):
     legend.SetFillColor(0)
     legend.SetBorderSize(1)
     legend.Draw('SAME')
-    c1.SaveAs("/home/mhl/public_html/2016/20160906_mass/"+saveName+".png")
+    c1.SaveAs("/home/mhl/public_html/2017/20170301_checkModel/"+saveName+".png")
 
 
-fullSimPath = "/raid/raid9/mhl/HZZ4L_Run2/HZZ4L/PereventMassErrCorr_2016ICHEP/getCorrection_ICHEP2016/toyStudy_test/inputTrees/"
-toyPath = "/raid/raid9/mhl/HZZ4L_Run2/HZZ4L/PereventMassErrCorr_2016ICHEP/getCorrection_ICHEP2016/toyStudy_test/STEP3_mergedToys_BkgSmear1pct4mu_FixShape_FixZX/"
+fullSimPath = "/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/doToy_tmp/inputTrees/"
+toyPath = "/raid/raid9/mhl/HZZ4L_Run2_post2016ICHEP/HiggsMass_HZZ4L/packages/doToy_tmp/STEP3_mergedToys_BkgSmear1pct4mu_FixShape_FixZX/"
 templatePath = toyPath
 
 fullSimTreeName = {'sig': 'mH_125_', 'irrBkg': 'qqZZ_LowMassSkim_', 'redBkg': 'Data_2016_4lLowMassSkim_'}
@@ -117,7 +117,7 @@ tag_refit = {'reco': '', 'refit': 'REFIT'}
 tag_varName = {'mass4l': '', 'mass4lErr': 'Err'}
 fullSimNames = {'mass4l_reco':'mass4l', 'mass4l_refit':'mass4lREFIT', 'mass4lErr_reco':'mass4lErr/mass4l', 'mass4lErr_refit':'mass4lErrREFIT/mass4lREFIT'}
 pdfsName = {'sig_mass4l':'ggH_hzz', 'irrBkg_mass4l': 'bkg_qqzz', 'redBkg_mass4l': 'bkg_zjets', \
-           'sig_mass4lErr': 'pdfErrS_', 'irrBkg_mass4lErr': 'pdfErr_qqzz_', 'redBkg_mass4lErr': 'pdfErr_ggzz_'}
+           'sig_mass4lErr': 'pdfErrS_', 'irrBkg_mass4lErr': 'pdfErr_qqzz_', 'redBkg_mass4lErr': 'pdfErr_zjets_'}
 
 tag_pdf_fs = {'mass4l_4mu': '', 'mass4l_4e': '', 'mass4l_2e2mu': '', \
           'mass4lErr_4mu': '1', 'mass4lErr_4e': '2', 'mass4lErr_2e2mu': '3'}

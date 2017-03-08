@@ -1,4 +1,4 @@
-plotpath="/home/mhl/public_html/2016/20161207_mass/scratch_fitmassH/"
+plotpath="/home/mhl/public_html/2017/20170227_tailPara/"
 
 cd ../makeSummaryPlots;
 #./makeGraph.sh 4mu_reco $plotpath

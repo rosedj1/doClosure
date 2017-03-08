@@ -80,10 +80,10 @@ def MakeFitPlotFromTree(tree, paraConfig, fitResult):
 #                              alphaDCB['+str(doubleCB_a1)+'], nDCB['+str(doubleCB_n1)+'], alpha2['+str(doubleCB_a2)+'], n2['+str(doubleCB_n2)+'])')
 #                              alphaDCB[1,0,10], nDCB[1,0,10], alpha2[1,0,10], n2[1,0,50])')
 
-    w.factory('CBShape::singleCB(x[' + str(xmin) + ',' + str(xmax) + '], \
-                                meanCB[0, -1.5, 1.5], sigmaCB[0.5,0.1,10], alphaCB['+str(singleCB_a)+'], nCB['+str(singleCB_n)+'])')
 #    w.factory('CBShape::singleCB(x[' + str(xmin) + ',' + str(xmax) + '], \
-#                                meanCB[0,-1.5,1.5], sigmaCB[1,0.1,10], alphaCB[1,0,10], nCB[1,0,10])')
+#                                meanCB[0, -1.5, 1.5], sigmaCB[0.5,0.1,10], alphaCB['+str(singleCB_a)+'], nCB['+str(singleCB_n)+'])')
+    w.factory('CBShape::singleCB(x[' + str(xmin) + ',' + str(xmax) + '], \
+                                meanCB[0,-1.5,1.5], sigmaCB[1,0.1,10], alphaCB[1,0,10], nCB[1,0,10])')
 
     w.factory('Polynomial::poly3(x,{a0[1, -10,10],a1[0.1, -10,10],a2[0.1, -10,10],a3[1, -10,10]})')
 
@@ -99,7 +99,7 @@ def MakeFitPlotFromTree(tree, paraConfig, fitResult):
     w.factory('SUM:BWplusEXP(f1[0,1]*bw, exp)')
     w.factory('SUM:BWplusPOLY3(f1[0,1]*bw, poly3)')
 
-    w.factory('SUM:model(fsig[0.9,0.7,1]*BWxCB, bkg)')
+    w.factory('SUM:model(fsig[0.9,0.7,0.99]*BWxCB, bkg)')
     
     dataHist1 = RooDataHist('dataHist1', 'dataHist1', RooArgList(w.var('x')), HIST1, 1)
     pdf = w.pdf(pdfName)

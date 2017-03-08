@@ -1,0 +1,1 @@
+python makeGraph_twoInputs.py --intxt "sigma_m2e_data.txt" --intxt2 "sigma_m2e_mc.txt" --plotpath "/home/mhl/public_html/2017/20170118_test/" --plotname "closure_2e_data_mc.png" --measurement "m_{2e}"
