@@ -8,10 +8,10 @@ def doAllClosure(fs, plotPath, Z_width, plotBinInfo, singleCB_tail, pTErrCorrect
     nDiv = 8
     for i in range(nDiv):
        massZErr_rel_bins.append(massZErr_rel_bins[-1]+(0.03-0.009)/nDiv)
-#    massZErr_rel_bins.append(0.04)
+    massZErr_rel_bins.append(0.04)
 #    massZErr_rel_bins.append(0.05)
-#    massZErr_rel_bins.append(0.07)
-    massZErr_rel_bins.append(0.1)
+    massZErr_rel_bins.append(1)
+#    massZErr_rel_bins.append(0.1)
 
     '''
     massZErr_rel_bins = [0,0.8]
