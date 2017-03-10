@@ -3,13 +3,14 @@ import time
 
 def doAllClosure(fs, plotPath, Z_width, plotBinInfo, singleCB_tail, pTErrCorrections):
 
-    massZErr_rel_bins = [0,0.009]
-    nDiv = 8
+    massZErr_rel_bins = [0,0.01]#09]
+    nDiv = 13
     for i in range(nDiv):
-       massZErr_rel_bins.append(massZErr_rel_bins[-1]+(0.03-0.009)/nDiv)
-    massZErr_rel_bins.append(0.04)
-#    massZErr_rel_bins.append(0.1)
-    massZErr_rel_bins.append(1)
+       massZErr_rel_bins.append(massZErr_rel_bins[-1]+(0.035-0.01)/nDiv)
+#       massZErr_rel_bins.append(massZErr_rel_bins[-1]+(0.03-0.009)/nDiv)
+#    massZErr_rel_bins.append(0.04)
+    massZErr_rel_bins.append(0.1)
+#    massZErr_rel_bins.append(1)
 #    massZErr_rel_bins = [0,1]
 
 
@@ -53,7 +54,7 @@ def doAllClosure(fs, plotPath, Z_width, plotBinInfo, singleCB_tail, pTErrCorrect
 
 #plotBinInfo = '100 80 100'
 plotBinInfo = '300 60 120'
-plotpath = '/home/mhl/public_html/2017/20170308_plotsForApproval/fitmassZ/'
+plotpath = '/home/mhl/public_html/2017/20170310_plotsForApproval/fitmassZ/'
 
 singleCB_tail_mu = '1.583 1.086' #first is alpha, second is n of singleCB
 singleCB_tail_e = '1.1443 2.5964' #first is alpha, second is n of singleCB
@@ -65,7 +66,7 @@ pTErrCorrections_e = '1.245 1.140 1.077 1.178'
 ZWidth = 2.49
 #ZWidth = 2.49
 
-doAllClosure('2mu', plotpath, ZWidth, plotBinInfo, singleCB_tail_mu, pTErrCorrections_mu)
+#doAllClosure('2mu', plotpath, ZWidth, plotBinInfo, singleCB_tail_mu, pTErrCorrections_mu)
 doAllClosure('2e', plotpath, ZWidth, plotBinInfo, singleCB_tail_e, pTErrCorrections_e)
 #doAllClosure('2e', plotpath, ZWidth, plotBinInfo, doubleCB_tail_e, pTErrCorrections_e)
 

@@ -100,10 +100,10 @@ myTree.Process(selector)
 
 ### should make following lines more clean ...
 sigma_m2l = [fitResult['sigmaCB'], fitResult['sigmaCB_err'],\
-             selector.massZErr_sum/selector.nEvents,\
-             selector.massZErr_sum_corr/selector.nEvents]#,\
-#                                 selector.massZErr_sum_rel/selector.nEvents,\
-#                                 selector.massZErr_sum_rel_corr/selector.nEvents]
+             selector.massZErr_sum_rel/selector.nEvents,\
+             selector.massZErr_sum_rel_corr/selector.nEvents]
+#             selector.massZErr_sum/selector.nEvents,\
+#             selector.massZErr_sum_corr/selector.nEvents]#,\
 
 print ''
 print sigma_m2l

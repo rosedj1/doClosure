@@ -4,8 +4,8 @@ setTDRStyle()
 
 from array import array
 
-data_mu = [line.strip() for line in open("sigma_m2mu.txt", 'r')]
-data_e = [line.strip() for line in open("sigma_m2e.txt", 'r')]
+data_mu = [line.strip() for line in open("sigma_m2mu.txt", 'r') if line.strip()]
+data_e = [line.strip() for line in open("sigma_m2e.txt", 'r') if line.strip()]
 
 data_mu = [i.split() for i in data_mu]
 data_e = [i.split() for i in data_e]
@@ -31,20 +31,24 @@ for i in range(len(data_mu)):
     y_e.append(float(data_e[i][0]))
     y_e_err.append(float(data_e[i][1]))
 
-gr_mu = TGraphErrors(10, x_mu, y_mu, x_mu_err, y_mu_err)
-gr_e = TGraphErrors(10, x_e, y_e, x_e_err, y_e_err)
+gr_mu = TGraphErrors(len(x_mu), x_mu, y_mu, x_mu_err, y_mu_err)
+gr_e = TGraphErrors(len(x_e), x_e, y_e, x_e_err, y_e_err)
 
 c1 = TCanvas('c1', '', 800, 800)
-
-dummy = TH1D("dummy","dummy",1,0,5)
+#c1.SetGrid()
+c1.SetLeftMargin(0.15)
+dummy = TH1D("dummy","dummy",1,0,0.05)
 dummy.SetMinimum(0.0)
-dummy.SetMaximum(5)
+dummy.SetMaximum(0.05)
 dummy.SetLineColor(0)
 dummy.SetMarkerColor(0)
 dummy.SetLineWidth(0)
 dummy.SetMarkerSize(0)
-dummy.GetXaxis().SetTitle("Predicted #sigma_{2l}(GeV)")
-dummy.GetYaxis().SetTitle("Measured #sigma_{2l}(GeV)")
+dummy.GetXaxis().SetTitle("Predicted #sigma_{m_{2l}}/m_{2l}")#(GeV)")
+dummy.GetYaxis().SetTitle("Measured #sigma_{m_{2l}}/m_{2l}")#(GeV)")
+dummy.GetXaxis().SetNdivisions(505)
+dummy.GetYaxis().SetNdivisions(505)
+dummy.GetYaxis().SetTitleOffset(1.4)
 dummy.Draw()
 
 
@@ -60,7 +64,7 @@ gr_e.SetMarkerStyle(20)
 gr_mu.SetMarkerSize(1.3)
 gr_e.SetMarkerSize(1.3)
 
-maxReso = 5
+maxReso = 0.05
 unc = 1.2
 
 lineBoundDown = TLine(0, 0, maxReso, maxReso/unc)
@@ -71,6 +75,28 @@ lineBoundUp.Draw()
 lineBoundDown.SetLineStyle(kDashed)
 lineBoundDown.Draw()
 lineBoundDiagonal.Draw()
+
+massZErr_rel_bins = [0,0.009]
+nDiv = 8
+for i in range(nDiv):
+    massZErr_rel_bins.append(massZErr_rel_bins[-1]+(0.03-0.009)/nDiv)
+massZErr_rel_bins.append(0.04)
+massZErr_rel_bins.append(1)
+
+#lines1 = []
+#lines2 = []
+#for i in range(len(massZErr_rel_bins)):
+#    num = massZErr_rel_bins[i]
+#    print num
+#    lines1.append(TLine(num,0,num,num))
+#    lines2.append(TLine(0,num,num,num))
+#    line1.SetLineStyle(kDashed)
+#    line1.Draw('same')
+#    line2.SetLineStyle(kDashed)
+#    line2.Draw('same')
+#for i in range(len(massZErr_rel_bins)):
+#    lines1[i].Draw()
+#    lines2[i].Draw()
 
 legend = TLegend(0.2,0.7,0.5,0.85)
 legend.AddEntry(gr_e, "Z#rightarrow e^{+}e^{-} Data", "p")

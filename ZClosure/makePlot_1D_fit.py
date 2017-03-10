@@ -83,7 +83,7 @@ def MakeFitPlotFromTree(tree, paraConfig, fitResult):
 #    w.factory('CBShape::singleCB(x[' + str(xmin) + ',' + str(xmax) + '], \
 #                                meanCB[0, -1.5, 1.5], sigmaCB[0.5,0.1,10], alphaCB['+str(singleCB_a)+'], nCB['+str(singleCB_n)+'])')
     w.factory('CBShape::singleCB(x[' + str(xmin) + ',' + str(xmax) + '], \
-                                meanCB[0,-1.5,1.5], sigmaCB[1,0.1,10], alphaCB[1,0,10], nCB[1,0,10])')
+                                meanCB[0,-1.5,1.5], sigmaCB[1,0.1,10], alphaCB[1,0,10], nCB[1,0,100])')
 
     w.factory('Polynomial::poly3(x,{a0[1, -10,10],a1[0.1, -10,10],a2[0.1, -10,10],a3[1, -10,10]})')
 
@@ -148,7 +148,7 @@ def MakeFitPlotFromTree(tree, paraConfig, fitResult):
     c1.SaveAs(savePath+saveName+'.pdf')
 
     #more optimal way is to save all variables in workspace in dictionary and pass to ouside
-    fitResult['sigmaCB'] = w.var('sigmaCB').getVal()
+    fitResult['sigmaCB'] = w.var('sigmaCB').getVal()/(91.2+w.var('meanCB').getVal())
 #    fitResult['sigmaDCB'] = w.var('sigmaDCB').getVal()
-    fitResult['sigmaCB_err'] = w.var('sigmaCB').getError()
+    fitResult['sigmaCB_err'] = w.var('sigmaCB').getError()/(91.2+w.var('meanCB').getVal())
    
