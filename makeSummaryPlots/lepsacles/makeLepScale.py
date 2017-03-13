@@ -23,17 +23,21 @@ def MakeGraph(txtfile1, txtfile2):
     return gr
 
 ##gr1 = MakeGraph("data_2mu_5_100.txt", "mc_2mu_5_100.txt")
-gr1 = MakeGraph("data_2mu_0.0_2.4.txt", "mc_2mu_0.0_2.4.txt")
+#gr1 = MakeGraph("data_2mu_0.0_2.4.txt", "mc_2mu_0.0_2.4.txt")
+gr1 = MakeGraph("data_2mu_0_0.1.txt", "mc_2mu_0_0.1.txt")
+#gr1 = MakeGraph("data_2e_0_0.1.txt", "mc_2e_0_0.1.txt")
+
 xMin = 0#-2.4
 ##xMax = 2.4
-xMax = 100
+xMax = 0.04
 yMin = -0.001
 yMax = 0.001
 #xTitle = "|#eta|"
-xTitle = "p_{T}(GeV)"
+#xTitle = "p_{T}(GeV)"
+xTitle = "#sigma_{m_{2l}}/m_{2l}"
 yTitle = "m_{#mu#mu}(Data-MC)/True"
 unc = 0.0004
-savename = "mu_lepScale_vs_pt_testBinning_DCB_withBKG_randomCut.png"
+savename = "mu_lepScale_vs_m2lerr_testBinning_DCB_withBKG_randomCut.png"
 
 #gr1 = MakeGraph("data_2e_7_100.txt", "mc_2e_7_100.txt")
 ##gr1 = MakeGraph("data_2e_0.0_2.5.txt", "mc_2e_0.0_2.5.txt")
@@ -72,4 +76,4 @@ gr1.Draw("same pe")
 gr1.SetMarkerStyle(20)
 
 #savename = "mu_lepScale_vs_eta.png"
-c1.SaveAs("/home/mhl/public_html/2017/20170312_checkLepScale/"+savename)
+c1.SaveAs("/home/mhl/public_html/2017/20170313_checkLepScale_vsM2lErr/"+savename)

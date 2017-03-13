@@ -26,6 +26,7 @@ def ParseOption():
     parser.add_argument('--pTErrCorrections', dest='pTErrCorrections', nargs='+', help='', type=float)#, required=True)
     parser.add_argument('--minEta', dest='min_eta', type=float, help='eta min')
     parser.add_argument('--maxEta', dest='max_eta', type=float, help='eta max')
+    parser.add_argument('--isData', dest='isData', action='store_true', default=False, help='isData')
 
     args = parser.parse_args()
     return args
@@ -87,6 +88,11 @@ cut = "massZ > " + str(binInfo[1]) + " && massZ < " + str(binInfo[2]) + " && \
          (eta1) > " + str(massZErr_rel_min) +  " && (eta1) < " + str(massZErr_rel_max) +  " ) || \
         (" + randomCut2 + " && pT2 > " + str(etaLow) + " && pT2 < " + str(etaHigh) + " && \
          (eta2) > " + str(massZErr_rel_min) +  " && (eta2) < " + str(massZErr_rel_max) + ") )"
+'''
+#corrected m2l error
+cut = "massZ > " + str(binInfo[1]) + " && massZ < " + str(binInfo[2]) + " && \
+         massZErr_corr/massZ > " + str(massZErr_rel_min) +  " && massZErr_corr/massZ < " + str(massZErr_rel_max) 
+'''
 
 plotParaConfig = \
 {\
@@ -116,6 +122,20 @@ fitResult = {'sigmaCB':0, 'sigmaDCB':0}
 myFile = TFile.Open(inputPath+inputFile,'READ')
 myTree = myFile.Get(treeName)
 
+friendTree = "newtree_" + args.fs 
+if args.isData:
+   friendTree += "_data.root"
+else:
+   friendTree += "_mc.root"
+
+#myFriend = TFile.Open(friendTree,'read')
+#myTree1 = myFriend.Get(treeName)
+#print friendTree
+#myTree1.Print()
+#sys.exit()   
+myTree.AddFriend("passedEvents", friendTree)
+#myTree.Scan("massErr:massErr_corr")
+#sys.exit()
 #TProof.Open("")
 #c = TChain("myTree")
 #c.Draw(">>myList", cut, "entrylist")

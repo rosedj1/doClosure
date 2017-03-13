@@ -36,21 +36,24 @@ def MakeGraph(txtfile1, txtfile2):
 
     return gr
 
-#gr1 = MakeGraph("data_2mu_5_100.txt", "mc_2mu_5_100.txt")
-gr1 = MakeGraph("data_2mu_0.0_2.4.txt", "mc_2mu_0.0_2.4.txt")
-#gr2 = MakeGraph("data_2e_7_100.txt", "mc_2e_7_100.txt")
-gr2 = MakeGraph("data_2e_0.0_2.5.txt", "mc_2e_0.0_2.5.txt")
+gr1 = MakeGraph("data_2mu_5_100.txt", "mc_2mu_5_100.txt")
+#gr1 = MakeGraph("data_2mu_0.0_2.4.txt", "mc_2mu_0.0_2.4.txt")
+#gr1 = MakeGraph("data_2mu_0_0.1.txt", "mc_2mu_0_0.1.txt")
+gr2 = MakeGraph("data_2e_7_100.txt", "mc_2e_7_100.txt")
+#gr2 = MakeGraph("data_2e_0.0_2.5.txt", "mc_2e_0.0_2.5.txt")
+#gr2 = MakeGraph("data_2e_0_0.1.txt", "mc_2e_0_0.1.txt")
 
-xMin = 0#-2.5
-#xMax = 2.5
-xMax = 100
+xMin = -2.5
+xMax = 2.5
+#xMax = 100
 yMin = -0.003
 yMax = 0.003
-#xTitle = "|#eta|"
-xTitle = "p_{T}(GeV)"
-yTitle = "m_{ll}(Data-MC)/True"
+xTitle = "|#eta|"
+#xTitle = "#sigma_{m_{2l}}/m_{2l}"
+#xTitle = "p_{T}(GeV)"
+yTitle = "(m_{data}^{peak}-m_{MC}^{peak})/m_{PDG}"
 unc = 0.0004
-savename = "lepScale_vs_pt_testBinning_DCB_withBKG_randomCut.png"
+savename = "lepScale_vs_eta.png"
 
 c1 = TCanvas("c1","",800,800)
 c1.SetLeftMargin(0.2)
@@ -73,18 +76,42 @@ lineBoundDiagonal_up.Draw()
 lineBoundDiagonal_dn.Draw()
 
 gr1.Draw("same pe")
-gr1.SetMarkerStyle(20)
+gr1.SetMarkerStyle(25)
 gr2.Draw("same pe")
 gr2.SetMarkerStyle(20)
 gr2.SetMarkerColor(2)
+gr1.SetMarkerColor(4)
+gr2.SetMarkerSize(1.3)
+gr1.SetMarkerSize(1.3)
 
-legend = TLegend(0.3,0.7,0.6,0.85)
-legend.AddEntry(gr1, "Z#rightarrow #mu^{+}#mu^{-}", "ep")
+
+legend = TLegend(0.25,0.75,0.55,0.9)
 legend.AddEntry(gr2, "Z#rightarrow e^{+}e^{-}", "pe")
+legend.AddEntry(gr1, "Z#rightarrow #mu^{+}#mu^{-}", "ep")
 legend.SetTextSize(0.05)
-legend.SetLineWidth(1)
+legend.SetLineWidth(0)
 legend.SetFillColor(0)
 legend.SetBorderSize(1)
 legend.Draw()
 
-c1.SaveAs("/home/mhl/public_html/2017/20170312_checkLepScale/"+savename)
+latex2 = TLatex()
+latex2.SetNDC()
+latex2.SetTextSize(0.5*c1.GetTopMargin())
+latex2.SetTextFont(42)
+latex2.SetTextAlign(31) # align right                                                                     
+latex2.DrawLatex(0.90, 0.95,"35.9 fb^{-1} (13 TeV)")
+latex2.SetTextSize(0.8*c1.GetTopMargin())
+latex2.SetTextFont(62)
+latex2.SetTextAlign(11) # align right                                                                     
+latex2.DrawLatex(0.19, 0.95, "CMS")
+latex2.SetTextSize(0.6*c1.GetTopMargin())
+latex2.SetTextFont(52)
+latex2.SetTextAlign(11)
+latex2.DrawLatex(0.32, 0.95, "Preliminary")
+latex2.SetTextFont(42)
+latex2.SetTextSize(0.45*c1.GetTopMargin())
+
+
+c1.SaveAs("/home/mhl/public_html/2017/20170313_checkLepScale_vsM2lErr/"+savename)
+c1.SaveAs("/home/mhl/public_html/2017/20170313_checkLepScale_vsM2lErr/"+savename.replace("png","pdf"))
+

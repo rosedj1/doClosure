@@ -23,12 +23,15 @@ def doAllClosure(fs, plotPath, Z_width, plotBinInfo, singleCB_tail, pTErrCorrect
 #    massZErr_rel_bins = [0,0.8,1.5,2,2.5]
 #    massZErr_rel_bins = [-2.5,-2,-1.5,-1.2,-1,-0.8,0,0.8,1,1.2,1.5,2,2.4]
 
-    '''
-    nDiv = 13
-    for i in range(nDiv):
-       massZErr_rel_bins.append(massZErr_rel_bins[-1]+(0.035-0.01)/nDiv)
-    massZErr_rel_bins.append(0.1)
-    '''
+#    massZErr_rel_bins = [0,0.01,0.012,0.014,0.017,0.02,0.03,0.04,0.1]   
+#    nDiv = 8
+#    massZErr_rel_bins = [0,0.01]
+#    for i in range(nDiv):
+#       massZErr_rel_bins.append(massZErr_rel_bins[-1]+(0.025-0.01)/nDiv)
+#    massZErr_rel_bins.append(0.03)
+#    massZErr_rel_bins.append(0.04)
+#    massZErr_rel_bins.append(0.1)
+    
 
 #2016 data and mc
 
@@ -61,7 +64,15 @@ def doAllClosure(fs, plotPath, Z_width, plotBinInfo, singleCB_tail, pTErrCorrect
             + ' --singleCB_tail ' + singleCB_tail \
             + ' --pTErrCorrections ' + pTErrCorrections \
             + ' --outtxtName ' + outtxtName + ' --fs ' + fs \
-            + ' --minEta ' + str(etaRange[0]) + ' --maxEta ' + str(etaRange[1]) + ' &'
+            + ' --minEta ' + str(etaRange[0]) + ' --maxEta ' + str(etaRange[1]) 
+
+        if isData:
+  
+           cmd +=  ' --isData &'
+
+        else:
+
+           cmd += ' &'
 
         #    print cmd
         call(cmd, shell=True)
@@ -73,11 +84,13 @@ def doAllClosure(fs, plotPath, Z_width, plotBinInfo, singleCB_tail, pTErrCorrect
 etaRange = [5,100]
 #etaRange = [7,100]
 #etaRange = [0.0,2.5]
-
+#etaRange = [0,0.1]
 #mu
 plotBinInfo = '50 80 100'
 #e
 #plotBinInfo = '100 70 110'
+#m2muerr
+#plotBinInfo = '60 75 105'
 
 args=ParseOption()
 
@@ -88,10 +101,10 @@ ZWidth = 2.49
 plotpath = ''
 if isData:
    plotpath += '/home/mhl/public_html/2017/20170312_checkLepScale/mu/data_'+str(etaRange[0]).replace('.','p')+'_'+str(etaRange[1]).replace('.','p')+'_DCB_withBKG_randomCut/'
-#   plotpath += '/home/mhl/public_html/2017/20170310_checkLepScale/e/data_'+str(etaRange[0]).replace('.','p')+'_'+str(etaRange[1]).replace('.','p')+'/'
+#   plotpath += '/home/mhl/public_html/2017/20170313_checkLepScale_vsM2lErr/e/data_vs_m2lerr/'
 else:
    plotpath += '/home/mhl/public_html/2017/20170312_checkLepScale/mu/mc_'+str(etaRange[0]).replace('.','p')+'_'+str(etaRange[1]).replace('.','p')+'_DCB_withBKG_randomCut/'
-#   plotpath += '/home/mhl/public_html/2017/20170310_checkLepScale/e/mc_'+str(etaRange[0]).replace('.','p')+'_'+str(etaRange[1]).replace('.','p')+'/'
+#   plotpath += '/home/mhl/public_html/2017/20170313_checkLepScale_vsM2lErr/e/mc_vs_m2lerr/'
    ZWidth = 2.44
 
 singleCB_tail_mu = '1.583 1.086' #first is alpha, second is n of singleCB
