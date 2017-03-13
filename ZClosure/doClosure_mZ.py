@@ -1,6 +1,7 @@
 from ROOT import *
 import makePlot_1D_fit
 from subprocess import call
+import sys
 #RooMsgService.instance().Print() 
 #RooMsgService.instance().getStream(1).removeTopic(RooFit.ObjectHandling)
 #RooMsgService.instance().getStream(1).removeTopic(RooFit.DataHandling)
@@ -23,12 +24,16 @@ def ParseOption():
     parser.add_argument('--singleCB_tail',dest='singleCB_tail', nargs='+', help='', type=float)#, required=True)
     parser.add_argument('--doubleCB_tail',dest='doubleCB_tail', nargs='+', help='', type=float)#, required=True)
     parser.add_argument('--pTErrCorrections', dest='pTErrCorrections', nargs='+', help='', type=float)#, required=True)
+    parser.add_argument('--minEta', dest='min_eta', type=float, help='eta min')
+    parser.add_argument('--maxEta', dest='max_eta', type=float, help='eta max')
 
     args = parser.parse_args()
     return args
 
 args=ParseOption()
 
+etaLow = args.min_eta
+etaHigh = args.max_eta
 massZErr_rel_min = args.min_relM2lErr 
 massZErr_rel_max = args.max_relM2lErr 
 inputPath = args.inpath 
@@ -45,9 +50,43 @@ singleCB_n = args.singleCB_tail[1]
 #doubleCB_n2 = args.doubleCB_tail[3]
 pTErrCorrections = args.pTErrCorrections
 
+idLep = 13
+if args.fs == "2e":
+   idLep = 11
+#etaLow = 0
+#etaHigh = 0.9
+
+#randomCut1 = "id1 == " + str(idLep)
+#randomCut2 = "id2 == " + str(idLep)
+#randomCut1 = "((pT1-int(pT1))+(eta2-int(eta2)))>((pT2-int(pT2))+(eta2-int(eta2)))"
+#randomCut2 = "((pT1-int(pT1))+(eta2-int(eta2)))<((pT2-int(pT2))+(eta2-int(eta2)))"
+#randomCut1 = "(pT1 < pT2)"
+#randomCut2 = "(pT1 > pT2)"
+randomCut1 = "(randomNum < 0.5)"
+randomCut2 = "(randomNum > 0.5)"
+
+#in different pt bin
+'''
 cut = "massZ > " + str(binInfo[1]) + " && massZ < " + str(binInfo[2]) + " && \
-       massZErr/massZ > " + str(massZErr_rel_min) + " && \
-       massZErr/massZ < " + str(massZErr_rel_max)
+       ((" + randomCut1 + " && abs(eta1) > " + str(etaLow) + " && abs(eta1) < " + str(etaHigh) + " && \
+         pT1 > " + str(massZErr_rel_min) +  " && pT1 < " + str(massZErr_rel_max) +  " ) || \
+        (" + randomCut2 + " && abs(eta2) > " + str(etaLow) + " && abs(eta2) < " + str(etaHigh) + " && \
+         pT2 > " + str(massZErr_rel_min) +  " && pT2 < " + str(massZErr_rel_max) + ") )"
+#in different absolute eta bin
+'''
+'''
+cut = "massZ > " + str(binInfo[1]) + " && massZ < " + str(binInfo[2]) + " && \
+       ((id1 == " + str(idLep) + " && pT1 > " + str(etaLow) + " && pT1 < " + str(etaHigh) + " && \
+         abs(eta1) > " + str(massZErr_rel_min) +  " && abs(eta1) < " + str(massZErr_rel_max) +  " ) || \
+        (id2 == " + str(idLep) + " && pT2 > " + str(etaLow) + " && pT2 < " + str(etaHigh) + " && \
+         abs(eta2) > " + str(massZErr_rel_min) +  " && abs(eta2) < " + str(massZErr_rel_max) + ") )"
+# 
+'''
+cut = "massZ > " + str(binInfo[1]) + " && massZ < " + str(binInfo[2]) + " && \
+       ((" + randomCut1 + " && pT1 > " + str(etaLow) + " && pT1 < " + str(etaHigh) + " && \
+         (eta1) > " + str(massZErr_rel_min) +  " && (eta1) < " + str(massZErr_rel_max) +  " ) || \
+        (" + randomCut2 + " && pT2 > " + str(etaLow) + " && pT2 < " + str(etaHigh) + " && \
+         (eta2) > " + str(massZErr_rel_min) +  " && (eta2) < " + str(massZErr_rel_max) + ") )"
 
 plotParaConfig = \
 {\
@@ -111,5 +150,5 @@ sigma_m2l = [str(sigma_m2l[i]) for i in range(len(sigma_m2l))]
 
 with open(args.outtxtName,'a') as myfile:
 #     myfile.write(sigma_m2l[0] + ' ' + sigma_m2l[1] + ' ' + sigma_m2l[2] + ' ' + sigma_m2l[3] + ' ' + sigma_m2l[4] + '\n')
-     myfile.write(sigma_m2l[0] + ' ' + sigma_m2l[1] + ' ' + sigma_m2l[2] + ' ' + sigma_m2l[3] + '\n')
+     myfile.write(sigma_m2l[0] + ' ' + sigma_m2l[1] + ' ' + str(massZErr_rel_min) + ' ' + str(massZErr_rel_max) + '\n')
 

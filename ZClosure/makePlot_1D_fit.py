@@ -66,15 +66,15 @@ def MakeFitPlotFromTree(tree, paraConfig, fitResult):
     xmax = binInfo[2]
     
     w.factory('Gaussian::gauss(x[' + str(xmin) + ',' + str(xmax) + '],meanGauss[0,-1,1],sigmaGauss[0.01,0,0.015])')
-    w.factory('BreitWigner::bw(x[' + str(xmin) + ',' + str(xmax) + '],meanBW[91.2],sigmaBW['+str(Z_width)+'])')#meanBW[91.2, 90, 92],sigmaBW[2.4,2,3])')
+    w.factory('BreitWigner::bw(x[' + str(xmin) + ',' + str(xmax) + '],meanBW[91.19],sigmaBW['+str(Z_width)+'])')#meanBW[91.2, 90, 92],sigmaBW[2.4,2,3])')
 #    w.factory('BreitWigner::bw(x[' + str(xmin) + ',' + str(xmax) + '],meanBW[91.2, 90, 92],sigmaBW[2.4,2,3])')
 
 #   w.factory('DoubleCB::doubleCB(x[' + str(xmin) + ',' + str(xmax) + '], \
 #                                 meanDCB[125,124,126], sigmaDCB[0.5,0.1,10], \
 #                                 alphaDCB[1.1,0,50], nDCB[1,0,50], alpha2[1.1,0,50], n2[1,0,50])')
     w.factory('DoubleCB::doubleCB(x[' + str(xmin) + ',' + str(xmax) + '], \
-                              meanDCB[0,-1,1], sigmaDCB[1, 0, 5], \
-                              alphaDCB[1,0,10], nDCB[1,0,10], alpha2[1,0,10], n2[1,0,50])')
+                              meanDCB[0,-5,5], sigmaDCB[1, 0, 5], \
+                              alphaDCB[1,0,10], nDCB[5,0,100], alpha2[1,0,10], n2[5,0,100])')
 #                              alphaDCB['+str(doubleCB_a1)+'], nDCB[1,0,50], alpha2['+str(doubleCB_a2)+'], n2[1,0,50])')
 #                              alphaDCB[1,0,10], nDCB['+str(doubleCB_n1)+'], alpha2[1,0,10], n2['+str(doubleCB_n2)+'])')
 #                              alphaDCB['+str(doubleCB_a1)+'], nDCB['+str(doubleCB_n1)+'], alpha2['+str(doubleCB_a2)+'], n2['+str(doubleCB_n2)+'])')
@@ -94,12 +94,13 @@ def MakeFitPlotFromTree(tree, paraConfig, fitResult):
     
 
     w.factory('FCONV::BWxCB(x,bw,singleCB)')
-#    w.factory('FCONV::BWxDCB(x,bw,doubleCB)')
+    w.factory('FCONV::BWxDCB(x,bw,doubleCB)')
 
     w.factory('SUM:BWplusEXP(f1[0,1]*bw, exp)')
     w.factory('SUM:BWplusPOLY3(f1[0,1]*bw, poly3)')
 
-    w.factory('SUM:model(fsig[0.9,0.7,0.99]*BWxCB, bkg)')
+#    w.factory('SUM:model(fsig[0.9,0.7,1]*BWxCB, bkg)')
+    w.factory('SUM:model(fsig[0.9,0.7,0.999]*BWxDCB, bkg)')
     
     dataHist1 = RooDataHist('dataHist1', 'dataHist1', RooArgList(w.var('x')), HIST1, 1)
     pdf = w.pdf(pdfName)
@@ -148,7 +149,14 @@ def MakeFitPlotFromTree(tree, paraConfig, fitResult):
     c1.SaveAs(savePath+saveName+'.pdf')
 
     #more optimal way is to save all variables in workspace in dictionary and pass to ouside
-    fitResult['sigmaCB'] = w.var('sigmaCB').getVal()/(91.2+w.var('meanCB').getVal())
+#    fitResult['sigmaCB'] = w.var('sigmaCB').getVal()/(91.2+w.var('meanCB').getVal())
 #    fitResult['sigmaDCB'] = w.var('sigmaDCB').getVal()
-    fitResult['sigmaCB_err'] = w.var('sigmaCB').getError()/(91.2+w.var('meanCB').getVal())
+#    fitResult['sigmaCB_err'] = w.var('sigmaCB').getError()/(91.2+w.var('meanCB').getVal())
+
+#    fitResult['sigmaCB'] = w.var('meanCB').getVal() + 91.19
+#    fitResult['sigmaCB_err'] = w.var('meanCB').getError()
+    fitResult['sigmaCB'] = w.var('meanDCB').getVal() + 91.19
+    fitResult['sigmaCB_err'] = w.var('meanDCB').getError()
+
+
    
