@@ -67,14 +67,14 @@ randomCut1 = "(randomNum < 0.5)"
 randomCut2 = "(randomNum > 0.5)"
 
 #in different pt bin
-'''
+
 cut = "massZ > " + str(binInfo[1]) + " && massZ < " + str(binInfo[2]) + " && \
        ((" + randomCut1 + " && abs(eta1) > " + str(etaLow) + " && abs(eta1) < " + str(etaHigh) + " && \
          pT1 > " + str(massZErr_rel_min) +  " && pT1 < " + str(massZErr_rel_max) +  " ) || \
         (" + randomCut2 + " && abs(eta2) > " + str(etaLow) + " && abs(eta2) < " + str(etaHigh) + " && \
          pT2 > " + str(massZErr_rel_min) +  " && pT2 < " + str(massZErr_rel_max) + ") )"
 #in different absolute eta bin
-'''
+
 '''
 cut = "massZ > " + str(binInfo[1]) + " && massZ < " + str(binInfo[2]) + " && \
        ((id1 == " + str(idLep) + " && pT1 > " + str(etaLow) + " && pT1 < " + str(etaHigh) + " && \
@@ -82,13 +82,13 @@ cut = "massZ > " + str(binInfo[1]) + " && massZ < " + str(binInfo[2]) + " && \
         (id2 == " + str(idLep) + " && pT2 > " + str(etaLow) + " && pT2 < " + str(etaHigh) + " && \
          abs(eta2) > " + str(massZErr_rel_min) +  " && abs(eta2) < " + str(massZErr_rel_max) + ") )"
 # 
-'''
+
 cut = "massZ > " + str(binInfo[1]) + " && massZ < " + str(binInfo[2]) + " && \
        ((" + randomCut1 + " && pT1 > " + str(etaLow) + " && pT1 < " + str(etaHigh) + " && \
          (eta1) > " + str(massZErr_rel_min) +  " && (eta1) < " + str(massZErr_rel_max) +  " ) || \
         (" + randomCut2 + " && pT2 > " + str(etaLow) + " && pT2 < " + str(etaHigh) + " && \
          (eta2) > " + str(massZErr_rel_min) +  " && (eta2) < " + str(massZErr_rel_max) + ") )"
-'''
+
 #corrected m2l error
 cut = "massZ > " + str(binInfo[1]) + " && massZ < " + str(binInfo[2]) + " && \
          massZErr_corr/massZ > " + str(massZErr_rel_min) +  " && massZErr_corr/massZ < " + str(massZErr_rel_max) 

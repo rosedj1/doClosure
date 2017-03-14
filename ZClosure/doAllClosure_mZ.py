@@ -6,16 +6,17 @@ def ParseOption():
 
     parser = argparse.ArgumentParser(description='submit all')
     parser.add_argument('--isData', dest='isData', action='store_true', default=False, help='isData')
+    parser.add_argument('--range',dest='range', nargs='+', help='', type=float)#, required=True)
     args = parser.parse_args()
     return args
 
 def doAllClosure(fs, plotPath, Z_width, plotBinInfo, singleCB_tail, pTErrCorrections, etaRange, isData):
 
 #    massZErr_rel_bins = [5,15,25,35,40,45,55,65,100]
-#    massZErr_rel_bins = [7,20,30,40,50,60,100]
+    massZErr_rel_bins = [5,20,30,40,50,60,100]
 #    massZErr_rel_bins = [5,15,20,25,30,35,40,45,50,55,60,65,100]
 
-    massZErr_rel_bins = [-2.4,-2.2,-1.8,-0.9,0,0.9,1.8,2.2,2.4]
+#    massZErr_rel_bins = [-2.4,-2.2,-1.8,-0.9,0,0.9,1.8,2.2,2.4]
 #    massZErr_rel_bins = [-2.4,-1.8,-1.4,-1.1,-0.9,0,0.9,1.1,1.4,1.8,2.4]
 #    massZErr_rel_bins = [-2.4,-1.8]
 
@@ -77,22 +78,19 @@ def doAllClosure(fs, plotPath, Z_width, plotBinInfo, singleCB_tail, pTErrCorrect
         #    print cmd
         call(cmd, shell=True)
 
+args=ParseOption()
 
 #etaRange = [0.0,0.9]
-#etaRange = [0.9,1.8]
-#etaRange = [1.8,2.4]
-etaRange = [5,100]
+#etaRange = [0.9,1.4]
+etaRange = [(args.range)[0],(args.range)[1]]#[1.4,2.4]
+#etaRange = [5,100]
 #etaRange = [7,100]
 #etaRange = [0.0,2.5]
 #etaRange = [0,0.1]
-#mu
-plotBinInfo = '50 80 100'
-#e
-#plotBinInfo = '100 70 110'
-#m2muerr
-#plotBinInfo = '60 75 105'
 
-args=ParseOption()
+#plotBinInfo = '100 78 102'
+plotBinInfo = '100 80 100'
+#plotBinInfo = '100 70 110'
 
 isData = args.isData
 #isData = False
@@ -100,10 +98,10 @@ isData = args.isData
 ZWidth = 2.49
 plotpath = ''
 if isData:
-   plotpath += '/home/mhl/public_html/2017/20170312_checkLepScale/mu/data_'+str(etaRange[0]).replace('.','p')+'_'+str(etaRange[1]).replace('.','p')+'_DCB_withBKG_randomCut/'
+   plotpath += '/home/mhl/public_html/2017/20170313_checkLepScale/mu/data_'+str(etaRange[0]).replace('.','p')+'_'+str(etaRange[1]).replace('.','p')+'_DCB_withBKG_randomCut/'
 #   plotpath += '/home/mhl/public_html/2017/20170313_checkLepScale_vsM2lErr/e/data_vs_m2lerr/'
 else:
-   plotpath += '/home/mhl/public_html/2017/20170312_checkLepScale/mu/mc_'+str(etaRange[0]).replace('.','p')+'_'+str(etaRange[1]).replace('.','p')+'_DCB_withBKG_randomCut/'
+   plotpath += '/home/mhl/public_html/2017/20170313_checkLepScale/mu/mc_'+str(etaRange[0]).replace('.','p')+'_'+str(etaRange[1]).replace('.','p')+'_DCB_withBKG_randomCut/'
 #   plotpath += '/home/mhl/public_html/2017/20170313_checkLepScale_vsM2lErr/e/mc_vs_m2lerr/'
    ZWidth = 2.44
 

@@ -74,7 +74,7 @@ def MakeFitPlotFromTree(tree, paraConfig, fitResult):
 #                                 alphaDCB[1.1,0,50], nDCB[1,0,50], alpha2[1.1,0,50], n2[1,0,50])')
     w.factory('DoubleCB::doubleCB(x[' + str(xmin) + ',' + str(xmax) + '], \
                               meanDCB[0,-5,5], sigmaDCB[1, 0, 5], \
-                              alphaDCB[1,0,10], nDCB[5,0,100], alpha2[1,0,10], n2[5,0,100])')
+                              alphaDCB[1,0,20], nDCB[50,0,100], alpha2[1,0,20], n2[50,0,100])')
 #                              alphaDCB['+str(doubleCB_a1)+'], nDCB[1,0,50], alpha2['+str(doubleCB_a2)+'], n2[1,0,50])')
 #                              alphaDCB[1,0,10], nDCB['+str(doubleCB_n1)+'], alpha2[1,0,10], n2['+str(doubleCB_n2)+'])')
 #                              alphaDCB['+str(doubleCB_a1)+'], nDCB['+str(doubleCB_n1)+'], alpha2['+str(doubleCB_a2)+'], n2['+str(doubleCB_n2)+'])')
@@ -88,7 +88,7 @@ def MakeFitPlotFromTree(tree, paraConfig, fitResult):
     w.factory('Polynomial::poly3(x,{a0[1, -10,10],a1[0.1, -10,10],a2[0.1, -10,10],a3[1, -10,10]})')
 
 #    w.factory("Exponential::bkg(x, tau[-0.03])")#tau[0.1,-1,1])")
-    w.factory("Exponential::bkg(x, tau[0,-1,1])")
+    w.factory("Exponential::bkg(x, tau[0,-10,10])")
 
     w.factory("Exponential::exp(expr('a3*a3*a3*x+a2*a2*x+a1*x+a0', x,a0,a1,a2,a3),a[-1, -2, 0])")
     
