@@ -13,8 +13,8 @@ def ParseOption():
 def doAllClosure(fs, plotPath, Z_width, plotBinInfo, singleCB_tail, pTErrCorrections, etaRange, isData):
 
 #    massZErr_rel_bins = [5,15,25,35,40,45,55,65,100]
-    massZErr_rel_bins = [5,20,30,40,50,60,100]
-#    massZErr_rel_bins = [5,15,20,25,30,35,40,45,50,55,60,65,100]
+#    massZErr_rel_bins = [5,20,30,40,50,60,100]
+    massZErr_rel_bins = [5,15,20,25,30,35,40,45,50,55,60,65,100]
 
 #    massZErr_rel_bins = [-2.4,-2.2,-1.8,-0.9,0,0.9,1.8,2.2,2.4]
 #    massZErr_rel_bins = [-2.4,-1.8,-1.4,-1.1,-0.9,0,0.9,1.1,1.4,1.8,2.4]
@@ -98,10 +98,10 @@ isData = args.isData
 ZWidth = 2.49
 plotpath = ''
 if isData:
-   plotpath += '/home/mhl/public_html/2017/20170313_checkLepScale/mu/data_'+str(etaRange[0]).replace('.','p')+'_'+str(etaRange[1]).replace('.','p')+'_DCB_withBKG_randomCut/'
+   plotpath += '/home/mhl/public_html/2017/20170314_test/mu/data_'+str(etaRange[0]).replace('.','p')+'_'+str(etaRange[1]).replace('.','p')+'_DCB_withBKG_randomCut/'
 #   plotpath += '/home/mhl/public_html/2017/20170313_checkLepScale_vsM2lErr/e/data_vs_m2lerr/'
 else:
-   plotpath += '/home/mhl/public_html/2017/20170313_checkLepScale/mu/mc_'+str(etaRange[0]).replace('.','p')+'_'+str(etaRange[1]).replace('.','p')+'_DCB_withBKG_randomCut/'
+   plotpath += '/home/mhl/public_html/2017/20170314_test/mu/mc_'+str(etaRange[0]).replace('.','p')+'_'+str(etaRange[1]).replace('.','p')+'_DCB_withBKG_randomCut/'
 #   plotpath += '/home/mhl/public_html/2017/20170313_checkLepScale_vsM2lErr/e/mc_vs_m2lerr/'
    ZWidth = 2.44
 

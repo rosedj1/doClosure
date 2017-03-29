@@ -48,19 +48,19 @@ def MakeGraph(txtfile1, txtfile2):
 #gr2 = MakeGraph("data_2e_0.0_2.5.txt", "mc_2e_0.0_2.5.txt")
 #gr2 = MakeGraph("data_2e_0_0.1.txt", "mc_2e_0_0.1.txt")
 
-#gr1 = MakeGraph("data_2mu_0.0_0.9.txt", "mc_2mu_0.0_0.9.txt")
-#gr2 = MakeGraph("data_2mu_0.9_1.4.txt", "mc_2mu_0.9_1.4.txt")
-#gr3 = MakeGraph("data_2mu_1.4_2.4.txt", "mc_2mu_1.4_2.4.txt")
-gr1 = MakeGraph("data_2e_0.0_0.8.txt", "mc_2e_0.0_0.8.txt")
-gr2 = MakeGraph("data_2e_0.8_1.5.txt", "mc_2e_0.8_1.5.txt")
-gr3 = MakeGraph("data_2e_1.5_2.5.txt", "mc_2e_1.5_2.5.txt")
+gr1 = MakeGraph("data_2mu_0.0_0.9.txt", "mc_2mu_0.0_0.9.txt")
+gr2 = MakeGraph("data_2mu_0.9_1.4.txt", "mc_2mu_0.9_1.4.txt")
+gr3 = MakeGraph("data_2mu_1.4_2.4.txt", "mc_2mu_1.4_2.4.txt")
+#gr1 = MakeGraph("data_2e_0.0_0.8.txt", "mc_2e_0.0_0.8.txt")
+#gr2 = MakeGraph("data_2e_0.8_1.5.txt", "mc_2e_0.8_1.5.txt")
+#gr3 = MakeGraph("data_2e_1.5_2.5.txt", "mc_2e_1.5_2.5.txt")
 
-#legendName1 = "Z, |#eta| 0.0-0.9"
-#legendName2 = "Z, |#eta| 0.9-1.4"
-#legendName3 = "Z, |#eta| 1.4-2.5"
-legendName1 = "Z, |#eta| 0.0-0.8"
-legendName2 = "Z, |#eta| 0.8-1.5"
-legendName3 = "Z, |#eta| 1.5-2.5"
+legendName1 = "Z, |#eta| 0.0-0.9"
+legendName2 = "Z, |#eta| 0.9-1.4"
+legendName3 = "Z, |#eta| 1.4-2.4"
+#legendName1 = "Z, |#eta| 0.0-0.8"
+#legendName2 = "Z, |#eta| 0.8-1.5"
+#legendName3 = "Z, |#eta| 1.5-2.5"
 
 xMin = 0
 #xMax = 2.5
@@ -69,10 +69,10 @@ yMin = -0.004
 yMax = 0.004
 #xTitle = "|#eta|"
 #xTitle = "#sigma_{m_{2l}}/m_{2l}"
-xTitle = "Electron p_{T}(GeV)"
+xTitle = "Muon p_{T}(GeV)"
 yTitle = "(m_{data}^{peak}-m_{MC}^{peak})/m_{PDG}"
 unc = 0.0004
-savename = "lepScale_vs_pt_eta_e.png"
+savename = "lepScale_vs_pt_eta_mu.png"
 
 
 
@@ -143,6 +143,6 @@ latex2.SetTextFont(42)
 latex2.SetTextSize(0.45*c1.GetTopMargin())
 
 
-c1.SaveAs("/home/mhl/public_html/2017/20170313_checkLepScale/"+savename)
-c1.SaveAs("/home/mhl/public_html/2017/20170313_checkLepScale/"+savename.replace("png","pdf"))
+c1.SaveAs("/home/mhl/public_html/2017/20170319_muScale/"+savename)
+c1.SaveAs("/home/mhl/public_html/2017/20170319_muScale/"+savename.replace("png","pdf"))
 
