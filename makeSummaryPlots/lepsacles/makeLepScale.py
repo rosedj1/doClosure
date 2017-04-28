@@ -76,4 +76,4 @@ gr1.Draw("same pe")
 gr1.SetMarkerStyle(20)
 
 #savename = "mu_lepScale_vs_eta.png"
-c1.SaveAs("/home/mhl/public_html/2017/20170313_checkLepScale_vsM2lErr/"+savename)
+c1.SaveAs("/home/mhl/public_html/2017/20170420_checkZPeak/"+savename)
