@@ -37,10 +37,13 @@ def MakeFitPlotFromTree(tree, paraConfig, fitResult):
     savePath = paraConfig['savePath']
     saveName = paraConfig['saveName']
     latexNote1 = paraConfig['latexNote1']
-    pdfName = paraConfig['pdfName']
-    Z_width = paraConfig['z_width'] 
-    singleCB_a = paraConfig['singleCB_a']
-    singleCB_n = paraConfig['singleCB_n']
+    #pdfName = paraConfig['pdfName']
+    #w = paraConfig['workspace']
+    pdf = paraConfig['pdf']
+
+#    Z_width = paraConfig['z_width'] 
+#    singleCB_a = paraConfig['singleCB_a']
+#    singleCB_n = paraConfig['singleCB_n']
 #    doubleCB_a1 = paraConfig['doubleCB_a1']
 #    doubleCB_n1 = paraConfig['doubleCB_n1']
 #    doubleCB_a2 = paraConfig['doubleCB_a2']
@@ -60,40 +63,41 @@ def MakeFitPlotFromTree(tree, paraConfig, fitResult):
         else:
            HIST1.Add(hists1[i])
     
+    '''
     w = RooWorkspace('w')
     
     xmin = binInfo[1]
     xmax = binInfo[2]
-    
+     
     w.factory('Gaussian::gauss(x[' + str(xmin) + ',' + str(xmax) + '],meanGauss[0,-1,1],sigmaGauss[0.01,0,0.015])')
-#    w.factory('BreitWigner::bw(x[' + str(xmin) + ',' + str(xmax) + '],meanBW[91.19],sigmaBW['+str(Z_width)+'])')#meanBW[91.2, 90, 92],sigmaBW[2.4,2,3])')
+    #w.factory('BreitWigner::bw(x[' + str(xmin) + ',' + str(xmax) + '],meanBW[91.19],sigmaBW['+str(Z_width)+'])')#meanBW[91.2, 90, 92],sigmaBW[2.4,2,3])')
     w.factory('BreitWigner::bw(x[' + str(xmin) + ',' + str(xmax) + '],meanBW[91.1876],sigmaBW[2.44])')
     w.factory('DoubleCB::doubleCB(x[' + str(xmin) + ',' + str(xmax) + '], \
                                  meanDCB[0,-1,1], sigmaDCB[0.01,0,10], \
                                  alphaDCB[1.1,0,50], nDCB[1,0,50], alpha2[1.1,0,50], n2[1,0,50])')
-    '''
+    
     w.factory('DoubleCB::doubleCB(x[' + str(xmin) + ',' + str(xmax) + '], \
                                  meanDCB[90,80,100], sigmaDCB[1,0,10], \
                                  alphaDCB[1.1,0,50], nDCB[1,0,50], alpha2[1.1,0,50], n2[1,0,50])')
-    ''' 
-#    w.factory('DoubleCB::doubleCB(x[' + str(xmin) + ',' + str(xmax) + '], \
-#                              meanDCB[0,-5,5], sigmaDCB[1, 0, 5], \
-#                              alphaDCB[1,0,20], nDCB[50,0,100], alpha2[1,0,20], n2[50,0,100])')
-#                              alphaDCB['+str(doubleCB_a1)+'], nDCB[1,0,50], alpha2['+str(doubleCB_a2)+'], n2[1,0,50])')
-#                              alphaDCB[1,0,10], nDCB['+str(doubleCB_n1)+'], alpha2[1,0,10], n2['+str(doubleCB_n2)+'])')
-#                              alphaDCB['+str(doubleCB_a1)+'], nDCB['+str(doubleCB_n1)+'], alpha2['+str(doubleCB_a2)+'], n2['+str(doubleCB_n2)+'])')
-#                              alphaDCB[1,0,10], nDCB[1,0,10], alpha2[1,0,10], n2[1,0,50])')
+     
+    #w.factory('DoubleCB::doubleCB(x[' + str(xmin) + ',' + str(xmax) + '], \
+    #                          meanDCB[0,-5,5], sigmaDCB[1, 0, 5], \
+    #                          alphaDCB[1,0,20], nDCB[50,0,100], alpha2[1,0,20], n2[50,0,100])')
+    #                          alphaDCB['+str(doubleCB_a1)+'], nDCB[1,0,50], alpha2['+str(doubleCB_a2)+'], n2[1,0,50])')
+    #                          alphaDCB[1,0,10], nDCB['+str(doubleCB_n1)+'], alpha2[1,0,10], n2['+str(doubleCB_n2)+'])')
+    #                          alphaDCB['+str(doubleCB_a1)+'], nDCB['+str(doubleCB_n1)+'], alpha2['+str(doubleCB_a2)+'], n2['+str(doubleCB_n2)+'])')
+    #                          alphaDCB[1,0,10], nDCB[1,0,10], alpha2[1,0,10], n2[1,0,50])')
 
-#    w.factory('CBShape::singleCB(x[' + str(xmin) + ',' + str(xmax) + '], \
-#                                meanCB[0, -1.5, 1.5], sigmaCB[0.5,0.1,10], alphaCB['+str(singleCB_a)+'], nCB['+str(singleCB_n)+'])')
-#    w.factory('CBShape::singleCB(x[' + str(xmin) + ',' + str(xmax) + '], \
-#                                meanCB[0,-1.5,1.5], sigmaCB[1,0.1,10], alphaCB[1,0,10], nCB[1,0,100])')
+    #w.factory('CBShape::singleCB(x[' + str(xmin) + ',' + str(xmax) + '], \
+    #                            meanCB[0, -1.5, 1.5], sigmaCB[0.5,0.1,10], alphaCB['+str(singleCB_a)+'], nCB['+str(singleCB_n)+'])')
+    #w.factory('CBShape::singleCB(x[' + str(xmin) + ',' + str(xmax) + '], \
+    #                            meanCB[0,-1.5,1.5], sigmaCB[1,0.1,10], alphaCB[1,0,10], nCB[1,0,100])')
     w.factory('CBShape::singleCB(x[' + str(xmin) + ',' + str(xmax) + '], \
                                 meanCB[90,80,100], sigmaCB[1,0,3], alphaCB[1,0,10], nCB[1,0,100])')
 
     w.factory('Polynomial::poly3(x,{a0[1, -10,10],a1[0.1, -10,10],a2[0.1, -10,10],a3[1, -10,10]})')
 
-#    w.factory("Exponential::bkg(x, tau[-0.03])")#tau[0.1,-1,1])")
+    #w.factory("Exponential::bkg(x, tau[-0.03])")#tau[0.1,-1,1])")
     w.factory("Exponential::bkg(x, tau[0,-10,10])")
 
     w.factory("Exponential::exp(expr('a3*a3*a3*x+a2*a2*x+a1*x+a0', x,a0,a1,a2,a3),a[-1, -2, 0])")
@@ -105,11 +109,13 @@ def MakeFitPlotFromTree(tree, paraConfig, fitResult):
     w.factory('SUM:BWplusEXP(f1[0,1]*bw, exp)')
     w.factory('SUM:BWplusPOLY3(f1[0,1]*bw, poly3)')
 
-#    w.factory('SUM:model(fsig[0.9,0.7,1]*BWxCB, bkg)')
+    #w.factory('SUM:model(fsig[0.9,0.7,1]*BWxCB, bkg)')
     w.factory('SUM:model(fsig[0.9,0.7,0.999]*BWxDCB, bkg)')
-    
+    '''
+
+
     dataHist1 = RooDataHist('dataHist1', 'dataHist1', RooArgList(w.var('x')), HIST1, 1)
-    pdf = w.pdf(pdfName)
+    #pdf = w.pdf(pdfName)
     fFit = pdf.fitTo(dataHist1)#, RooFit.PrintLevel(-1))
     
     xframe = w.var('x').frame(RooFit.Title(xTitle))
@@ -121,7 +127,7 @@ def MakeFitPlotFromTree(tree, paraConfig, fitResult):
 
     c1 = TCanvas("c1", "c1", 800, 800)
 #    c1.SetLogy()    
-    dummy = TH1D("dummy","dummy",1,binInfo[1],binInfo[2])
+    dummy = TH1D("dummy","dummy",1,xmin,xmax)
     dummy.SetMinimum(0.1)
     yMax1 = HIST1.GetMaximum()*1.5
     yMax = yMax1

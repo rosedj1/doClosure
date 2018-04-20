@@ -152,3 +152,38 @@ sigma_m2l = [str(sigma_m2l[i]) for i in range(len(sigma_m2l))]
 
 with open(args.outtxtName,'a') as myfile:
      myfile.write(sigma_m2l[0] + ' ' + sigma_m2l[1] + ' ' + str(cut_min) + ' ' + str(cut_max) + '\n')
+
+
+
+#for config in configs:
+     # make plot
+plotParaConfig = \
+{\
+'binInfo': binInfo,
+'vars1': ['(pTL4-pTGENL4)/pTGENL4'],
+#'vars1': ['(pT2-genLep_pt2)/genLep_pt2'],
+'cuts1': ['1'], #
+'weight1': ['1'],
+'xTitle': '(pT_{Reco}-pT_{Gen})/pT_{Gen}',
+'yTitle': '',
+'savePath': savePath,
+'saveName': saveName, #
+'latexNote1': str(cut_min) + ' < ' + cutVar + ' < ' + str(cut_max),
+'pdf': 
+#'pdfName': 'doubleCB',
+#'pdfName': 'BWxDCB',
+}
+
+binInfo, no
+var, no
+cut, yes
+weight, no
+titles, no
+path, no
+name, yes
+latxnnote, yes
+pdf, np
+
+!!!loop at cut
+need a function to make dir if not exsit
+need a function/sth to make workspace
