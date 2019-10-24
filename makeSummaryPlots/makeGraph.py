@@ -1,22 +1,35 @@
+#!/bin/bash
+################################################################################
+# PURPOSE:  Make closure plots for Drell-Yan events. 
+# SYNTAX:   Check the code in 'makeGraph(_jake).sh' which calls this script.
+# NOTES:    A closure plot shows how well the measured sigma of a m_ll plot
+#           agrees with the predicted sigma.
+#           This code simply makes a plot using data stored in sigma_m2mu.txt.
+# AUTHOR:   Hualin Mei, modified by Jake Rosenzweig
+# DATE:     2019-08-19
+# UPDATED:  2019-10-24
+################################################################################
+#_______________________________________________________________________________
+# User Parameters
+#_______________________________________________________________________________
+# Automatic Stuff
+
 from ROOT import *
 from array import array
 import sys
+import argparse
+import numpy as np
 
 from tdrStyle import *
 setTDRStyle()
 
-import numpy as np
-
-import argparse
 def ParseOption():
-
     parser = argparse.ArgumentParser(description='submit all')
-    parser.add_argument('--intxt', dest='intxt', type=str, help='')
+    parser.add_argument('--intxt', dest='intxt', type=str, help='')  # 
     parser.add_argument('--plotpath', dest='plotpath', type=str, help='')
     parser.add_argument('--plotname', dest='plotname', type=str, help='')
     parser.add_argument('--measurement', dest='measurement', type=str, help='')
     parser.add_argument('--doREFIT', dest='doREFIT', action='store_true', default=False, help='doREFIT')
-
     args = parser.parse_args()
     return args
 
@@ -28,8 +41,10 @@ sigma_pred = []
 sigma_pred_corr = []
 
 data = [line.strip() for line in open(args.intxt, 'r')]
-for i in range(1, len(data)):
+print "data:\n",data,"\n"
 
+# The first line in args.intxt is blank. Therefore, start at element 1.
+for i in range(1, len(data)):
     dataperline = data[i].split(' ')
     sigma_fit.append(float(dataperline[0]))
     sigma_fitErr.append(float(dataperline[1]))
@@ -39,8 +54,8 @@ for i in range(1, len(data)):
     else:
        sigma_pred_corr.append(float(dataperline[3]))
 
-
-y, x1, x2 = array('f'), array('f'), array('f')
+# Prepare and fill x and y arrays.
+x1, x2, y  = array('f'), array('f'), array('f')
 xErr,yErr = array('f'), array('f')
 
 for i in range(len(sigma_fit)):
@@ -51,13 +66,14 @@ for i in range(len(sigma_fit)):
     xErr.append(0)
 
 ave = []
-print 'corr, uncorr, measure'
+print "Jake! I believe 'measure' means 1-sigma_pred_corr/sigma_fit"
+print 'uncorr, corr, measure'
 for i in range(len(x1)):
-  print x2[i], x1[i], y[i], 1-x2[i]/y[i]
+  print x1[i], x2[i], y[i], 1-x2[i]/y[i]
   ave.append(abs(1-x2[i]/y[i]))
-print np.average(ave)
+print "average:",np.average(ave)
 
-
+# Make the closure plots.
 gr1 = TGraphErrors(len(y),x1,y,xErr,yErr)
 gr2 = TGraphErrors(len(y),x2,y,xErr,yErr)
 

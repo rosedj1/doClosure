@@ -1,25 +1,23 @@
 import ROOT, sys, os, string, re
 from ROOT import *
 from array import array
-   
 from tdrStyle import *
-setTDRStyle()
-ROOT.gSystem.Load('libHiggsAnalysisCombinedLimit.so')
-    
-#from paraConfigurations import *
-    
 import argparse
-def ParseOption():
+#ROOT.gSystem.Load('libHiggsAnalysisCombinedLimit.so')
+#from paraConfigurations import *
+
+ROOT.gROOT.SetBatch(kTRUE)    # kTRUE will NOT draw plots to screen.
+setTDRStyle()
     
+def ParseOption():
     parser = argparse.ArgumentParser(description='submit all')
     parser.add_argument('-t', dest='tag', type=str, help='for each plot')
     args = parser.parse_args()
     return args
-    
-    args=ParseOption()
-    
 
 def MakeFitPlotFromTree(tree, paraConfig, fitResult):
+
+#    args=ParseOption()
 
 #    tag = args.tag
 #    tag = 'massZ_test'
@@ -151,4 +149,3 @@ def MakeFitPlotFromTree(tree, paraConfig, fitResult):
     fitResult['sigmaCB'] = w.var('sigmaCB').getVal()
 #    fitResult['sigmaDCB'] = w.var('sigmaDCB').getVal()
     fitResult['sigmaCB_err'] = w.var('sigmaCB').getError()
-   

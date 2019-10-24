@@ -21,17 +21,16 @@ def ParseOption():
     parser.add_argument('--zWidth', dest='Z_width', type=float, help='Z width in MC or pdg value')
     parser.add_argument('--plotBinInfo', dest='binInfo', nargs='+', help='', type=int)#, required=True)
     parser.add_argument('--singleCB_tail',dest='singleCB_tail', nargs='+', help='', type=float)#, required=True)
-    parser.add_argument('--doubleCB_tail',dest='doubleCB_tail', nargs='+', help='', type=float)#, required=True)
+    #parser.add_argument('--doubleCB_tail',dest='doubleCB_tail', nargs='+', help='', type=float)#, required=True)
     parser.add_argument('--pTErrCorrections', dest='pTErrCorrections', nargs='+', help='', type=float)#, required=True)
-
     args = parser.parse_args()
     return args
 
 args=ParseOption()
 
-massZErr_rel_min = args.min_relM2lErr 
-massZErr_rel_max = args.max_relM2lErr 
-inputPath = args.inpath 
+massZErr_rel_min = args.min_relM2lErr # massZErr_rel_bins[i] , from doAllClosure_mZ
+massZErr_rel_max = args.max_relM2lErr # massZErr_rel_bins[i+1]
+inputPath = args.inpath
 inputFile = args.filename
 treeName = 'passedEvents'
 savePath = args.plotpath 
@@ -45,12 +44,14 @@ singleCB_n = args.singleCB_tail[1]
 #doubleCB_n2 = args.doubleCB_tail[3]
 pTErrCorrections = args.pTErrCorrections
 
-cut = "massZ > " + str(binInfo[1]) + " && massZ < " + str(binInfo[2]) + " && \
-       massZErr/massZ > " + str(massZErr_rel_min) + " && \
-       massZErr/massZ < " + str(massZErr_rel_max)
+cuts = ("massZ > " + str(binInfo[1]) +''
+       " && massZ < " + str(binInfo[2]) +'' 
+       " && massZErr/massZ > " + str(massZErr_rel_min) +''
+       " && massZErr/massZ < " + str(massZErr_rel_max) +'')
 
-plotParaConfig = \
-{\
+print "Using cuts:\n", cuts
+
+plotParaConfig =  {
 'binInfo': binInfo,
 'vars1': ['massZ'],
 'cuts1': ['1'], #
@@ -82,7 +83,7 @@ myTree = myFile.Get(treeName)
 #c.Draw(">>myList", cut, "entrylist")
 
 #select part of tree to be used
-myTree.Draw(">>myList", cut, "entrylist")
+myTree.Draw(">>myList", cuts, "entrylist")
 entryList = gDirectory.Get("myList")
 myTree.SetEntryList(entryList)
 
@@ -99,17 +100,17 @@ selector.SetTag(fs)
 myTree.Process(selector)
 
 ### should make following lines more clean ...
-sigma_m2l = [fitResult['sigmaCB'], fitResult['sigmaCB_err'],\
-             selector.massZErr_sum/selector.nEvents,\
-             selector.massZErr_sum_corr/selector.nEvents]#,\
+sigma_m2l = [fitResult['sigmaCB'], 
+             fitResult['sigmaCB_err'],
+             selector.massZErr_sum/selector.nEvents,
+             selector.massZErr_sum_corr/selector.nEvents
+             ]
 #                                 selector.massZErr_sum_rel/selector.nEvents,\
 #                                 selector.massZErr_sum_rel_corr/selector.nEvents]
 
-print ''
-print sigma_m2l
+print 'sigma_m2l:\n', sigma_m2l
 sigma_m2l = [str(sigma_m2l[i]) for i in range(len(sigma_m2l))]
 
 with open(args.outtxtName,'a') as myfile:
 #     myfile.write(sigma_m2l[0] + ' ' + sigma_m2l[1] + ' ' + sigma_m2l[2] + ' ' + sigma_m2l[3] + ' ' + sigma_m2l[4] + '\n')
      myfile.write(sigma_m2l[0] + ' ' + sigma_m2l[1] + ' ' + sigma_m2l[2] + ' ' + sigma_m2l[3] + '\n')
-

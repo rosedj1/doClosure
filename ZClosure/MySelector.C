@@ -34,7 +34,7 @@ void MySelector::SetTag(TString fs) {fs_=fs;}
 
 
 double MySelector::ApplyCorr(double pT, double eta, double pTErr, int ecalDriven) {
-
+ // Only applies to fs == 2e.
  double scale = 1;
 
  if (ecalDriven) {
@@ -54,11 +54,13 @@ double MySelector::ApplyCorr(double pT, double eta, double pTErr, int ecalDriven
 }
 
 double MySelector::pTCorr(double pT, double eta, int tag){
-
+ // 
  TH2F* LUT_ = LUTs_[tag];
 
- TAxis* x_pTaxis = LUT_->GetXaxis(); TAxis* y_etaaxis = LUT_->GetYaxis();
- double maxPt = x_pTaxis->GetXmax(); double minPt = x_pTaxis->GetXmin();
+ TAxis* x_pTaxis = LUT_->GetXaxis(); 
+ TAxis* y_etaaxis = LUT_->GetYaxis();
+ double maxPt = x_pTaxis->GetXmax(); 
+ double minPt = x_pTaxis->GetXmin();
 
  int xbin = x_pTaxis->FindFixBin(pT);
  int ybin = y_etaaxis->FindFixBin(abs(eta));
@@ -169,8 +171,8 @@ Bool_t MySelector::Process(Long64_t entry)
    double dm2 = (lep1+lep2p).M()-(lep1+lep2).M();
    double massZErr_cal = TMath::Sqrt(dm1*dm1+dm2*dm2);
 
-   double pterr1_corr = *pterr1; double pterr2_corr = *pterr2;
-
+   double pterr1_corr = *pterr1; 
+   double pterr2_corr = *pterr2;
 
    if (fs_ == "2mu") {
 
@@ -266,7 +268,12 @@ Bool_t MySelector::Process(Long64_t entry)
    massZErr_sum_corr += massZErr_cal_corr;
    massZErr_sum_rel_corr += massZErr_cal_corr/(*massZ);
 
-//   cout << massZErr_cal << ", " << (*massZErr) << endl;
+/*   cout << "massZErr: " << (*massZErr) << endl;
+   cout << "massZErr_sum: " << massZErr_sum << endl;
+   cout << "massZErr_sum_rel: " << massZErr_sum_rel << endl;
+   cout << "massZErr_sum_corr: " << massZErr_sum_corr << endl;
+   cout << "massZErr_sum_rel_corr: " << massZErr_sum_rel_corr << endl; 
+*/
    return kTRUE;
 }
 
