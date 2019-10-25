@@ -1,16 +1,17 @@
 from subprocess import call
-from PyUtils.fileUtils import copyFile, makeDirs
 
 def doAllClosure(fs, plotpath, Z_width, plotBinInfo, singleCB_tail, pTErrCorrections):
 # e.g.          '2mu', '/home/...', 2.49, '300 60 120', '1.201 3.433', '1.251 1.292 1.117 1' 
 
-    # THIS MAKES THE BINS FOR THE CLOSURE PLOT.
+    # THIS MAKES THE REL PT ERR BINS FOR THE CLOSURE PLOT.
+#    massZErr_rel_bins = [0,0.009] # first two elements of list
     massZErr_rel_bins = [0,0.009] # first two elements of list
 
     # Then add nDiv more equally-spaced bins. Just use np.linspace?
 #    nDiv = 8
-    nDiv = 8
+    nDiv = 5
     for i in range(nDiv):
+#       massZErr_rel_bins.append(massZErr_rel_bins[-1]+(0.03-0.009)/nDiv)
        massZErr_rel_bins.append(massZErr_rel_bins[-1]+(0.03-0.009)/nDiv)
 
 #    massZErr_rel_bins.append(0.04)
@@ -48,13 +49,14 @@ def doAllClosure(fs, plotpath, Z_width, plotBinInfo, singleCB_tail, pTErrCorrect
 #    filename = 'DoubleLepton_m'+fs+'.root'
 #    filename = 'DYJetsToLL_M-50_kalman_v4_m'+fs+'.root'
     filename = '2018_MC_MG5_DY_30percentoffiles_m'+fs+'.root'
-    outtxtName = '../makeSummaryPlots/sigma_m'+fs+'_TEST.txt'
+    outtxtName = '../makeSummaryPlots/sigma_m'+fs+'_TEST_20191025_1149.txt'
 
     print "Running over file:", inputpath+filename
     print "Will create file:", outtxtName
     call('echo " " > ' + outtxtName, shell=True)
 
-    for i in range(len(massZErr_rel_bins)-1): # 11 iterations: 0,1,2,...,10.
+    # 11 iterations: 0,1,2,...,10. So this would make 11 mZ CB fit plots.
+    for i in range(len(massZErr_rel_bins)-1): 
 
         cmd = 'python doClosure_mZ.py' \
             + ' --min ' + str(massZErr_rel_bins[i]) \

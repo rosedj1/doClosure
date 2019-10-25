@@ -39,22 +39,26 @@ double MySelector::ApplyCorr(double pT, double eta, double pTErr, int ecalDriven
 
  if (ecalDriven) {
 
-    if (abs(eta) < 1 && pTErr/pT < 0.03 ) scale = pTCorr(pT,eta,0); // LUT_1 is for |eta| < 1 && pTErr/pT < 0.03
-    if (abs(eta) < 1 && pTErr/pT > 0.03 ) scale = 1.187;
-    if (abs(eta) >= 1 && pTErr/pT < 0.07 ) scale = pTCorr(pT,eta,1); // LUT_2 is for |eta| > 1 && pTErr/pT < 0.06
-    if (abs(eta) >= 1 && pTErr/pT > 0.07 ) scale = 0.815;
+    // FIXME: Use pTCorr for the hardcoded values by using a LUT for the highpTerr regions.
+    if (abs(eta) < 1 && pTErr/pT < 0.03 ) scale = pTCorr(pT,eta,0);   // Jake says:   LUT_0 is for ECAL electrons |eta| < 1 && pTErr/pT < 0.03
+//    if (abs(eta) < 1 && pTErr/pT < 0.03 ) scale = pTCorr(pT,eta,0); // Hualin says: LUT_1 is for |eta| < 1 && pTErr/pT < 0.03
+//    if (abs(eta) < 1 && pTErr/pT > 0.03 ) scale = 1.187;
+    if (abs(eta) < 1 && pTErr/pT > 0.03 ) scale = 0.72346430324;       // Only high relpTErr is hardcoded for now.
+    if (abs(eta) >= 1 && pTErr/pT < 0.07 ) scale = pTCorr(pT,eta,0);   // Jake says:   Use the same LUT: LUT_1 for |eta| > 1 && pTErr/pT < 0.07
+//    if (abs(eta) >= 1 && pTErr/pT < 0.07 ) scale = pTCorr(pT,eta,1); // Hualin says: LUT_2 is for |eta| > 1 && pTErr/pT < 0.06
+//    if (abs(eta) >= 1 && pTErr/pT > 0.07 ) scale = 0.815;
+    if (abs(eta) >= 1 && pTErr/pT > 0.07 ) scale = 0.100000000001;
 
     } else {
-
            scale = pTCorr(pT,eta,2); //LUT_3 is for non ecal driven electron
-
            }
 
     return scale;
 }
 
 double MySelector::pTCorr(double pT, double eta, int tag){
- // 
+ // Returns the stored lambda value from the LUT corresponding to the lepton (tag).
+ // I'm pretty sure that 'scale' should really be 'lambda'.
  TH2F* LUT_ = LUTs_[tag];
 
  TAxis* x_pTaxis = LUT_->GetXaxis(); 

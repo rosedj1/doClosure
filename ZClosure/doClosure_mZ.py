@@ -64,7 +64,7 @@ plotParaConfig =  {
 'pdfName': 'model',
 #'pdfName': 'BWxDCB',
 'z_width': args.Z_width ,
-'singleCB_a': singleCB_a,
+'singleCB_a': singleCB_a,  #FIXME: I'm pretty certain these aren't needed anymore!
 'singleCB_n': singleCB_n,
 #'doubleCB_a1': doubleCB_a1,
 #'doubleCB_n1': doubleCB_n1,
@@ -95,7 +95,7 @@ selector = TSelector.GetSelector("MySelector.C")
 #tag = str(massZErr_rel_min) + '_' + str(massZErr_rel_max)
 fs = args.fs
 #call('cp LUT_' + fs + '.root tmpLUTs/LUT_' + fs + '_' + tag + '.root', shell=True)
-selector.SetTag(fs)
+selector.SetTag(fs)    # FIXME: I don't think SetTag() does anything! 
 #selector.SetPtErrCorrection(args.fs, pTErrCorrections[0], pTErrCorrections[1], pTErrCorrections[2], pTErrCorrections[3])
 myTree.Process(selector)
 

@@ -17,4 +17,4 @@
 #python makeGraph.py --intxt "sigma_m4e_refit.txt" --plotpath "/home/mhl/public_html/2016/20161125_mass/fitmassH/" --plotname "closureH_4e_corr_refit.png" --measurement "m_{4l}" --doREFIT
 #python makeGraph.py --intxt "sigma_m2e2mu_refit.txt" --plotpath "/home/mhl/public_html/2016/20161125_mass/fitmassH/" --plotname "closureH_2e2mu_corr_refit.png" --measurement "m_{4l}" --doREFIT
 
-python makeGraph.py --intxt "sigma_m2e.txt" --plotpath "/home/rosedj1/public_html/Higgs/HiggsMassMeas/2018_MC_MG5_mll_Closure_Plots/" --plotname "closureZ_2e_jaketest.png" --measurement "m_{2l}"
+python makeGraph.py --intxt "sigma_m2e_TEST_20191025_1149.txt" --plotpath "/home/rosedj1/public_html/Higgs/HiggsMassMeas/Plots_2018_MC_Zclosure_diffbinning/" --plotname "closureZ_2e" --measurement "m_{2l}"

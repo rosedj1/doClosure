@@ -13,8 +13,10 @@ all the values to be plotted. It contains four columns:
 
 *Example sigma\_2e.txt*:
 | sigma(CB,fit) | sigma(CB,fit,err) | sigma(pred) | sigma(pred,corrected) |
-|:-------------:|:-----------------:|:-----------:|:---------------------:|
 | y             |             yErr  |     x1      |                x2     |
+| Measured      |    Meas\_Err      | Predicted   |  Pred, with corr applied | 
+|:-------------:|:-----------------:|:-----------:|:---------------------:|
+|  blank line |
 | 1.19499228126 | 0.00855546049762  | 0.6589886754 |  0.81351701441 |
 | 1.6185653721 | 0.00980362146727  | 0.926673338737 | 1.15340653145 |
 
