@@ -34,31 +34,37 @@ void MySelector::SetTag(TString fs) {fs_=fs;}
 
 
 double MySelector::ApplyCorr(double pT, double eta, double pTErr, int ecalDriven) {
-
+ // Only applies to fs == 2e.
  double scale = 1;
 
  if (ecalDriven) {
 
-    if (abs(eta) < 1 && pTErr/pT < 0.03 ) scale = pTCorr(pT,eta,0); // LUT_1 is for |eta| < 1 && pTErr/pT < 0.03
-    if (abs(eta) < 1 && pTErr/pT > 0.03 ) scale = 1.187;
-    if (abs(eta) >= 1 && pTErr/pT < 0.07 ) scale = pTCorr(pT,eta,1); // LUT_2 is for |eta| > 1 && pTErr/pT < 0.06
-    if (abs(eta) >= 1 && pTErr/pT > 0.07 ) scale = 0.815;
+    // FIXME: Use pTCorr for the hardcoded values by using a LUT for the highpTerr regions.
+    if (abs(eta) < 1 && pTErr/pT < 0.03 ) scale = pTCorr(pT,eta,0);   // Jake says:   LUT_0 is for ECAL electrons |eta| < 1 && pTErr/pT < 0.03
+//    if (abs(eta) < 1 && pTErr/pT < 0.03 ) scale = pTCorr(pT,eta,0); // Hualin says: LUT_1 is for |eta| < 1 && pTErr/pT < 0.03
+//    if (abs(eta) < 1 && pTErr/pT > 0.03 ) scale = 1.187;
+    if (abs(eta) < 1 && pTErr/pT > 0.03 ) scale = 0.72346430324;       // Only high relpTErr is hardcoded for now.
+    if (abs(eta) >= 1 && pTErr/pT < 0.07 ) scale = pTCorr(pT,eta,0);   // Jake says:   Use the same LUT: LUT_1 for |eta| > 1 && pTErr/pT < 0.07
+//    if (abs(eta) >= 1 && pTErr/pT < 0.07 ) scale = pTCorr(pT,eta,1); // Hualin says: LUT_2 is for |eta| > 1 && pTErr/pT < 0.06
+//    if (abs(eta) >= 1 && pTErr/pT > 0.07 ) scale = 0.815;
+    if (abs(eta) >= 1 && pTErr/pT > 0.07 ) scale = 0.100000000001;
 
     } else {
-
            scale = pTCorr(pT,eta,2); //LUT_3 is for non ecal driven electron
-
            }
 
     return scale;
 }
 
 double MySelector::pTCorr(double pT, double eta, int tag){
-
+ // Returns the stored lambda value from the LUT corresponding to the lepton (tag).
+ // I'm pretty sure that 'scale' should really be 'lambda'.
  TH2F* LUT_ = LUTs_[tag];
 
- TAxis* x_pTaxis = LUT_->GetXaxis(); TAxis* y_etaaxis = LUT_->GetYaxis();
- double maxPt = x_pTaxis->GetXmax(); double minPt = x_pTaxis->GetXmin();
+ TAxis* x_pTaxis = LUT_->GetXaxis(); 
+ TAxis* y_etaaxis = LUT_->GetYaxis();
+ double maxPt = x_pTaxis->GetXmax(); 
+ double minPt = x_pTaxis->GetXmin();
 
  int xbin = x_pTaxis->FindFixBin(pT);
  int ybin = y_etaaxis->FindFixBin(abs(eta));
@@ -169,8 +175,8 @@ Bool_t MySelector::Process(Long64_t entry)
    double dm2 = (lep1+lep2p).M()-(lep1+lep2).M();
    double massZErr_cal = TMath::Sqrt(dm1*dm1+dm2*dm2);
 
-   double pterr1_corr = *pterr1; double pterr2_corr = *pterr2;
-
+   double pterr1_corr = *pterr1; 
+   double pterr2_corr = *pterr2;
 
    if (fs_ == "2mu") {
 
@@ -266,7 +272,12 @@ Bool_t MySelector::Process(Long64_t entry)
    massZErr_sum_corr += massZErr_cal_corr;
    massZErr_sum_rel_corr += massZErr_cal_corr/(*massZ);
 
-//   cout << massZErr_cal << ", " << (*massZErr) << endl;
+/*   cout << "massZErr: " << (*massZErr) << endl;
+   cout << "massZErr_sum: " << massZErr_sum << endl;
+   cout << "massZErr_sum_rel: " << massZErr_sum_rel << endl;
+   cout << "massZErr_sum_corr: " << massZErr_sum_corr << endl;
+   cout << "massZErr_sum_rel_corr: " << massZErr_sum_rel_corr << endl; 
+*/
    return kTRUE;
 }
 
