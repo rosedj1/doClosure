@@ -1,0 +1,124 @@
+Using cuts:
+massZ > 60 && massZ < 120 && massZErr/massZ > 0.075 && massZErr/massZ < 0.1
+[#1] INFO:ObjectHandling -- RooWorkSpace::import(w) Recycling existing object x created with identical factory specification
+[#1] INFO:ObjectHandling -- RooWorkSpace::import(w) Recycling existing object x created with identical factory specification
+[#0] ERROR:ObjectHandling -- RooFactoryWSTool::createArg() ERROR class DoubleCB not defined in ROOT class table
+[#0] ERROR:ObjectHandling -- RooFactoryWSTool::createArg() ERROR class DoubleCB not found in factory alias table, nor in ROOT class table
+[#0] ERROR:ObjectHandling -- RooFactoryWSTool::processExpression() ERRORS detected, transaction to workspace aborted, no objects committed
+[#1] INFO:ObjectHandling -- RooWorkSpace::import(w) Recycling existing object x created with identical factory specification
+[#1] INFO:ObjectHandling -- RooWorkSpace::import(w) Recycling existing object f1 created with identical factory specification
+[#1] INFO:DataHandling -- RooDataHist::adjustBinning(dataHist1): fit range of variable x expanded to nearest bin boundaries: [60,120] --> [60,120]
+[#1] INFO:Eval -- RooRealVar::setRange(x) new range named 'refrange_fft_BWxCB' created with bounds [60,120]
+[#1] INFO:Caching -- RooAbsCachedPdf::getCache(BWxCB) creating new cache 0x47deef0 with pdf bw_CONV_singleCB_CACHE_Obs[x] for nset (x) with code 0
+[#1] INFO:Minization -- RooMinuit::optimizeConst: activating const optimization
+[#1] INFO:Caching -- RooAbsCachedPdf::getCache(BWxCB) creating new cache 0x4a0b310 with pdf bw_CONV_singleCB_CACHE_Obs[x] for nset (x) with code 0 from preexisting content.
+[#1] INFO:Minization --  The following expressions have been identified as constant and will be precalculated and cached: (bw)
+[#1] INFO:Minization --  The following expressions will be evaluated in cache-and-track mode: (BWxCB,bkg)
+ **********
+ **   13 **MIGRAD        3000           1
+ **********
+ FIRST CALL TO USER FUNCTION AT NEW START POINT, WITH IFLAG=4.
+ START MIGRAD MINIMIZATION.  STRATEGY  1.  CONVERGENCE WHEN EDM .LT. 1.00e-03
+ FCN=24552.1 FROM MIGRAD    STATUS=INITIATE      116 CALLS         117 TOTAL
+                     EDM= unknown      STRATEGY= 1      NO ERROR MATRIX       
+  EXT PARAMETER               CURRENT GUESS       STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  alphaCB      1.00000e+00   5.00000e-01   0.00000e+00   4.41696e+02
+   2  fsig         9.12701e-01   2.90000e-02  -4.22487e+00  -3.32189e+01
+   3  meanCB      -1.49999e+00   3.00000e-01   0.00000e+00  -3.64027e-02
+   4  nCB          1.42793e-02   5.00000e-01   0.00000e+00   4.30525e+02
+   5  sigmaCB      1.00000e+00   4.50000e-01   0.00000e+00   1.31706e+02
+   6  tau          0.00000e+00   2.00000e-01   0.00000e+00   1.78161e+03
+                               ERR DEF= 0.5
+ MIGRAD MINIMIZATION HAS CONVERGED.
+ MIGRAD WILL VERIFY CONVERGENCE AND ERROR MATRIX.
+ MINUIT WARNING IN HESSE   
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN HESSE   
+ ============== 1.00404 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -3.0238e+01  4.8269e-01  5.7038e-01  9.9989e-01  1.9470e+00  3.2238e+01
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 30.270654 TO DIAGONAL.
+ FCN=24445.5 FROM MIGRAD    STATUS=CONVERGED     454 CALLS         455 TOTAL
+                     EDM=8.2136e-07    STRATEGY= 1      ERR MATRIX NOT POS-DEF
+  EXT PARAMETER                APPROXIMATE        STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  alphaCB      3.44785e-10   7.41904e+00   9.34193e-02** at limit **
+   2  fsig         8.54158e-01   3.41195e-03   1.43593e-02  -5.86218e-03
+   3  meanCB      -1.50000e+00   1.19155e-03   2.46788e-02** at limit **
+   4  nCB          1.49344e-08   9.24589e+00   3.21037e-03** at limit **
+   5  sigmaCB      2.77866e+00   3.17897e-02   4.36570e-03  -9.35871e-03
+   6  tau         -4.35895e-02   5.91916e-04   3.57713e-04  -3.15696e-01
+                               ERR DEF= 0.5
+ EXTERNAL ERROR MATRIX.    NDIM=  25    NPAR=  6    ERR DEF=0.5
+  8.160e-09 -3.032e-10 -1.170e-12 -1.374e-07 -3.275e-08 -1.708e-10 
+ -3.032e-10  1.164e-05  2.161e-11  5.105e-09  1.498e-06  2.962e-08 
+ -1.170e-12  2.161e-11  3.111e-09  1.969e-11 -9.462e-10 -8.068e-12 
+ -1.374e-07  5.105e-09  1.969e-11  2.317e-06  5.514e-07  2.876e-09 
+ -3.275e-08  1.498e-06 -9.462e-10  5.514e-07  1.011e-03 -3.049e-07 
+ -1.708e-10  2.962e-08 -8.068e-12  2.876e-09 -3.049e-07  3.504e-07 
+ERR MATRIX NOT POS-DEF
+ PARAMETER  CORRELATION COEFFICIENTS  
+       NO.  GLOBAL      1      2      3      4      5      6
+        1  0.99897   1.000 -0.001 -0.000 -0.999 -0.011 -0.003
+        2  0.02032  -0.001  1.000  0.000  0.001  0.014  0.015
+        3  0.00065  -0.000  0.000  1.000  0.000 -0.001 -0.000
+        4  0.99897  -0.999  0.001  0.000  1.000  0.011  0.003
+        5  0.02432  -0.011  0.014 -0.001  0.011  1.000 -0.016
+        6  0.02226  -0.003  0.015 -0.000  0.003 -0.016  1.000
+ ERR MATRIX NOT POS-DEF
+ **********
+ **   18 **HESSE        3000
+ **********
+ MINUIT WARNING IN HESSE   
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN HESSE   
+ ============== 1 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -2.2344e+02  4.8406e-01  5.7426e-01  9.9999e-01  1.9417e+00  2.2544e+02
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 223.667682 TO DIAGONAL.
+ FCN=24445.5 FROM HESSE     STATUS=NOT POSDEF     48 CALLS         503 TOTAL
+                     EDM=7.85337e-08    STRATEGY= 1      ERR MATRIX NOT POS-DEF
+  EXT PARAMETER                APPROXIMATE     INTERNAL      INTERNAL  
+  NO.   NAME      VALUE            ERROR       STEP SIZE       VALUE   
+   1  alphaCB      3.44785e-10   4.87981e-02   3.81151e-01  -1.57081e+00
+                                 WARNING -   - ABOVE PARAMETER IS AT LIMIT.
+   2  fsig         8.54158e-01   1.27278e-03   5.74373e-04  -6.21999e+00
+   3  meanCB      -1.50000e+00   1.65936e-04   4.93577e-03  -1.56986e+00
+                                 WARNING -   - ABOVE PARAMETER IS AT LIMIT.
+   4  nCB          1.49344e-08   7.29748e+00   5.00000e-01  -1.57087e+00
+                                 WARNING -   - ABOVE PARAMETER IS AT LIMIT.
+   5  sigmaCB      2.77866e+00   1.18616e-02   1.74628e-04  -4.76707e-01
+   6  tau         -4.35895e-02   2.20783e-04   1.43085e-05  -4.36033e-02
+                               ERR DEF= 0.5
+ EXTERNAL ERROR MATRIX.    NDIM=  25    NPAR=  6    ERR DEF=0.5
+  6.741e-11 -3.401e-11 -1.704e-14 -4.722e-09 -2.833e-09 -1.454e-11 
+ -3.401e-11  1.620e-06  1.239e-13  2.382e-09  3.081e-08  5.796e-10 
+ -1.704e-14  1.239e-13  4.331e-10  1.193e-12 -4.052e-12 -3.799e-14 
+ -4.722e-09  2.382e-09  1.193e-12  3.314e-07  1.984e-07  1.018e-09 
+ -2.833e-09  3.081e-08 -4.052e-12  1.984e-07  1.407e-04 -5.371e-09 
+ -1.454e-11  5.796e-10 -3.799e-14  1.018e-09 -5.371e-09  4.875e-08 
+ERR MATRIX NOT POS-DEF
+ PARAMETER  CORRELATION COEFFICIENTS  
+       NO.  GLOBAL      1      2      3      4      5      6
+        1  0.99900   1.000 -0.003 -0.000 -0.999 -0.029 -0.008
+        2  0.00431  -0.003  1.000  0.000  0.003  0.002  0.002
+        3  0.00010  -0.000  0.000  1.000  0.000 -0.000 -0.000
+        4  0.99900  -0.999  0.003  0.000  1.000  0.029  0.008
+        5  0.02924  -0.029  0.002 -0.000  0.029  1.000 -0.002
+        6  0.00859  -0.008  0.002 -0.000  0.008 -0.002  1.000
+ ERR MATRIX NOT POS-DEF
+[#1] INFO:Minization -- RooMinuit::optimizeConst: deactivating const optimization
+[#1] INFO:Caching -- RooAbsCachedPdf::getCache(BWxCB) creating new cache 0x4dfd910 with pdf bw_CONV_singleCB_CACHE_Obs[x] for nset (x) with code 0
+[#1] INFO:Plotting -- RooAbsPdf::plotOn(model) directly selected PDF components: (bkg)
+[#1] INFO:Plotting -- RooAbsPdf::plotOn(model) indirectly selected PDF components: ()
+[#1] INFO:Caching -- RooAbsCachedPdf::getCache(BWxCB) creating new cache 0x4bca9a0 with pdf bw_CONV_singleCB_CACHE_Obs[x] for nset (x) with code 0 from preexisting content.
+nEvents: 6576
+massZErr_ave: 6.38067
+massZErr_rel_ave: 0.0824986
+massZErr_ave_corr: 1.91596
+massZErr_rel_ave_corr: 0.0247008
+sigma_m2l:
+[2.7786633736554016, 0.011861641276398549, 6.380672950386178, 1.9159644068823796]
