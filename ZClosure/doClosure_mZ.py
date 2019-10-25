@@ -1,6 +1,7 @@
 from ROOT import *
 import makePlot_1D_fit
 from subprocess import call
+import os
 #RooMsgService.instance().Print() 
 #RooMsgService.instance().getStream(1).removeTopic(RooFit.ObjectHandling)
 #RooMsgService.instance().getStream(1).removeTopic(RooFit.DataHandling)
@@ -16,13 +17,13 @@ def ParseOption():
     parser.add_argument('--inpath', dest='inpath', type=str, help='')
     parser.add_argument('--filename', dest='filename', type=str, help='')
     parser.add_argument('--plotpath', dest='plotpath', type=str, help='')
-    parser.add_argument('--outtxtName', dest='outtxtName', type=str, help='')
+    parser.add_argument('--ZWIDTH', dest='Z_width', type=float, help='Z width in MC or pdg value')
+    parser.add_argument('--mZ_bininfo', dest='binInfo', nargs='+', help='', type=int)#, required=True)
+    parser.add_argument('--pathsigmatxt', dest='outtxtName', type=str, help='Full path of sigma.txt to be written.')
     parser.add_argument('--fs', dest='fs', type=str, help='')
-    parser.add_argument('--zWidth', dest='Z_width', type=float, help='Z width in MC or pdg value')
-    parser.add_argument('--plotBinInfo', dest='binInfo', nargs='+', help='', type=int)#, required=True)
-    parser.add_argument('--singleCB_tail',dest='singleCB_tail', nargs='+', help='', type=float)#, required=True)
     #parser.add_argument('--doubleCB_tail',dest='doubleCB_tail', nargs='+', help='', type=float)#, required=True)
-    parser.add_argument('--pTErrCorrections', dest='pTErrCorrections', nargs='+', help='', type=float)#, required=True)
+#    parser.add_argument('--pTErrCorrections', dest='pTErrCorrections', nargs='+', help='', type=float)#, required=True)
+#    parser.add_argument('--singleCB_tail',dest='singleCB_tail', nargs='+', help='', type=float)#, required=True)
     args = parser.parse_args()
     return args
 
@@ -36,13 +37,13 @@ treeName = 'passedEvents'
 savePath = args.plotpath 
 saveName = 'massZ_relmZErr_' + str(massZErr_rel_min) + '_' + str(massZErr_rel_max) + '_' + args.fs
 binInfo = args.binInfo
-singleCB_a = args.singleCB_tail[0]
-singleCB_n = args.singleCB_tail[1]
+#singleCB_a = args.singleCB_tail[0]
+#singleCB_n = args.singleCB_tail[1]
 #doubleCB_a1 = args.doubleCB_tail[0]
 #doubleCB_n1 = args.doubleCB_tail[1]
 #doubleCB_a2 = args.doubleCB_tail[2]
 #doubleCB_n2 = args.doubleCB_tail[3]
-pTErrCorrections = args.pTErrCorrections
+#pTErrCorrections = args.pTErrCorrections
 
 cuts = ("massZ > " + str(binInfo[1]) +''
        " && massZ < " + str(binInfo[2]) +'' 
@@ -64,8 +65,8 @@ plotParaConfig =  {
 'pdfName': 'model',
 #'pdfName': 'BWxDCB',
 'z_width': args.Z_width ,
-'singleCB_a': singleCB_a,  #FIXME: I'm pretty certain these aren't needed anymore!
-'singleCB_n': singleCB_n,
+#'singleCB_a': singleCB_a,  #FIXME: I'm pretty certain these aren't needed anymore!
+#'singleCB_n': singleCB_n,
 #'doubleCB_a1': doubleCB_a1,
 #'doubleCB_n1': doubleCB_n1,
 #'doubleCB_a2': doubleCB_a2,
