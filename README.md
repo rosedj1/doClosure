@@ -12,6 +12,7 @@ Ultimately *doClosure\_mZ.py* produces sigma\_m2e.txt (or sigma\_m2mu.txt) which
 all the values to be plotted. It contains four columns:
 
 *Example sigma\_2e.txt*:
+
 | sigma(CB,fit) | sigma(CB,fit,err) | sigma(pred) | sigma(pred,corrected) |
 | y             |             yErr  |     x1      |                x2     |
 | Measured      |    Meas\_Err      | Predicted   |  Pred, with corr applied | 
